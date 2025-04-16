@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>AI调用</title>
+    <link href="/2025/04/16/test/"/>
+    <url>/2025/04/16/test/</url>
+    
+    <content type="html"><![CDATA[<div class="ai-container" style="margin: 50px auto; max-width: 800px; text-align: center;">  <div class="ai-card" style="background: linear-gradient(135deg, #6e8efb, #a777e3); border-radius: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); padding: 40px; color: white; position: relative; overflow: hidden;">        <div class="ai-particles" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.3;">      <!-- 这里用CSS实现背景动画效果 -->    </div>        <div class="ai-content" style="position: relative; z-index: 2;">      <h2 style="font-size: 2.5em; margin-bottom: 20px; font-weight: bold; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);">AI 智能助手</h2>            <p style="font-size: 1.2em; margin-bottom: 30px; line-height: 1.6;">        探索人工智能的无限可能，获取即时帮助和智能回答      </p>            <div class="ai-features" style="display: flex; justify-content: center; margin: 30px 0; flex-wrap: wrap;">        <div style="background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 15px; margin: 10px; min-width: 150px;">          <span style="font-size: 1.8em; display: block;">💡</span>          <span>智能问答</span>        </div>        <div style="background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 15px; margin: 10px; min-width: 150px;">          <span style="font-size: 1.8em; display: block;">🔍</span>          <span>信息搜索</span>        </div>        <div style="background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 15px; margin: 10px; min-width: 150px;">          <span style="font-size: 1.8em; display: block;">✨</span>          <span>创意生成</span>        </div>      </div>            <a href="/play/ai/3.html" style="display: inline-block; background: white; color: #6e46e3; font-weight: bold; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-size: 1.2em; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">        立即体验 <span style="margin-left: 8px;">→</span>      </a>    </div>  </div></div><style>@keyframes float {  0% { transform: translateY(0px); }  50% { transform: translateY(-20px); }  100% { transform: translateY(0px); }}.ai-card {  animation: float 6s ease-in-out infinite;}@keyframes pulse {  0% { transform: scale(1); }  50% { transform: scale(1.05); }  100% { transform: scale(1); }}.ai-card:hover {  animation: pulse 2s infinite;}.ai-container a:hover {  transform: translateY(-5px);  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);}</style><script>// 等待页面完全加载后再执行window.addEventListener('load', function() {  setTimeout(function() {    // 添加null检查    const aiCard = document.querySelector('.ai-card');    const particles = document.querySelector('.ai-particles');        if (aiCard && particles) {      for (let i = 0; i < 50; i++) {        const particle = document.createElement('div');        particle.style.position = 'absolute';        particle.style.width = Math.random() * 10 + 'px';        particle.style.height = particle.style.width;        particle.style.background = 'white';        particle.style.borderRadius = '50%';        particle.style.top = Math.random() * 100 + '%';        particle.style.left = Math.random() * 100 + '%';        particle.style.opacity = Math.random() * 0.5;                // 添加动画        particle.style.animation = `float ${Math.random() * 10 + 5}s linear infinite`;        particles.appendChild(particle);      }    } else {      console.log('AI卡片元素未找到，跳过粒子效果创建');    }  }, 500); // 增加延迟确保DOM完全渲染});</script>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>

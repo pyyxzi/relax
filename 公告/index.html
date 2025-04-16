@@ -19,11 +19,15 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Archives">
-<meta property="og:url" content="http://example.com/archives/2025/04/index.html">
+    <meta name="description" content="2025年01月01日       网站公告                 网站创建       网站正式创建！我将在这里分享有趣的东西!       感谢访问，希望我的内容能够对您有所帮助！            &#x2F;* 公告页面样式 *&#x2F; .announcement-container {   max-width: 800px;   margin:">
+<meta property="og:type" content="website">
+<meta property="og:title" content="网站公告">
+<meta property="og:url" content="http://example.com/%E5%85%AC%E5%91%8A/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="2025年01月01日       网站公告                 网站创建       网站正式创建！我将在这里分享有趣的东西!       感谢访问，希望我的内容能够对您有所帮助！            &#x2F;* 公告页面样式 *&#x2F; .announcement-container {   max-width: 800px;   margin:">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-16T11:46:14.660Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -31,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Archives - Hexo</title>
+  <title>网站公告 - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -189,13 +193,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/archive_bg.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/new_page_bg.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.4)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="时间线"></span>
+            <span id="subtitle" data-typed-text="网站最新公告与更新信息"></span>
           
         </div>
 
@@ -226,23 +230,166 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">1 posts in total</p>
-  <hr>
+<article class="page-content">
+  <div class="announcement-container">
+  <!-- <div class="announcement-header">
+    <i class="fas fa-bullhorn announcement-icon"></i>
+    <h2 class="announcement-title">网站公告</h2>
+  </div> -->
+
   
-  
-    
-      
-      <p class="h5">2025</p>
-    
-    <a href="/2025/04/16/test/" class="list-group-item list-group-item-action">
-      <time>04-16</time>
-      <div class="list-group-item-title">AI调用</div>
-    </a>
-  
+  <div class="announcement-item">
+    <div class="announcement-meta">
+      <span class="announcement-date">2025年01月01日</span>
+      <span class="announcement-tag">网站公告</span>
+    </div>
+    <div class="announcement-content">
+      <h3>网站创建</h3>
+      <p>网站正式创建！我将在这里分享有趣的东西!</p>
+      <p>感谢访问，希望我的内容能够对您有所帮助！</p>
+    </div>
+  </div>
 </div>
 
+<style>
+/* 公告页面样式 */
+.announcement-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
 
+.announcement-header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.announcement-title {
+  font-size: 2rem;
+  color: #3498db;
+  display: inline-block;
+  padding-bottom: 10px;
+  position: relative;
+}
+
+.announcement-title:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  border-radius: 3px;
+}
+
+.announcement-icon {
+  font-size: 2.5rem;
+  color: #3498db;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.announcement-item {
+  margin-bottom: 40px;
+  padding: 25px;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border-left: 5px solid #3498db;
+}
+
+.announcement-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.announcement-date {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.announcement-tag {
+  background: #3498db;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.announcement-item:nth-child(3) .announcement-tag {
+  background: #9b59b6;
+}
+
+.announcement-item:nth-child(4) .announcement-tag {
+  background: #e74c3c;
+}
+
+.announcement-item:nth-child(5) .announcement-tag {
+  background: #2ecc71;
+}
+
+.announcement-content h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+}
+
+.announcement-content p {
+  color: #34495e;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+.announcement-content ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.announcement-content ul li {
+  color: #34495e;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.announcement-content ul li:before {
+  content: "•";
+  color: #3498db;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+@media (max-width: 768px) {
+  .announcement-meta {
+    flex-direction: column;
+  }
+  
+  .announcement-date {
+    margin-bottom: 10px;
+  }
+  
+  .announcement-tag {
+    align-self: flex-start;
+  }
+}
+</style>
+
+  
+
+</article>
 
 
 
