@@ -811,6 +811,9 @@
             fontSize: '15px'
         };
 
+        // 添加聊天模型记忆
+        let chatModels = JSON.parse(localStorage.getItem('chatModels')) || {};
+
         // 初始化
         document.addEventListener('DOMContentLoaded', function () {
             // 应用字体设置
@@ -843,7 +846,36 @@
                     this.style.overflowY = 'hidden';
                 }
             });
+
+            // 添加Android兼容性检测
+            checkAndroidCompatibility();
         });
+
+        // 检查Android兼容性
+        function checkAndroidCompatibility() {
+            const isAndroid = /android/i.test(navigator.userAgent);
+            if (isAndroid) {
+                // 优化Android输入框问题
+                const textarea = document.getElementById('messageInput');
+
+                // 防止Android键盘弹出时页面布局混乱
+                textarea.addEventListener('focus', function () {
+                    // 确保滚动到可见区域，防止键盘遮挡
+                    setTimeout(() => {
+                        window.scrollTo(0, 0);
+                        document.body.scrollTop = 0;
+                    }, 300);
+                });
+
+                // 修复Android软键盘问题
+                window.addEventListener('resize', function () {
+                    // 在键盘弹出或收起时调整布局
+                    if (document.activeElement === textarea) {
+                        window.scrollTo(0, 0);
+                    }
+                });
+            }
+        }
 
         // 应用字体设置
         function applyFontSettings() {
@@ -1018,6 +1050,16 @@
             localStorage.setItem('apiSettings', JSON.stringify(apiSettings));
             localStorage.setItem('fontSettings', JSON.stringify(fontSettings));
 
+            // 如果当前有选中的对话，保存当前模型设置到该对话
+            if (currentChatId) {
+                chatModels[currentChatId] = {
+                    model: model,
+                    temperature: temperature,
+                    maxTokens: maxTokens
+                };
+                localStorage.setItem('chatModels', JSON.stringify(chatModels));
+            }
+
             // 应用字体设置
             applyFontSettings();
 
@@ -1050,7 +1092,17 @@
             };
 
             chats.unshift(newChat);
+
+            // 保存当前选择的模型到新对话
+            chatModels[newChat.id] = {
+                model: apiSettings.model,
+                temperature: apiSettings.temperature,
+                maxTokens: apiSettings.maxTokens
+            };
+
             saveChatsToDB();
+            localStorage.setItem('chatModels', JSON.stringify(chatModels));
+
             renderChatList();
             switchToChat(newChat.id);
 
@@ -1162,6 +1214,21 @@
             // 更新标题
             document.getElementById('currentChatTitle').textContent = currentChat.name;
 
+            // 应用该对话的模型设置（如果有）
+            if (chatModels[chatId]) {
+                // 临时存储当前模型设置，仅用于此对话
+                apiSettings.model = chatModels[chatId].model;
+                if (chatModels[chatId].temperature) {
+                    apiSettings.temperature = chatModels[chatId].temperature;
+                }
+                if (chatModels[chatId].maxTokens) {
+                    apiSettings.maxTokens = chatModels[chatId].maxTokens;
+                }
+
+                // 更新设置表单以反映当前对话的模型设置
+                updateSettingsFormForCurrentChat();
+            }
+
             // 渲染消息
             renderMessages(currentChat.messages);
 
@@ -1172,6 +1239,30 @@
 
             // 聚焦输入框
             document.getElementById('messageInput').focus();
+        }
+
+        // 更新设置表单以反映当前对话的模型设置
+        function updateSettingsFormForCurrentChat() {
+            const modelSelect = document.getElementById('modelSelect');
+            const temperatureInput = document.getElementById('temperature');
+            const temperatureValue = document.getElementById('temperatureValue');
+            const maxTokensInput = document.getElementById('maxTokens');
+
+            // 标准模型列表
+            const standardModels = ['gpt-4', 'gpt-3.5-turbo', 'claude-3-opus', 'claude-3-sonnet', 'gemini-pro'];
+
+            if (standardModels.includes(apiSettings.model)) {
+                modelSelect.value = apiSettings.model;
+                document.getElementById('customModelGroup').style.display = 'none';
+            } else {
+                modelSelect.value = 'custom';
+                document.getElementById('customModelGroup').style.display = 'block';
+                document.getElementById('customModel').value = apiSettings.model;
+            }
+
+            temperatureInput.value = apiSettings.temperature;
+            temperatureValue.textContent = apiSettings.temperature;
+            maxTokensInput.value = apiSettings.maxTokens;
         }
 
         // 渲染消息
@@ -1469,6 +1560,13 @@
         function deleteChat(chatId) {
             if (confirm('确定要删除这个对话吗？')) {
                 chats = chats.filter(chat => chat.id !== chatId);
+
+                // 同时删除对应的模型记忆
+                if (chatModels[chatId]) {
+                    delete chatModels[chatId];
+                    localStorage.setItem('chatModels', JSON.stringify(chatModels));
+                }
+
                 saveChatsToDB();
 
                 if (currentChatId === chatId) {
