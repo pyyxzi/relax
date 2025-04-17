@@ -19,15 +19,15 @@
   <meta name="author" content="彭于晏">
   <meta name="keywords" content="">
   
-    <meta name="description" content="🎬 沙子坑影院                                         🎲 随机震撼体验                                                                🏃           1号厅：箱根驿传，风驰电掣                  ▼">
+    <meta name="description" content="🎬 沙子坑影院                                                🎲 随机震撼体验                                     💡 关灯模式">
 <meta property="og:type" content="website">
 <meta property="og:title" content="放映厅">
 <meta property="og:url" content="http://example.com/%E6%94%BE%E6%98%A0%E5%8E%85/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="🎬 沙子坑影院                                         🎲 随机震撼体验                                                                🏃           1号厅：箱根驿传，风驰电掣                  ▼">
+<meta property="og:description" content="🎬 沙子坑影院                                                🎲 随机震撼体验                                     💡 关灯模式">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-16T13:36:02.000Z">
-<meta property="article:modified_time" content="2025-04-16T16:33:03.231Z">
+<meta property="article:modified_time" content="2025-04-17T03:10:48.278Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -190,12 +190,36 @@
                     <span>AI</span>
                   </a>
                 
+              </div>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="iconfont icon-docker"></i>
+                <span>休闲</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
                   
                   
                   
                   <a class="dropdown-item" href="/game" target="_self">
                     <i class="iconfont icon-steam"></i>
                     <span>游戏</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/music" target="_self">
+                    <i class="iconfont icon-music"></i>
+                    <span>八音盒</span>
                   </a>
                 
                   
@@ -274,6 +298,18 @@
   
 <div class="cinema-container" style="background: linear-gradient(to bottom, #0a0a20, #1a1a40); padding: 30px; min-height: 100vh; font-family: 'Microsoft YaHei', sans-serif;">
   
+  <!-- 动态背景 -->
+  <div class="dynamic-bg">
+    <div class="star star1"></div>
+    <div class="star star2"></div>
+    <div class="star star3"></div>
+    <div class="star star4"></div>
+    <div class="star star5"></div>
+    <div class="star star6"></div>
+    <div class="star star7"></div>
+    <div class="star star8"></div>
+  </div>
+  
   <!-- 页面标题 -->
   <div class="cinema-header" style="text-align: center; margin-bottom: 50px; position: relative;">
     <h1 style="color: #e4e4e4; font-size: 3.5em; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); letter-spacing: 3px; font-weight: bold;">
@@ -281,10 +317,16 @@
     </h1>
     <div class="header-decoration" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 300px; height: 4px; background: linear-gradient(90deg, transparent, #ff4d8d, transparent);"></div>
     
-    <!-- 随机播放按钮 -->
-    <div class="random-button" style="margin-top: 30px;">
+    <!-- 功能按钮区 -->
+    <div class="function-buttons" style="margin-top: 30px; display: flex; justify-content: center; gap: 20px;">
+      <!-- 随机播放按钮 -->
       <button onclick="playRandomVideo()" style="background: linear-gradient(90deg, #ff4d8d, #ff9b66); border: none; color: white; padding: 12px 30px; border-radius: 50px; font-size: 18px; cursor: pointer; box-shadow: 0 4px 20px rgba(255, 77, 141, 0.5); transition: all 0.3s ease;">
         <span style="margin-right: 10px;">🎲</span> 随机震撼体验
+      </button>
+      
+      <!-- 关灯按钮 -->
+      <button id="lightToggle" onclick="toggleLights()" style="background: linear-gradient(90deg, #6a11cb, #2575fc); border: none; color: white; padding: 12px 30px; border-radius: 50px; font-size: 18px; cursor: pointer; box-shadow: 0 4px 20px rgba(106, 17, 203, 0.5); transition: all 0.3s ease;">
+        <span style="margin-right: 10px;">💡</span> 关灯模式
       </button>
     </div>
   </div>
@@ -293,7 +335,7 @@
   <div class="theaters-container" style="max-width: 1200px; margin: 0 auto;">
     
     <!-- 1号厅：箱根驿传 -->
-    <div class="theater-section" style="margin-bottom: 40px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.4s ease, box-shadow 0.4s ease;">
+    <div class="theater-section" style="margin-bottom: 60px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;">
       <div class="theater-header" onclick="toggleTheater('hakone-theater')" style="padding: 25px; background: linear-gradient(90deg, #d32f2f, #f44336); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
         <h2 style="color: #fff; margin: 0; font-size: 1.8em; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
           <span style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; margin-right: 15px; box-shadow: 0 0 10px rgba(255,255,255,0.3);">🏃</span>
@@ -317,7 +359,7 @@
     </div>
 
     <!-- 2号厅：异域风情 -->
-    <div class="theater-section" style="margin-bottom: 40px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.4s ease, box-shadow 0.4s ease;">
+    <div class="theater-section" style="margin-bottom: 60px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;">
       <div class="theater-header" onclick="toggleTheater('exotic-theater')" style="padding: 25px; background: linear-gradient(90deg, #00695c, #009688); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
         <h2 style="color: #fff; margin: 0; font-size: 1.8em; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
           <span style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; margin-right: 15px; box-shadow: 0 0 10px rgba(255,255,255,0.3);">🌏</span>
@@ -339,7 +381,7 @@
     </div>
 
     <!-- 3号厅：超燃战斗 -->
-    <div class="theater-section" style="margin-bottom: 40px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.4s ease, box-shadow 0.4s ease;">
+    <div class="theater-section" style="margin-bottom: 60px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;">
       <div class="theater-header" onclick="toggleTheater('battle-theater')" style="padding: 25px; background: linear-gradient(90deg, #303f9f, #5c6bc0); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
         <h2 style="color: #fff; margin: 0; font-size: 1.8em; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
           <span style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; margin-right: 15px; box-shadow: 0 0 10px rgba(255,255,255,0.3);">⚔️</span>
@@ -360,10 +402,199 @@
       </div>
     </div>
 
+    <!-- 6号厅：享你所想 -->
+    <div class="theater-section" style="margin-bottom: 60px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;">
+      <div class="theater-header" onclick="toggleTheater('enjoy-theater')" style="padding: 25px; background: linear-gradient(90deg, #6a11cb, #2575fc); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="color: #fff; margin: 0; font-size: 1.8em; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
+          <span style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; margin-right: 15px; box-shadow: 0 0 10px rgba(255,255,255,0.3);">🌈</span>
+          6号厅：享你所想
+        </h2>
+        <span class="toggle-icon" style="color: #fff; font-size: 1.8em; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">▼</span>
+      </div>
+      <div id="enjoy-theater" class="theater-content" style="display: none; padding: 25px;">
+        <div class="external-sites" style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+          <!-- 茶杯狐 -->
+          <a href="https://cupfox.love/" target="_blank" class="site-card" style="text-decoration: none; color: white; background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); border-radius: 15px; width: 300px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: all 0.3s ease; position: relative; overflow: hidden;">
+            <div class="site-icon" style="font-size: 48px; margin-bottom: 15px;">🦊</div>
+            <h3 style="margin: 0; font-size: 1.5em; text-shadow: 0 2px 5px rgba(0,0,0,0.3);">茶杯狐</h3>
+            <p style="margin: 5px 0 0 0; text-align: center; font-size: 1em;">片荒剧荒速来</p>
+            <div class="site-hover-effect" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,154,158,0.5) 0%, rgba(250,208,196,0.5) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center;">
+              <span style="background: rgba(255,255,255,0.2); border-radius: 50px; padding: 10px 20px; font-weight: bold;">点击访问</span>
+            </div>
+          </a>
+          
+          <!-- fofo影院 -->
+          <a href="https://www.fofo11.com/" target="_blank" class="site-card" style="text-decoration: none; color: white; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); border-radius: 15px; width: 300px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: all 0.3s ease; position: relative; overflow: hidden;">
+            <div class="site-icon" style="font-size: 48px; margin-bottom: 15px;">🎬</div>
+            <h3 style="margin: 0; font-size: 1.5em; text-shadow: 0 2px 5px rgba(0,0,0,0.3);">fofo影院</h3>
+            <p style="margin: 5px 0 0 0; text-align: center; font-size: 1em;">免费在线看电影</p>
+            <div class="site-hover-effect" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(161,140,209,0.5) 0%, rgba(251,194,235,0.5) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center;">
+              <span style="background: rgba(255,255,255,0.2); border-radius: 50px; padding: 10px 20px; font-weight: bold;">点击访问</span>
+            </div>
+          </a>
+          
+          <!-- 星辰影院 -->
+          <a href="https://www.xcyycn.com/" target="_blank" class="site-card" style="text-decoration: none; color: white; background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); border-radius: 15px; width: 300px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: all 0.3s ease; position: relative; overflow: hidden;">
+            <div class="site-icon" style="font-size: 48px; margin-bottom: 15px;">✨</div>
+            <h3 style="margin: 0; font-size: 1.5em; text-shadow: 0 2px 5px rgba(0,0,0,0.3);">星辰影院</h3>
+            <p style="margin: 5px 0 0 0; text-align: center; font-size: 1em;">免费在线看电影</p>
+            <div class="site-hover-effect" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(132,250,176,0.5) 0%, rgba(143,211,244,0.5) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center;">
+              <span style="background: rgba(255,255,255,0.2); border-radius: 50px; padding: 10px 20px; font-weight: bold;">点击访问</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </div>
 
 <style>
+/* 动态背景 */
+.dynamic-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: twinkle 7s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+.star1 {
+  width: 2px;
+  height: 2px;
+  top: 10%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.star2 {
+  width: 3px;
+  height: 3px;
+  top: 30%;
+  left: 85%;
+  animation-delay: 1s;
+}
+
+.star3 {
+  width: 2px;
+  height: 2px;
+  top: 70%;
+  left: 40%;
+  animation-delay: 1.5s;
+}
+
+.star4 {
+  width: 4px;
+  height: 4px;
+  top: 40%;
+  left: 10%;
+  animation-delay: 2s;
+}
+
+.star5 {
+  width: 3px;
+  height: 3px;
+  top: 80%;
+  left: 80%;
+  animation-delay: 2.5s;
+}
+
+.star6 {
+  width: 2px;
+  height: 2px;
+  top: 20%;
+  left: 60%;
+  animation-delay: 3s;
+}
+
+.star7 {
+  width: 3px;
+  height: 3px;
+  top: 60%;
+  left: 15%;
+  animation-delay: 3.5s;
+}
+
+.star8 {
+  width: 2px;
+  height: 2px;
+  top: 50%;
+  left: 75%;
+  animation-delay: 4s;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+.cinema-container {
+  position: relative;
+  z-index: 1;
+  transition: background 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 关灯模式 */
+.lights-off .dynamic-bg .star {
+  opacity: 1;
+  filter: blur(1px);
+}
+
+.lights-off {
+  background: rgba(5, 5, 15, 0.95) !important;
+}
+
+.lights-off .theater-section,
+.lights-off .theater-header {
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.lights-off .cinema-header h1 {
+  opacity: 0.7;
+}
+
+.lights-off .header-decoration,
+.lights-off .random-button,
+.lights-off .toggle-icon,
+.lights-off .theater-control {
+  opacity: 0.5;
+}
+
+.lights-off .theater-content:not(.active-theater) {
+  opacity: 0.3;
+}
+
+.lights-off .active-theater {
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 站点卡片悬停效果 */
+.site-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.site-card:hover .site-hover-effect {
+  opacity: 1;
+}
+
 /* 动画效果 */
 @keyframes glow {
   0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
@@ -378,18 +609,18 @@
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-20px); }
+  from { opacity: 0; transform: translateY(-15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes float {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
   100% { transform: translateY(0px); }
 }
 
 .theater-section {
-  transition: all 0.4s ease;
+  transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   overflow: hidden;
 }
@@ -406,13 +637,14 @@
 }
 
 .theater-section:hover {
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
 }
 
 .random-button button {
   position: relative;
   overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .random-button button::after {
@@ -425,22 +657,22 @@
   background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.8s ease;
 }
 
 .random-button button:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(255, 77, 141, 0.7);
-  animation: pulse 1.5s infinite;
+  animation: pulse 2.2s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 
 .random-button button:hover::after {
   opacity: 1;
-  animation: float 3s infinite ease-in-out;
+  animation: float 4s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 
 .theater-header {
-  transition: all 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   overflow: hidden;
 }
@@ -453,7 +685,7 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-  transition: all 0.6s ease;
+  transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
 }
 
@@ -466,7 +698,7 @@
 }
 
 .toggle-icon {
-  transition: transform 0.3s ease;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .theater-header.active .toggle-icon {
@@ -474,12 +706,20 @@
 }
 
 .theater-content {
-  animation: slideDown 0.5s ease forwards;
+  animation: slideDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.control-button {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
 
 .control-button:hover {
   background: rgba(255,255,255,0.4) !important;
   transform: scale(1.1);
+}
+
+.site-card {
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
 
 /* 响应式设计 */
@@ -731,6 +971,16 @@ function toggleTheater(theaterId) {
     // 添加展开动画
     content.style.animation = 'slideDown 0.5s ease forwards';
     
+    // 在关灯模式下标记当前活跃的影院
+    if (document.querySelector('.cinema-container').classList.contains('lights-off')) {
+      // 移除所有活跃影院标记
+      document.querySelectorAll('.theater-content').forEach(theater => {
+        theater.classList.remove('active-theater');
+      });
+      // 添加当前影院活跃标记
+      content.classList.add('active-theater');
+    }
+    
     // 如果有控制按钮，默认高亮第一个
     const firstButton = content.querySelector('.control-button');
     if (firstButton) {
@@ -740,6 +990,32 @@ function toggleTheater(theaterId) {
   } else {
     content.style.display = 'none';
     header.classList.remove('active');
+    content.classList.remove('active-theater');
+  }
+}
+
+// 关灯功能
+function toggleLights() {
+  const container = document.querySelector('.cinema-container');
+  const button = document.getElementById('lightToggle');
+  
+  if (container.classList.contains('lights-off')) {
+    // 开灯
+    container.classList.remove('lights-off');
+    button.innerHTML = '<span style="margin-right: 10px;">💡</span> 关灯模式';
+    button.style.background = 'linear-gradient(90deg, #6a11cb, #2575fc)';
+  } else {
+    // 关灯
+    container.classList.add('lights-off');
+    button.innerHTML = '<span style="margin-right: 10px;">🔆</span> 开灯模式';
+    button.style.background = 'linear-gradient(90deg, #ff9966, #ff5e62)';
+    
+    // 标记当前打开的影院为活跃
+    document.querySelectorAll('.theater-content').forEach(theater => {
+      if (theater.style.display === 'block') {
+        theater.classList.add('active-theater');
+      }
+    });
   }
 }
 
@@ -748,7 +1024,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // 默认展开第一个影院
   setTimeout(() => {
     toggleTheater('hakone-theater');
-  }, 500);
+  }, 800);
   
   // 添加展开/收起动画
   const headers = document.querySelectorAll('.theater-header');
@@ -773,6 +1049,52 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+  
+  // 站点卡片添加脉冲动画
+  const siteCards = document.querySelectorAll('.site-card');
+  let currentCardIndex = 0;
+  
+  function animateSiteCard() {
+    // 移除之前的动画
+    siteCards.forEach(card => {
+      card.style.animation = '';
+    });
+    
+    // 添加新动画
+    if(siteCards.length > 0) {
+      siteCards[currentCardIndex].style.animation = 'pulse 3s cubic-bezier(0.45, 0.05, 0.55, 0.95)';
+      
+      // 更新索引
+      currentCardIndex = (currentCardIndex + 1) % siteCards.length;
+      
+      // 设置下一个动画
+      setTimeout(animateSiteCard, 4000);
+    }
+  }
+  
+  // 初始动画
+  setTimeout(animateSiteCard, 3000);
+  
+  // 添加星星闪烁动画增强
+  function enhanceStars() {
+    const stars = document.querySelectorAll('.star');
+    stars.forEach((star, index) => {
+      // 随机调整位置
+      const randomTop = Math.random() * 100;
+      const randomLeft = Math.random() * 100;
+      setTimeout(() => {
+        star.style.transition = 'top 15s cubic-bezier(0.34, 0.82, 0.6, 1), left 15s cubic-bezier(0.34, 0.82, 0.6, 1)';
+        star.style.top = `${randomTop}%`;
+        star.style.left = `${randomLeft}%`;
+      }, index * 300);
+    });
+    
+    // 定期调整星星位置
+    setTimeout(enhanceStars, 15000);
+  }
+  
+  // 初始化星星动画
+  setTimeout(enhanceStars, 2000);
 });
 </script>
 
