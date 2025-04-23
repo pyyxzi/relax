@@ -19,15 +19,15 @@
   <meta name="author" content="彭于晏">
   <meta name="keywords" content="">
   
-    <meta name="description" content="🎬 沙子坑影院                                                🎲 随机震撼体验                                     💡 关灯模式">
+    <meta name="description" content="🎬 沙子坑影院">
 <meta property="og:type" content="website">
 <meta property="og:title" content="放映厅">
 <meta property="og:url" content="http://example.com/%E6%94%BE%E6%98%A0%E5%8E%85/index.html">
-<meta property="og:site_name" content="宝藏库">
-<meta property="og:description" content="🎬 沙子坑影院                                                🎲 随机震撼体验                                     💡 关灯模式">
+<meta property="og:site_name" content="赛博窥天阁">
+<meta property="og:description" content="🎬 沙子坑影院">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-16T13:36:02.000Z">
-<meta property="article:modified_time" content="2025-04-17T03:10:48.278Z">
+<meta property="article:modified_time" content="2025-04-23T14:19:16.948Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -35,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>放映厅 - 宝藏库</title>
+  <title>放映厅 - 赛博窥天阁</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -121,7 +121,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>空前绝后</strong>
+      <strong>龙渊密阁</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -190,6 +190,22 @@
                     <span>AI</span>
                   </a>
                 
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/bot" target="_self">
+                    <i class="iconfont icon-zhihu-fill"></i>
+                    <span>问题咨询</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/resource" target="_self">
+                    <i class="iconfont icon-codepen-fill"></i>
+                    <span>资源分享</span>
+                  </a>
+                
               </div>
             </li>
           
@@ -228,6 +244,14 @@
                   <a class="dropdown-item" href="/%E6%94%BE%E6%98%A0%E5%8E%85" target="_self">
                     <i class="iconfont icon-youtube-fill"></i>
                     <span>放映厅</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/message" target="_self">
+                    <i class="iconfont icon-medium-fill"></i>
+                    <span>留言板</span>
                   </a>
                 
               </div>
@@ -298,6 +322,20 @@
   
 <div class="cinema-container" style="background: linear-gradient(to bottom, #0a0a20, #1a1a40); padding: 30px; min-height: 100vh; font-family: 'Microsoft YaHei', sans-serif;">
   
+  <!-- 3D背景效果 -->
+  <div class="cinema-3d-bg">
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+    <div class="cube"></div>
+  </div>
+
+  <!-- 粒子效果 -->
+  <div class="particles-container">
+    <canvas id="particles"></canvas>
+  </div>
+  
   <!-- 动态背景 -->
   <div class="dynamic-bg">
     <div class="star star1"></div>
@@ -310,9 +348,22 @@
     <div class="star star8"></div>
   </div>
   
+  <!-- 影院幕布 -->
+  <div class="cinema-curtain">
+    <div class="curtain-left"></div>
+    <div class="curtain-right"></div>
+  </div>
+
+  <!-- 光影效果 -->
+  <div class="light-effects">
+    <div class="spotlight spotlight1"></div>
+    <div class="spotlight spotlight2"></div>
+    <div class="spotlight spotlight3"></div>
+  </div>
+  
   <!-- 页面标题 -->
   <div class="cinema-header" style="text-align: center; margin-bottom: 50px; position: relative;">
-    <h1 style="color: #e4e4e4; font-size: 3.5em; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); letter-spacing: 3px; font-weight: bold;">
+    <h1 class="cinema-title" style="color: #e4e4e4; font-size: 3.5em; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); letter-spacing: 3px; font-weight: bold;">
       🎬 沙子坑影院
     </h1>
     <div class="header-decoration" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 300px; height: 4px; background: linear-gradient(90deg, transparent, #ff4d8d, transparent);"></div>
@@ -320,15 +371,31 @@
     <!-- 功能按钮区 -->
     <div class="function-buttons" style="margin-top: 30px; display: flex; justify-content: center; gap: 20px;">
       <!-- 随机播放按钮 -->
-      <button onclick="playRandomVideo()" style="background: linear-gradient(90deg, #ff4d8d, #ff9b66); border: none; color: white; padding: 12px 30px; border-radius: 50px; font-size: 18px; cursor: pointer; box-shadow: 0 4px 20px rgba(255, 77, 141, 0.5); transition: all 0.3s ease;">
+      <button onclick="playRandomVideo()" class="cinema-button" style="background: linear-gradient(90deg, #ff4d8d, #ff9b66);">
         <span style="margin-right: 10px;">🎲</span> 随机震撼体验
       </button>
       
       <!-- 关灯按钮 -->
-      <button id="lightToggle" onclick="toggleLights()" style="background: linear-gradient(90deg, #6a11cb, #2575fc); border: none; color: white; padding: 12px 30px; border-radius: 50px; font-size: 18px; cursor: pointer; box-shadow: 0 4px 20px rgba(106, 17, 203, 0.5); transition: all 0.3s ease;">
+      <button id="lightToggle" onclick="toggleLights()" class="cinema-button" style="background: linear-gradient(90deg, #6a11cb, #2575fc);">
         <span style="margin-right: 10px;">💡</span> 关灯模式
       </button>
+
+      <!-- 爆米花按钮 -->
+      <button onclick="showPopcorn()" class="cinema-button" style="background: linear-gradient(90deg, #ff9966, #ff5e62);">
+        <span style="margin-right: 10px;">🍿</span> 来份爆米花
+      </button>
+
+      <!-- 特效按钮 -->
+      <button onclick="toggleEffects()" class="cinema-button" style="background: linear-gradient(90deg, #00b4d8, #0096c7);">
+        <span style="margin-right: 10px;">✨</span> 特效模式
+      </button>
     </div>
+  </div>
+
+  <!-- 影院座位区 -->
+  <div class="cinema-seats">
+    <div class="screen"></div>
+    <div class="seats-grid"></div>
   </div>
 
   <!-- 影院列表 -->
@@ -450,6 +517,180 @@
 </div>
 
 <style>
+/* 新增3D背景效果 */
+.cinema-3d-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.cube {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  transform-style: preserve-3d;
+  animation: float 20s infinite linear;
+}
+
+.cube:nth-child(1) {
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.cube:nth-child(2) {
+  top: 30%;
+  right: 20%;
+  animation-delay: -5s;
+}
+
+.cube:nth-child(3) {
+  bottom: 20%;
+  left: 30%;
+  animation-delay: -10s;
+}
+
+.cube:nth-child(4) {
+  top: 50%;
+  right: 40%;
+  animation-delay: -15s;
+}
+
+.cube:nth-child(5) {
+  bottom: 40%;
+  left: 60%;
+  animation-delay: -20s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateZ(0) rotateX(0) rotateY(0);
+  }
+  100% {
+    transform: translateZ(500px) rotateX(360deg) rotateY(360deg);
+  }
+}
+
+/* 新增粒子效果 */
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* 新增光影效果 */
+.light-effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.spotlight {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+  filter: blur(20px);
+  animation: spotlightMove 15s infinite ease-in-out;
+}
+
+.spotlight1 {
+  top: 20%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.spotlight2 {
+  top: 60%;
+  right: 20%;
+  animation-delay: -5s;
+}
+
+.spotlight3 {
+  bottom: 20%;
+  left: 50%;
+  animation-delay: -10s;
+}
+
+@keyframes spotlightMove {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(100px, 50px);
+  }
+  50% {
+    transform: translate(-50px, 100px);
+  }
+  75% {
+    transform: translate(50px, -50px);
+  }
+}
+
+/* 新增标题动画 */
+.cinema-title {
+  position: relative;
+  animation: titleGlow 3s infinite ease-in-out;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
+                 0 0 50px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* 新增特效模式样式 */
+.effects-on .cinema-3d-bg .cube {
+  animation-play-state: running;
+}
+
+.effects-on .spotlight {
+  animation-play-state: running;
+}
+
+.effects-on .cinema-title {
+  animation-play-state: running;
+}
+
+.effects-off .cinema-3d-bg .cube {
+  animation-play-state: paused;
+}
+
+.effects-off .spotlight {
+  animation-play-state: paused;
+}
+
+.effects-off .cinema-title {
+  animation-play-state: paused;
+}
+
 /* 动态背景 */
 .dynamic-bg {
   position: fixed;
@@ -771,6 +1012,152 @@
     height: 36px !important;
   }
 }
+
+/* 新增影院幕布样式 */
+.cinema-curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.curtain-left, .curtain-right {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,0,0,0.1), rgba(255,0,0,0.05));
+  transition: transform 1s ease;
+}
+
+.curtain-left {
+  left: 0;
+  transform-origin: left;
+  transform: translateX(-100%);
+}
+
+.curtain-right {
+  right: 0;
+  transform-origin: right;
+  transform: translateX(100%);
+}
+
+.lights-off .curtain-left {
+  transform: translateX(0);
+}
+
+.lights-off .curtain-right {
+  transform: translateX(0);
+}
+
+/* 新增影院座位区样式 */
+.cinema-seats {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.1;
+  transition: opacity 0.5s ease;
+}
+
+.screen {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(255,255,255,0.2);
+}
+
+.seats-grid {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 60%;
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 5px;
+}
+
+.seats-grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 20px,
+    rgba(255,255,255,0.05) 20px,
+    rgba(255,255,255,0.05) 40px
+  );
+}
+
+.lights-off .cinema-seats {
+  opacity: 0.3;
+}
+
+/* 新增按钮样式 */
+.cinema-button {
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cinema-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: 0.5s;
+}
+
+.cinema-button:hover::before {
+  left: 100%;
+}
+
+.cinema-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* 新增爆米花动画 */
+@keyframes popcorn {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
+}
+
+.popcorn {
+  position: fixed;
+  font-size: 24px;
+  animation: popcorn 2s ease-in-out infinite;
+  z-index: 1000;
+}
 </style>
 
 <script>
@@ -994,7 +1381,24 @@ function toggleTheater(theaterId) {
   }
 }
 
-// 关灯功能
+// 新增爆米花效果
+function showPopcorn() {
+  const container = document.querySelector('.cinema-container');
+  const popcorn = document.createElement('div');
+  popcorn.className = 'popcorn';
+  popcorn.textContent = '🍿';
+  popcorn.style.left = Math.random() * window.innerWidth + 'px';
+  popcorn.style.top = Math.random() * window.innerHeight + 'px';
+  container.appendChild(popcorn);
+  
+  setTimeout(() => {
+    popcorn.remove();
+  }, 2000);
+  
+  showNotification('爆米花已送达，请享用！');
+}
+
+// 修改关灯功能
 function toggleLights() {
   const container = document.querySelector('.cinema-container');
   const button = document.getElementById('lightToggle');
@@ -1004,11 +1408,19 @@ function toggleLights() {
     container.classList.remove('lights-off');
     button.innerHTML = '<span style="margin-right: 10px;">💡</span> 关灯模式';
     button.style.background = 'linear-gradient(90deg, #6a11cb, #2575fc)';
+    
+    // 关闭幕布
+    document.querySelector('.curtain-left').style.transform = 'translateX(-100%)';
+    document.querySelector('.curtain-right').style.transform = 'translateX(100%)';
   } else {
     // 关灯
     container.classList.add('lights-off');
     button.innerHTML = '<span style="margin-right: 10px;">🔆</span> 开灯模式';
     button.style.background = 'linear-gradient(90deg, #ff9966, #ff5e62)';
+    
+    // 打开幕布
+    document.querySelector('.curtain-left').style.transform = 'translateX(0)';
+    document.querySelector('.curtain-right').style.transform = 'translateX(0)';
     
     // 标记当前打开的影院为活跃
     document.querySelectorAll('.theater-content').forEach(theater => {
@@ -1019,7 +1431,84 @@ function toggleLights() {
   }
 }
 
-// 页面加载完成后的初始化
+// 新增特效模式切换
+function toggleEffects() {
+  const container = document.querySelector('.cinema-container');
+  const button = document.querySelector('.cinema-button[onclick="toggleEffects()"]');
+  
+  if (container.classList.contains('effects-on')) {
+    container.classList.remove('effects-on');
+    container.classList.add('effects-off');
+    button.innerHTML = '<span style="margin-right: 10px;">✨</span> 开启特效';
+    showNotification('特效已关闭');
+  } else {
+    container.classList.remove('effects-off');
+    container.classList.add('effects-on');
+    button.innerHTML = '<span style="margin-right: 10px;">🌟</span> 关闭特效';
+    showNotification('特效已开启');
+  }
+}
+
+// 新增粒子效果
+function initParticles() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  
+  const particles = [];
+  const particleCount = 100;
+  
+  class Particle {
+    constructor() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.size = Math.random() * 3 + 1;
+      this.speedX = Math.random() * 2 - 1;
+      this.speedY = Math.random() * 2 - 1;
+      this.opacity = Math.random() * 0.5 + 0.1;
+    }
+    
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      
+      if (this.x < 0 || this.x > width) this.speedX *= -1;
+      if (this.y < 0 || this.y > height) this.speedY *= -1;
+    }
+    
+    draw() {
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    
+    particles.forEach(particle => {
+      particle.update();
+      particle.draw();
+    });
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+  
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+}
+
+// 修改页面加载初始化
 document.addEventListener('DOMContentLoaded', function() {
   // 默认展开第一个影院
   setTimeout(() => {
@@ -1095,6 +1584,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 初始化星星动画
   setTimeout(enhanceStars, 2000);
+  
+  // 初始化粒子效果
+  initParticles();
+  
+  // 默认开启特效
+  document.querySelector('.cinema-container').classList.add('effects-on');
 });
 </script>
 
