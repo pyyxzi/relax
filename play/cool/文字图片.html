@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>文字图像</title>
+    <link rel="icon" href="ico/文字图片.ico" type="image/x-icon">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+        p {
+            font-family: 'Poppins', sans-serif;
+            line-height: 8px;
+            /* 减小行高增加文字密度 */
+            background: url("imgs/ikun.jpg");
+            -webkit-background-clip: text;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0);
+            background-size: contain;
+            /* 保持图片完整比例 */
+            background-position: center;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            /* 增加内边距以避免文字紧贴边缘 */
+            box-sizing: border-box;
+            /* 让 padding 不会撑大元素 */
+            white-space: pre-wrap;
+            word-break: break-all;
+            overflow: hidden;
+            font-size: 8px;
+            /* 减小字体大小增加密度 */
+        }
+
+        body {
+            background: black;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* --- 新增样式 --- */
+        #settingsPanel {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            background: rgba(30, 30, 35, 0.75);
+            /* 更深色半透明背景 */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            /* 增强阴影 */
+            color: #eee;
+            /* 浅色文字 */
+            display: block;
+            /* 默认显示 */
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            /* 添加平滑过渡效果 */
+            transform: translateX(0);
+            opacity: 1;
+            backdrop-filter: blur(10px);
+            /* 背景模糊效果 */
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* 添加细边框 */
+            max-width: 350px;
+        }
+
+        #settingsPanel.hidden {
+            opacity: 0;
+            transform: translateX(-120%) rotate(-5deg);
+            /* 隐藏时向左移出并旋转 */
+            pointer-events: none;
+            /* 隐藏时不可交互 */
+        }
+
+        #settingsPanel::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            z-index: -1;
+            background: linear-gradient(45deg, rgba(0, 123, 255, 0.2), rgba(128, 0, 255, 0.2));
+            border-radius: 16px;
+            filter: blur(20px);
+            opacity: 0.5;
+        }
+
+        #settingsPanel label {
+            display: block;
+            /* 让标签单独一行 */
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        #settingsPanel input[type="text"],
+        #settingsPanel select {
+            width: 100%;
+            /* 宽度充满容器 */
+            padding: 10px 12px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(40, 40, 45, 0.7);
+            color: #fff;
+            border-radius: 8px;
+            box-sizing: border-box;
+            /* padding 不会撑大元素 */
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) inset;
+        }
+
+        #settingsPanel input[type="text"]:focus,
+        #settingsPanel select:focus {
+            border-color: rgba(0, 123, 255, 0.6);
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2) inset;
+            outline: none;
+        }
+
+        #settingsPanel select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 16px;
+            padding-right: 30px;
+        }
+
+        #settingsPanel button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(0, 80, 200, 0.8));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            /* 圆角按钮 */
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 70, 150, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        #settingsPanel button:hover {
+            background: linear-gradient(135deg, rgba(0, 140, 255, 0.9), rgba(0, 90, 210, 0.9));
+            box-shadow: 0 6px 20px rgba(0, 70, 150, 0.4);
+            transform: translateY(-2px);
+        }
+
+        #settingsPanel button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(0, 70, 150, 0.3);
+        }
+
+        /* 添加按钮点击波纹效果 */
+        #settingsPanel button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+
+        #settingsPanel button:focus:not(:active)::after {
+            animation: ripple 0.8s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0) translate(-50%, -50%);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(20, 20) translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+
+        /* 美化切换按钮 */
+        #toggleSettingsButton {
+            position: fixed;
+            /* 固定定位 */
+            top: 15px;
+            right: 15px;
+            z-index: 11;
+            /* 比设置面板层级高 */
+            padding: 12px 20px;
+            background: linear-gradient(135deg, rgba(40, 40, 45, 0.6), rgba(20, 20, 25, 0.6));
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        #toggleSettingsButton:hover {
+            background: linear-gradient(135deg, rgba(50, 50, 55, 0.7), rgba(30, 30, 35, 0.7));
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #toggleSettingsButton:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #toggleSettingsButton::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, #ff3366, #00ccff, #3366ff);
+            background-size: 400% 400%;
+            border-radius: 50px;
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #toggleSettingsButton:hover::before {
+            opacity: 0.5;
+            animation: gradientBG 3s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* 自定义文件上传控件样式 */
+        .file-upload {
+            position: relative;
+            margin-bottom: 18px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: pointer;
+            display: block;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 12px 15px;
+            background: rgba(60, 60, 70, 0.6);
+            color: #fff;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            margin-top: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-label:hover {
+            background: rgba(70, 70, 80, 0.7);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+        }
+
+        .divider {
+            margin: 20px 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        /* 滤镜选项样式 */
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(50, 50, 60, 0.4);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-option:hover {
+            background: rgba(60, 60, 70, 0.5);
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: 10px;
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(40, 40, 45, 0.5);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .filter-option input[type="checkbox"]:checked {
+            background: rgba(0, 123, 255, 0.8);
+            border-color: rgba(0, 123, 255, 0.8);
+        }
+
+        .filter-option input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* 美化滑块控件 */
+        .filter-slider {
+            width: 100%;
+            margin: 15px 0 20px 0;
+            padding: 10px;
+            background: rgba(50, 50, 60, 0.4);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-slider:hover {
+            background: rgba(60, 60, 70, 0.5);
+        }
+
+        .filter-slider input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #007bff, #00c6ff);
+            outline: none;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) inset;
+        }
+
+        .filter-slider input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(0, 123, 255, 0.8);
+        }
+
+        .filter-slider input[type="range"]::-webkit-slider-thumb:hover {
+            background: #f0f0f0;
+            transform: scale(1.1);
+        }
+
+        /* 预览图片容器 */
+        #imagePreview {
+            width: 100%;
+            height: 100px;
+            background-color: rgba(30, 30, 35, 0.5);
+            margin-bottom: 18px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) inset;
+        }
+
+        #imagePreview:hover {
+            border-color: rgba(0, 123, 255, 0.4);
+            box-shadow: 0 0 0 1px rgba(0, 123, 255, 0.2), 0 2px 10px rgba(0, 0, 0, 0.2) inset;
+        }
+
+        /* --- 结束新增样式 --- */
+    </style>
+</head>
+
+<body>
+    <!-- 将原来的 div 添加 id="settingsPanel" -->
+    <div id="settingsPanel">
+        <label for="customText">输入文本:</label>
+        <input type="text" id="customText" value="kunkun's love">
+
+        <!-- 图片选择部分 -->
+        <label>选择图片来源:</label>
+
+        <!-- 添加本地上传选项 -->
+        <div class="file-upload">
+            <label for="localImage">上传本地图片:</label>
+            <label class="file-upload-label" id="fileLabel">选择文件</label>
+            <input type="file" id="localImage" accept="image/*">
+        </div>
+
+        <!-- 新增图片预览 -->
+        <div id="imagePreview"></div>
+
+        <!-- 新增滤镜选项 -->
+        <div class="filter-option">
+            <input type="checkbox" id="blackwhiteFilter" checked>
+            <label for="blackwhiteFilter">应用黑白滤镜</label>
+        </div>
+
+        <!-- 新增曝光度滑块 -->
+        <div class="filter-slider">
+            <label for="exposureSlider">曝光度调整:</label>
+            <input type="range" id="exposureSlider" min="0" max="100" value="40">
+        </div>
+
+        <div class="divider"></div>
+
+        <label for="imageSelect">选择预设图片:</label>
+        <select id="imageSelect">
+            <option value="https://c-ssl.duitang.com/uploads/blog/202312/24/GgSw7DXZhdzp08P.jpeg">图像1</option>
+            <option value="imgs/ikun.jpg" selected>图像2 </option>
+            <option value="http://hbimg.huaban.com/24106597e62d09839e5560b2eaf16f247a23072441380-wYMhyw">图像3</option>
+            <option value="imgs/ikun1.jpg">图像4 </option>
+            <option
+                value="https://img2.baidu.com/it/u=1361972383,1512955259&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=675">图像5
+            </option>
+
+            <option
+                value="https://images.unsplash.com/photo-1640164692456-b8501f1b1937?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2185&q=80">
+                图像6
+            </option>
+
+        </select>
+
+        <button id="applyButton">应用</button>
+    </div>
+
+    <!-- 美化切换按钮 -->
+    <button id="toggleSettingsButton">切换设置</button>
+
+    <p id="text"></p>
+
+    <!-- 隐藏的Canvas用于图像处理 -->
+    <canvas id="imageCanvas" style="display:none;"></canvas>
+
+    <script>
+        const textElement = document.getElementById('text');
+        const customTextInput = document.getElementById('customText');
+        const imageSelect = document.getElementById('imageSelect');
+        const applyButton = document.getElementById('applyButton');
+        // --- 新增获取元素 ---
+        const settingsPanel = document.getElementById('settingsPanel');
+        const toggleSettingsButton = document.getElementById('toggleSettingsButton');
+        // --- 新增本地图片上传元素 ---
+        const localImageInput = document.getElementById('localImage');
+        const fileLabel = document.getElementById('fileLabel');
+        // --- 新增图片处理相关元素 ---
+        const blackwhiteFilterCheckbox = document.getElementById('blackwhiteFilter');
+        const exposureSlider = document.getElementById('exposureSlider');
+        const imageCanvas = document.getElementById('imageCanvas');
+        const ctx = imageCanvas.getContext('2d');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // 用于存储上传的本地图片URL
+        let localImageUrl = null;
+        // 用于存储处理后的图片URL
+        let processedImageUrl = null;
+        // 原始图片对象
+        let originalImage = null;
+
+        // 处理本地图片上传
+        localImageInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                // 更新文件名显示
+                fileLabel.textContent = file.name;
+
+                // 创建本地图片URL
+                if (localImageUrl) {
+                    URL.revokeObjectURL(localImageUrl);
+                }
+                localImageUrl = URL.createObjectURL(file);
+
+                // 加载图片并处理
+                loadAndProcessImage(localImageUrl);
+            }
+        });
+
+        // 图片加载与处理函数
+        function loadAndProcessImage(imageUrl) {
+            // 创建新图像对象
+            originalImage = new Image();
+            originalImage.onload = function () {
+                // 显示预览
+                imagePreview.style.display = 'block';
+
+                // 处理图像
+                processImage();
+            };
+            originalImage.src = imageUrl;
+        }
+
+        // 图像处理函数
+        function processImage() {
+            if (!originalImage) return;
+
+            // 释放之前处理的图像URL
+            if (processedImageUrl) {
+                URL.revokeObjectURL(processedImageUrl);
+                processedImageUrl = null;
+            }
+
+            // 设置Canvas尺寸与图像一致
+            imageCanvas.width = originalImage.width;
+            imageCanvas.height = originalImage.height;
+
+            // 清除Canvas
+            ctx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
+
+            // 绘制原始图像
+            ctx.drawImage(originalImage, 0, 0);
+
+            // 如果勾选了黑白滤镜，应用黑白效果
+            if (blackwhiteFilterCheckbox.checked) {
+                const imageData = ctx.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
+                const data = imageData.data;
+
+                // 获取曝光度调整值 (0-100)
+                const exposureValue = parseInt(exposureSlider.value);
+                // 将曝光度调整值转换为增强因子 (1.0 - 2.0)
+                const exposureFactor = 1 + (exposureValue / 100);
+
+                // 应用黑白滤镜并增加曝光度
+                for (let i = 0; i < data.length; i += 4) {
+                    // 使用更合理的灰度转换公式 (考虑人眼对不同颜色的敏感度)
+                    // R:0.299, G:0.587, B:0.114
+                    let gray = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+
+                    // 增加曝光度 - 使亮部更亮
+                    if (gray > 127) {
+                        gray = Math.min(255, gray * exposureFactor);
+                    }
+
+                    data[i] = gray;     // R
+                    data[i + 1] = gray; // G
+                    data[i + 2] = gray; // B
+                    // 不修改 Alpha 通道
+                }
+
+                ctx.putImageData(imageData, 0, 0);
+            }
+
+            // 从Canvas获取处理后的图像URL
+            processedImageUrl = imageCanvas.toDataURL('image/png');
+
+            // 更新预览
+            imagePreview.style.backgroundImage = `url("${processedImageUrl}")`;
+
+            // 自动应用处理后的图片
+            updateTextEffect(true);
+        }
+
+        // 滤镜变更时重新处理图像
+        blackwhiteFilterCheckbox.addEventListener('change', function () {
+            if (originalImage) {
+                processImage();
+            }
+        });
+
+        // 曝光度滑块变更时重新处理图像
+        exposureSlider.addEventListener('input', function () {
+            if (originalImage && blackwhiteFilterCheckbox.checked) {
+                processImage();
+            }
+        });
+
+        function updateTextEffect(useLocalImage = false) {
+            let baseText = customTextInput.value.trim();
+            if (baseText === "") {
+                baseText = "Kun's Lawyer Letter"; // 如果输入为空，使用默认文本
+            }
+            if (!baseText.endsWith(' ')) {
+                baseText += ' '; // 确保末尾有空格以避免单词粘连
+            }
+
+            // 决定使用哪个图片源
+            let selectedImageUrl;
+            if (useLocalImage && (processedImageUrl || localImageUrl)) {
+                // 优先使用处理后的图像
+                selectedImageUrl = processedImageUrl || localImageUrl;
+                // 如果使用本地图片，可以清除下拉选择
+                imageSelect.selectedIndex = -1;
+            } else {
+                selectedImageUrl = imageSelect.value;
+
+                // 如果选择了预设图片并启用了黑白滤镜，也可以处理它
+                // 但这会导致多次网络请求，所以这里我们暂时不实现预设图片的黑白处理
+                // 如需实现可以加载预设图片到Canvas并应用同样的处理
+            }
+
+            // --- 动态计算重复次数以填充屏幕 ---
+            const fontSize = 8; // 与 CSS 中的 font-size 一致
+            const lineHeight = 8; // 与 CSS 中的 line-height 一致
+            const charWidthApprox = fontSize * 0.6; // 估算字符平均宽度
+            const charsPerLine = Math.floor(window.innerWidth / charWidthApprox);
+            const lines = Math.floor(window.innerHeight / lineHeight);
+            // 稍微增加一点倍数，确保覆盖更充分
+            const totalCharsNeeded = charsPerLine * lines * 1.8; // 乘以 1.8 以确保足够覆盖，可以调整
+            // 避免除以零或负数
+            const baseLength = baseText.length > 0 ? baseText.length : 1;
+            const repeatCount = Math.max(1, Math.ceil(totalCharsNeeded / baseLength));
+
+            textElement.textContent = baseText.repeat(repeatCount);
+            textElement.style.backgroundImage = `url("${selectedImageUrl}")`;
+            // 确保背景尺寸在更新时也设置正确
+            textElement.style.backgroundSize = "contain";
+            textElement.style.backgroundPosition = "center";
+        }
+
+        // 预设图片选择时重置本地图片状态
+        imageSelect.addEventListener('change', function () {
+            // 清除预览
+            imagePreview.style.display = 'none';
+
+            if (localImageUrl) {
+                // 清除之前的本地图片URL
+                URL.revokeObjectURL(localImageUrl);
+                localImageUrl = null;
+            }
+
+            if (processedImageUrl) {
+                // 清除处理后的图片URL
+                URL.revokeObjectURL(processedImageUrl);
+                processedImageUrl = null;
+            }
+
+            // 重置原始图像对象
+            originalImage = null;
+
+            // 重置文件上传控件
+            localImageInput.value = '';
+            fileLabel.textContent = '选择文件';
+
+            // 应用预设图片
+            updateTextEffect(false);
+        });
+
+        // 应用按钮点击事件
+        applyButton.addEventListener('click', function () {
+            // 优先使用处理后的本地图片，如果有的话
+            updateTextEffect(!!(processedImageUrl || localImageUrl));
+        });
+
+        // --- 新增切换按钮点击事件 ---
+        toggleSettingsButton.addEventListener('click', () => {
+            settingsPanel.classList.toggle('hidden');
+            // 更新按钮文本
+            if (settingsPanel.classList.contains('hidden')) {
+                toggleSettingsButton.textContent = '显示设置';
+            } else {
+                toggleSettingsButton.textContent = '隐藏设置';
+            }
+        });
+
+
+        // 初始加载时应用默认设置
+        updateTextEffect();
+
+        // 窗口重置时重新计算并应用
+        window.addEventListener('resize', () => {
+            updateTextEffect(!!(processedImageUrl || localImageUrl)); // 重新生成文本并设置背景
+        });
+
+        // 页面关闭时清理
+        window.addEventListener('beforeunload', function () {
+            // 释放创建的对象URL以避免内存泄漏
+            if (localImageUrl) {
+                URL.revokeObjectURL(localImageUrl);
+            }
+            if (processedImageUrl) {
+                URL.revokeObjectURL(processedImageUrl);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

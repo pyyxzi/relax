@@ -19,11 +19,15 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Links">
-<meta property="og:url" content="http://example.com/links/index.html">
+    <meta name="description" content="&#x2F;* {{ 移除之前的 keyframes 动画定义 }} *&#x2F;     &#x2F;* @keyframes gradient-animation { ... } *&#x2F;      &#x2F;* {{ 添加新的 keyframes 动画定义，用于伪元素 }} *&#x2F;     @keyframes aurora-move {       0% { transform: translate(-10%,">
+<meta property="og:type" content="website">
+<meta property="og:title" content="特效">
+<meta property="og:url" content="http://example.com/%E7%89%B9%E6%95%88/index.html">
 <meta property="og:site_name" content="赛博窥天阁">
+<meta property="og:description" content="&#x2F;* {{ 移除之前的 keyframes 动画定义 }} *&#x2F;     &#x2F;* @keyframes gradient-animation { ... } *&#x2F;      &#x2F;* {{ 添加新的 keyframes 动画定义，用于伪元素 }} *&#x2F;     @keyframes aurora-move {       0% { transform: translate(-10%,">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-25T14:08:40.000Z">
+<meta property="article:modified_time" content="2025-04-26T15:01:25.635Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -31,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Links - 赛博窥天阁</title>
+  <title>特效 - 赛博窥天阁</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -113,7 +117,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 80vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -293,19 +297,23 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/new_page_bg.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.4)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Links"></span>
+            <span id="subtitle" data-typed-text="特效"></span>
           
         </div>
 
         
       </div>
 
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
       
     </div>
   </div>
@@ -326,65 +334,267 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="row links">
+<article class="page-content">
   
+<div class="effects-container">
+  <style>
+    /* {{ 移除之前的 keyframes 动画定义 }} */
+    /* @keyframes gradient-animation { ... } */
+
+    /* {{ 添加新的 keyframes 动画定义，用于伪元素 }} */
+    @keyframes aurora-move {
+      0% { transform: translate(-10%, -10%) rotate(0deg); }
+      50% { transform: translate(10%, 10%) rotate(180deg); }
+      100% { transform: translate(-10%, -10%) rotate(360deg); }
+    }
+
+    @keyframes aurora-move-alt {
+      0% { transform: translate(10%, 10%) rotate(0deg); }
+      50% { transform: translate(-10%, -10%) rotate(-180deg); }
+      100% { transform: translate(10%, 10%) rotate(-360deg); }
+    }
+
+    .effects-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      /* {{ 修改背景为更复杂的极光/流体效果 }} */
+      position: relative; /* 需要定位上下文给伪元素 */
+      overflow: hidden; /* 隐藏超出边界的伪元素部分 */
+      background-color: #1a1a2e; /* 深色底色 */
+      border-radius: 15px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      z-index: 0; /* 确保伪元素在内容之下 */
+    }
+
+    /* {{ 添加伪元素样式实现流体渐变背景 }} */
+    .effects-container::before,
+    .effects-container::after {
+      content: '';
+      position: absolute;
+      top: -50%; /* 使伪元素更大，覆盖更广 */
+      left: -50%;
+      width: 200%; /* 伪元素尺寸为容器两倍 */
+      height: 200%;
+      opacity: 0.3; /* 降低透明度，柔和混合 */
+      filter: blur(80px); /* 高斯模糊制造柔和边缘 */
+      z-index: -1; /* 置于内容之下 */
+    }
+
+    .effects-container::before {
+      background: radial-gradient(circle at 30% 30%, #3a7bd5 0%, transparent 50%),
+                  radial-gradient(circle at 70% 70%, #e73c7e 0%, transparent 50%);
+      animation: aurora-move 25s cubic-bezier(0.4, 0.0, 0.2, 1) infinite; /* 应用动画 */
+    }
+
+    .effects-container::after {
+      background: radial-gradient(circle at 70% 30%, #ee7752 0%, transparent 50%),
+                  radial-gradient(circle at 30% 70%, #23d5ab 0%, transparent 50%);
+      animation: aurora-move-alt 30s cubic-bezier(0.4, 0.0, 0.2, 1) infinite reverse; /* 应用反向、不同时长的动画 */
+    }
+
+
+    .effects-title {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      /* {{ 保持白色和阴影以确保可读性 }} */
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      /* 移除之前的背景相关样式 */
+      background-image: none;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: unset;
+      background-clip: unset;
+      position: relative; /* 确保标题在伪元素之上 */
+      z-index: 1;
+    }
+
+    .effects-intro {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 1.2em;
+      /* {{ 保持浅色和阴影 }} */
+      color: #eee;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+      position: relative; /* 确保介绍文字在伪元素之上 */
+      z-index: 1;
+    }
+
+    .effects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+    }
     
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Blog"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Blog</div>
-            <div class="link-intro">主题博客</div>
-          </div>
-        </div>
-      </a>
-    </div>
-  
+    .effect-card {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.9); /* 让卡片稍微有点透明感，但仍保持内容清晰 */
+      /* 或者保持 background-color: #fff; 如果不想要透明感 */
+    }
     
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/docs/" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Docs"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Docs</div>
-            <div class="link-intro">主题使用指南</div>
-          </div>
-        </div>
-      </a>
-    </div>
-  
+    .effect-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
     
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Repo"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Repo</div>
-            <div class="link-intro">主题 GitHub 仓库</div>
-          </div>
-        </div>
-      </a>
-    </div>
+    .effect-image {
+      height: 180px;
+      /* background-size: cover; 已被移除，因为会被 JS 覆盖 */
+      /* background-position: center; 已被移除，因为会被 JS 覆盖 */
+      position: relative;
+    }
+    
+    /* {{ 删除以下特定的背景类 }} */
+    /* .blackhole-bg { ... } */
+    /* .kaleidoscope-bg { ... } */
+    /* .texttag-bg { ... } */
+    /* .textimage-bg { ... } */
+    
+    .effect-content {
+      padding: 20px;
+    }
+    
+    .effect-title {
+      font-size: 1.4em;
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .effect-description {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .effect-link {
+      display: inline-block;
+      padding: 8px 20px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    
+    .effect-link:hover {
+      background-color: #2980b9;
+    }
+    
+    .effect-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: rgba(255,255,255,0.8);
+      background: rgba(0,0,0,0.3);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    @media (max-width: 768px) {
+      .effects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .effects-title {
+        font-size: 2em;
+      }
+    }
+  </style>
+
+  <h1 class="effects-title">视觉特效展示</h1>
+  <p class="effects-intro">探索令人惊叹的视觉特效和创意设计，体验数字艺术的无限可能</p>
   
+  <div class="effects-grid">
+    <div class="effect-card">
+      <!-- {{ 不再需要特定的背景类，如 blackhole-bg }} -->
+      <div class="effect-image">
+        <div class="effect-icon">🌌</div>
+      </div>
+      <div class="effect-content">
+        <h2 class="effect-title">黑洞效果</h2>
+        <p class="effect-description">扭曲时空的视觉奇观，体验被引力场吸引的粒子运动轨迹。</p>
+        <a href="/play/cool/blackhole.html" class="effect-link">查看演示</a>
+      </div>
+    </div>
+    
+    <div class="effect-card">
+      <!-- {{ 不再需要特定的背景类，如 kaleidoscope-bg }} -->
+      <div class="effect-image">
+        <div class="effect-icon">🎨</div>
+      </div>
+      <div class="effect-content">
+        <h2 class="effect-title">万花筒</h2>
+        <p class="effect-description">沉浸在色彩斑斓的几何图案中，随着图案的变换感受视觉艺术的魅力。</p>
+        <a href="/play/cool/万花筒.html" class="effect-link">查看演示</a>
+      </div>
+    </div>
+    
+    <div class="effect-card">
+      <!-- {{ 不再需要特定的背景类，如 texttag-bg }} -->
+      <div class="effect-image">
+        <div class="effect-icon">🏷️</div>
+      </div>
+      <div class="effect-content">
+        <h2 class="effect-title">文字标签</h2>
+        <p class="effect-description">四大名著文字标签云</p>
+        <a href="/play/cool/文字标签.html" class="effect-link">查看演示</a>
+      </div>
+    </div>
+    
+    <div class="effect-card">
+      <!-- {{ 不再需要特定的背景类，如 textimage-bg }} -->
+      <div class="effect-image">
+        <div class="effect-icon">📝</div>
+      </div>
+      <div class="effect-content">
+        <h2 class="effect-title">文字图片</h2>
+        <p class="effect-description">文字构成图片，ikun专属</p>
+        <a href="/play/cool/文字图片.html" class="effect-link">查看演示</a>
+      </div>
+    </div>
+    <!-- {{ 如果要添加新模块，只需复制上面的 effect-card 结构并修改内容 }} -->
+  </div>
+
+  <!-- {{ 添加 JavaScript 代码块 }} -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const effectImages = document.querySelectorAll('.effects-container .effect-image');
+
+      effectImages.forEach(img => {
+        // 生成随机 HSL 颜色 (饱和度 S 和亮度 L 固定，只改变色相 H)
+        const randomHue1 = Math.floor(Math.random() * 360);
+        const randomHue2 = Math.floor(Math.random() * 360);
+        const color1 = `hsl(${randomHue1}, 70%, 60%)`; // HSL 颜色更易于生成和谐的色彩
+        const color2 = `hsl(${randomHue2}, 70%, 60%)`;
+        const randomAngle = Math.floor(Math.random() * 360); // 随机渐变角度
+
+        // 应用随机渐变背景
+        img.style.background = `linear-gradient(${randomAngle}deg, ${color1}, ${color2})`;
+        img.style.backgroundSize = 'cover'; // 确保背景覆盖整个区域
+        img.style.backgroundPosition = 'center'; // 确保背景居中
+      });
+    });
+  </script>
 </div>
 
 
+
+
+  
+
+</article>
 
 
 

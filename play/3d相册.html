@@ -1,0 +1,1610 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>3D立体相册</title>
+	<link rel="icon" href="ai/相机.ico" type="image/x-icon">
+
+	<style type="text/css">
+		html {
+			overflow: hidden;
+			-ms-touch-action: none;
+			-ms-content-zooming: none;
+		}
+
+		body {
+			position: absolute;
+			margin: 0px;
+			padding: 0px;
+			background: #000;
+			/* 改为黑色背景，与彩虹效果更加协调 */
+			width: 100%;
+			height: 100%;
+		}
+
+		#canvas {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+			/* 确保画布在彩虹背景之上 */
+			background: transparent;
+			/* 改为透明背景，让彩虹背景可见 */
+		}
+
+		#rainbow-bg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			/* 确保彩虹背景在画布之下 */
+			opacity: 0.65;
+			/* 稍微降低透明度，确保不干扰图片 */
+		}
+
+		/* 相册切换控制样式 - 更炫酷且不遮挡 */
+		#album-controls {
+			position: fixed;
+			bottom: 30px;
+			left: 50%;
+			transform: translateX(-50%) scale(0.85);
+			z-index: 1000;
+			background: rgba(0, 0, 0, 0.35);
+			padding: 8px 15px;
+			border-radius: 50px;
+			display: flex;
+			gap: 15px;
+			align-items: center;
+			box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			opacity: 0.6;
+		}
+
+		#album-controls:hover {
+			transform: translateX(-50%) scale(1);
+			background: rgba(0, 0, 0, 0.5);
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3),
+				0 0 20px rgba(131, 56, 236, 0.5),
+				0 0 40px rgba(131, 56, 236, 0.2);
+			opacity: 1;
+		}
+
+		.album-button {
+			background: rgba(0, 0, 0, 0.3);
+			color: white;
+			border: none;
+			padding: 8px;
+			border-radius: 50%;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			font-family: Arial, sans-serif;
+			font-weight: bold;
+			font-size: 14px;
+			width: 36px;
+			height: 36px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			overflow: hidden;
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+		}
+
+		.album-button::before {
+			content: '';
+			position: absolute;
+			top: -10px;
+			left: -10px;
+			right: -10px;
+			bottom: -10px;
+			background: radial-gradient(circle, rgba(131, 56, 236, 0.8) 0%, rgba(131, 56, 236, 0) 70%);
+			opacity: 0;
+			transition: opacity 0.4s ease;
+			z-index: -1;
+		}
+
+		.album-button:hover {
+			background: rgba(131, 56, 236, 0.6);
+			transform: translateY(-2px) scale(1.1);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
+				0 0 10px rgba(131, 56, 236, 0.6);
+		}
+
+		.album-button:hover::before {
+			opacity: 0.4;
+			animation: pulse 1.5s infinite;
+		}
+
+		.album-button:active {
+			transform: translateY(1px) scale(0.95);
+		}
+
+		@keyframes pulse {
+			0% {
+				transform: scale(1);
+				opacity: 0.4;
+			}
+
+			50% {
+				transform: scale(1.1);
+				opacity: 0.2;
+			}
+
+			100% {
+				transform: scale(1);
+				opacity: 0.4;
+			}
+		}
+
+		#prev-album::before {
+			content: '';
+		}
+
+		#next-album::before {
+			content: '';
+		}
+
+		#prev-album::after {
+			content: "◀";
+		}
+
+		#next-album::after {
+			content: "▶";
+		}
+
+		#album-name {
+			color: white;
+			display: flex;
+			align-items: center;
+			font-family: Arial, sans-serif;
+			margin: 0;
+			font-size: 14px;
+			font-weight: bold;
+			text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(131, 56, 236, 0.5);
+			min-width: 80px;
+			text-align: center;
+			justify-content: center;
+			background: linear-gradient(90deg, #ffffff, #a388ee, #ffffff);
+			background-size: 200% auto;
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			animation: shine 3s linear infinite;
+			transform: translateZ(0);
+		}
+
+		@keyframes shine {
+			to {
+				background-position: 200% center;
+			}
+		}
+
+		/* 自动隐藏控制面板 */
+		body:not(:hover) #album-controls:not(:hover) {
+			opacity: 0.2;
+			transform: translateX(-50%) scale(0.7);
+		}
+	</style>
+
+	<script type="text/javascript">
+		// 定义全局相册数据和当前相册索引
+		var currentAlbumIndex = 0;
+
+		// 相册集数据定义
+		var albumSets = [
+			{
+				name: "相册集1",
+				images: [
+					'imgs/1.jpg',
+					'imgs/2.jpg',
+					'imgs/3.jpg',
+					'imgs/4.jpg',
+					'imgs/5.jpg',
+					'imgs/6.jpg',
+					'imgs/7.jpg',
+					'imgs/8.jpg',
+					'imgs/10.jpg'
+				]
+			},
+			{
+				name: "相册集2",
+				images: [
+					'imgs/west1.jpg',
+					'imgs/12.jpg',
+					'imgs/13.jpg',
+					'imgs/14.jpg',
+					'imgs/15.jpg',
+					'imgs/11.jpg',
+					'imgs/west2.jpg',
+					'imgs/west3.jpg',
+					'imgs/west4.jpg'
+				]
+			},
+			{
+				name: "相册集3",
+				images: [
+					'imgs/album3/1.jpg',
+					'imgs/album3/2.jpg',
+					'imgs/album3/3.jpg',
+					'imgs/album3/4.jpg',
+					'imgs/album3/5.jpg',
+					'imgs/album3/6.jpg',
+					'imgs/album3/7.jpg',
+					'imgs/album3/8.jpg',
+					'imgs/album3/9.jpg'
+				]
+			}
+		];
+
+		// 获取当前相册的图片数据
+		function getAlbumImgData() {
+			return [
+				// north - 调整图片位置，增加间距  nx:0,nz:1
+				{ img: albumSets[currentAlbumIndex].images[0], x: -2000, y: 0, z: 1800, nx: 0, nz: 1 },
+				{ img: albumSets[currentAlbumIndex].images[1], x: 0, y: 0, z: 1800, nx: 0, nz: 1 },
+				{ img: albumSets[currentAlbumIndex].images[2], x: 2000, y: 0, z: 1800, nx: 0, nz: 1 },
+				// east - 调整图片位置，增加间距  nx:-1,nz:0
+				{ img: albumSets[currentAlbumIndex].images[3], x: 4000, y: 0, z: 1500, nx: -1, nz: 0 },
+				{ img: albumSets[currentAlbumIndex].images[4], x: 4000, y: 0, z: -300, nx: -1, nz: 0 },
+				{ img: albumSets[currentAlbumIndex].images[5], x: 4000, y: 0, z: -2100, nx: -1, nz: 0 },
+				// west - 调整图片位置，增加间距
+				{ img: albumSets[currentAlbumIndex].images[6], x: -4000, y: 0, z: 1500, nx: 1, nz: 0 },
+				{ img: albumSets[currentAlbumIndex].images[7], x: -4000, y: 0, z: -300, nx: 1, nz: 0 },
+				{ img: albumSets[currentAlbumIndex].images[8], x: -4000, y: 0, z: -2100, nx: 1, nz: 0 }
+			];
+		}
+
+		// 炫酷渐变背景动画代码
+		function initRainbowBackground() {
+			const rainbowBg = document.getElementById('rainbow-bg');
+			const ctx = rainbowBg.getContext('2d');
+
+			// 调整canvas大小到窗口大小
+			function resizeCanvas() {
+				rainbowBg.width = window.innerWidth;
+				rainbowBg.height = window.innerHeight;
+			}
+
+			// 初始调整大小
+			resizeCanvas();
+
+			// 窗口改变时调整大小
+			window.addEventListener('resize', resizeCanvas);
+
+			// 创建渐变对象 - 使用更炫酷的颜色组合
+			let time = 0;
+			const colorSets = [
+				{ colors: ['#FF0080', '#7928CA', '#FF0080'], speed: 0.001 }, // 霓虹粉紫
+				{ colors: ['#3300FF', '#06BCFB', '#4D27BC'], speed: 0.0012 }, // 深蓝变幻
+				{ colors: ['#21D4FD', '#B721FF', '#21D4FD'], speed: 0.0015 }, // 蓝紫渐变
+				{ colors: ['#FA8BFF', '#2BD2FF', '#2BFF88'], speed: 0.001 }, // 彩虹炫光
+				{ colors: ['#FF3CAC', '#784BA0', '#2B86C5'], speed: 0.002 }, // 霓虹流动
+				{ colors: ['#FF9A8B', '#FF6A88', '#FF99AC'], speed: 0.0018 } // 浪漫珊瑚
+			];
+
+			// 创建炫光对象
+			const glowCount = 18; // 增加光晕数量
+			const glows = [];
+
+			for (let i = 0; i < glowCount; i++) {
+				glows.push({
+					x: Math.random() * rainbowBg.width,
+					y: Math.random() * rainbowBg.height,
+					radius: Math.random() * 600 + 300, // 增加半径范围
+					opacity: Math.random() * 0.3 + 0.1, // 降低不透明度，避免干扰图片
+					colorIndex: Math.floor(Math.random() * colorSets.length),
+					speed: {
+						x: (Math.random() - 0.5) * 1.0, // 降低速度，使动画更平滑
+						y: (Math.random() - 0.5) * 1.0
+					},
+					angle: Math.random() * Math.PI * 2,
+					pulseFactor: Math.random() * 0.2 + 0.8 // 脉冲因子，使光晕有呼吸效果
+				});
+			}
+
+			// 创建流动线条
+			const lineCount = 12;
+			const lines = [];
+
+			for (let i = 0; i < lineCount; i++) {
+				const points = [];
+				const pointCount = Math.floor(Math.random() * 5) + 3;
+				const colorIndex = Math.floor(Math.random() * colorSets.length);
+
+				for (let j = 0; j < pointCount; j++) {
+					points.push({
+						x: Math.random() * rainbowBg.width,
+						y: Math.random() * rainbowBg.height,
+						originX: Math.random() * rainbowBg.width,
+						originY: Math.random() * rainbowBg.height,
+						speed: Math.random() * 0.015 + 0.005 // 降低速度，使动画更流畅
+					});
+				}
+
+				lines.push({
+					points: points,
+					width: Math.random() * 5 + 1, // 降低线条宽度，使效果更精细
+					colorIndex: colorIndex,
+					opacity: Math.random() * 0.2 + 0.1 // 降低不透明度，避免干扰图片
+				});
+			}
+
+			// 添加星光粒子
+			const particleCount = 100;
+			const particles = [];
+
+			for (let i = 0; i < particleCount; i++) {
+				particles.push({
+					x: Math.random() * rainbowBg.width,
+					y: Math.random() * rainbowBg.height,
+					size: Math.random() * 2 + 0.5,
+					opacity: Math.random() * 0.5 + 0.2,
+					speed: Math.random() * 0.5 + 0.1,
+					blinkSpeed: Math.random() * 0.01 + 0.005
+				});
+			}
+
+			// 绘制函数
+			function draw() {
+				// 清空画布但保留轻微拖尾效果
+				ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+				ctx.fillRect(0, 0, rainbowBg.width, rainbowBg.height);
+
+				// 绘制全屏渐变背景 - 使用旋转渐变
+				const centerX = rainbowBg.width / 2;
+				const centerY = rainbowBg.height / 2;
+				const radius = Math.max(rainbowBg.width, rainbowBg.height);
+
+				// 创建旋转渐变
+				const backgroundGradient = ctx.createRadialGradient(
+					centerX, centerY, 0,
+					centerX, centerY, radius
+				);
+
+				const currentSetIndex = Math.floor(time * 0.05) % colorSets.length;
+				const nextSetIndex = (currentSetIndex + 1) % colorSets.length;
+				const blend = (time * 0.05) % 1; // 0到1之间的混合值
+
+				const currentSet = colorSets[currentSetIndex];
+				const nextSet = colorSets[nextSetIndex];
+
+				// 混合两个颜色集
+				const blendColors = (color1, color2, factor) => {
+					const r1 = parseInt(color1.substring(1, 3), 16);
+					const g1 = parseInt(color1.substring(3, 5), 16);
+					const b1 = parseInt(color1.substring(5, 7), 16);
+
+					const r2 = parseInt(color2.substring(1, 3), 16);
+					const g2 = parseInt(color2.substring(3, 5), 16);
+					const b2 = parseInt(color2.substring(5, 7), 16);
+
+					const r = Math.round(r1 + (r2 - r1) * factor);
+					const g = Math.round(g1 + (g2 - g1) * factor);
+					const b = Math.round(b1 + (b2 - b1) * factor);
+
+					return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+				};
+
+				for (let i = 0; i < currentSet.colors.length; i++) {
+					const offset = (i / (currentSet.colors.length - 1));
+					const color1 = currentSet.colors[i];
+					const color2 = nextSet.colors[Math.min(i, nextSet.colors.length - 1)];
+					const blendedColor = blendColors(color1, color2, blend);
+
+					backgroundGradient.addColorStop(offset, blendedColor);
+				}
+
+				ctx.globalAlpha = 0.3;
+				ctx.fillStyle = backgroundGradient;
+				ctx.fillRect(0, 0, rainbowBg.width, rainbowBg.height);
+
+				// 绘制星光粒子
+				ctx.globalAlpha = 1;
+				ctx.globalCompositeOperation = 'lighter';
+
+				particles.forEach(particle => {
+					// 闪烁效果
+					particle.opacity = 0.2 + Math.sin(time * particle.blinkSpeed) * 0.3;
+
+					// 移动粒子
+					particle.y -= particle.speed;
+					if (particle.y < 0) {
+						particle.y = rainbowBg.height;
+						particle.x = Math.random() * rainbowBg.width;
+					}
+
+					// 绘制粒子
+					ctx.globalAlpha = particle.opacity;
+					ctx.fillStyle = '#FFFFFF';
+					ctx.beginPath();
+					ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+					ctx.fill();
+				});
+
+				// 绘制炫光效果
+				glows.forEach(glow => {
+					// 更新位置
+					glow.angle += 0.003;
+					glow.x += Math.cos(glow.angle) * glow.speed.x;
+					glow.y += Math.sin(glow.angle) * glow.speed.y;
+
+					// 脉冲效果 - 使光晕有呼吸感
+					const pulse = 0.7 + Math.sin(time * 0.2) * 0.3;
+					const currentRadius = glow.radius * glow.pulseFactor * pulse;
+
+					// 处理边界
+					if (glow.x < -currentRadius) glow.x = rainbowBg.width + currentRadius;
+					if (glow.x > rainbowBg.width + currentRadius) glow.x = -currentRadius;
+					if (glow.y < -currentRadius) glow.y = rainbowBg.height + currentRadius;
+					if (glow.y > rainbowBg.height + currentRadius) glow.y = -currentRadius;
+
+					// 创建径向渐变
+					const colorSet = colorSets[glow.colorIndex];
+					const gradient = ctx.createRadialGradient(
+						glow.x, glow.y, 0,
+						glow.x, glow.y, currentRadius
+					);
+
+					const cycleTime = time * 0.1 % 1;
+					gradient.addColorStop(0, colorSet.colors[0] + '70');
+					gradient.addColorStop(0.5, colorSet.colors[Math.min(1, colorSet.colors.length - 1)] + '40');
+					gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+					// 绘制光晕
+					ctx.globalAlpha = glow.opacity;
+					ctx.beginPath();
+					ctx.fillStyle = gradient;
+					ctx.arc(glow.x, glow.y, currentRadius, 0, Math.PI * 2);
+					ctx.fill();
+				});
+
+				// 绘制流动线条
+				ctx.globalAlpha = 1;
+				lines.forEach(line => {
+					// 更新点位置 - 使用不同的频率和幅度，使动画更有变化
+					line.points.forEach((point, index) => {
+						const amplitude = rainbowBg.width * 0.15; // 减少振幅，使动画更柔和
+						point.x = point.originX + Math.sin(time * point.speed + index * 0.5) * amplitude;
+						point.y = point.originY + Math.cos(time * point.speed * 1.5 + index * 0.3) * (amplitude * 0.5);
+					});
+
+					// 绘制线条
+					ctx.globalAlpha = line.opacity;
+					ctx.beginPath();
+					ctx.moveTo(line.points[0].x, line.points[0].y);
+
+					// 使用更平滑的曲线
+					for (let i = 0; i < line.points.length - 1; i++) {
+						const x1 = line.points[i].x;
+						const y1 = line.points[i].y;
+						const x2 = line.points[i + 1].x;
+						const y2 = line.points[i + 1].y;
+
+						// 计算控制点
+						const cpx = (x1 + x2) / 2;
+						const cpy = (y1 + y2) / 2;
+
+						if (i === 0) {
+							ctx.moveTo(x1, y1);
+						}
+						ctx.quadraticCurveTo(x1, y1, cpx, cpy);
+					}
+
+					const colorSet = colorSets[line.colorIndex];
+					const gradient = ctx.createLinearGradient(
+						0, 0,
+						rainbowBg.width, rainbowBg.height
+					);
+
+					for (let i = 0; i < colorSet.colors.length; i++) {
+						const offset = (i / (colorSet.colors.length - 1) + time * 0.02) % 1;
+						gradient.addColorStop(offset, colorSet.colors[i]);
+					}
+
+					ctx.strokeStyle = gradient;
+					ctx.lineWidth = line.width;
+					ctx.lineCap = 'round';
+					ctx.lineJoin = 'round';
+					ctx.stroke();
+				});
+
+				// 复位混合模式
+				ctx.globalCompositeOperation = 'source-over';
+				ctx.globalAlpha = 1;
+
+				// 更新时间
+				time += 0.01;
+
+				// 请求下一帧
+				requestAnimationFrame(draw);
+			}
+
+			// 开始动画
+			draw();
+		}
+
+		var ge1doot = ge1doot || {
+			json: null,
+			screen: null,
+			pointer: null,
+			camera: null,
+			loadJS: function (url, callback, data) {
+				if (typeof url == "string") url = [url];
+				var load = function (src) {
+					var script = document.createElement("script");
+					if (callback) {
+						if (script.readyState) {
+							script.onreadystatechange = function () {
+								if (script.readyState == "loaded" || script.readyState == "complete") {
+									script.onreadystatechange = null;
+									if (--n === 0) callback(data || false);
+								}
+							}
+						} else {
+							script.onload = function () {
+								if (--n === 0) callback(data || false);
+							}
+						}
+					}
+					script.src = src;
+					document.getElementsByTagName("head")[0].appendChild(script);
+				}
+				for (var i = 0, n = url.length; i < n; i++) load(url[i]);
+			}
+		}
+
+		// ===== html/canvas container =====
+
+		ge1doot.Screen = function (setup) {
+			ge1doot.screen = this;
+			this.elem = document.getElementById(setup.container) || setup.container;
+			this.ctx = this.elem.tagName == "CANVAS" ? this.elem.getContext("2d") : false;
+			this.style = this.elem.style;
+			this.left = 0;
+			this.top = 0;
+			this.width = 0;
+			this.height = 0;
+			this.cursor = "default";
+			this.setup = setup;
+			this.resize = function () {
+				var o = this.elem;
+				this.width = o.offsetWidth;
+				this.height = o.offsetHeight;
+				for (this.left = 0, this.top = 0; o != null; o = o.offsetParent) {
+					this.left += o.offsetLeft;
+					this.top += o.offsetTop;
+				}
+				if (this.ctx) {
+					this.elem.width = this.width;
+					this.elem.height = this.height;
+				}
+				this.setup.resize && this.setup.resize();
+			}
+			this.setCursor = function (type) {
+				if (type !== this.cursor && 'ontouchstart' in window === false) {
+					this.cursor = type;
+					this.style.cursor = type;
+				}
+			}
+			window.addEventListener('resize', function () {
+				ge1doot.screen.resize();
+			}, false);
+			!this.setup.resize && this.resize();
+		}
+
+		// ==== unified touch events handler ====
+
+		ge1doot.Pointer = function (setup) {
+			ge1doot.pointer = this;
+			var self = this;
+			var body = document.body;
+			var html = document.documentElement;
+			this.setup = setup;
+			this.screen = ge1doot.screen;
+			this.elem = this.screen.elem;
+			this.X = 0;
+			this.Y = 0;
+			this.Xi = 0;
+			this.Yi = 0;
+			this.bXi = 0;
+			this.bYi = 0;
+			this.Xr = 0;
+			this.Yr = 0;
+			this.startX = 0;
+			this.startY = 0;
+			this.scale = 0;
+			this.wheelDelta = 0;
+			this.isDraging = false;
+			this.hasMoved = false;
+			this.isDown = false;
+			this.evt = false;
+			var sX = 0;
+			var sY = 0;
+			// prevent default behavior
+			if (setup.tap) this.elem.onclick = function () { return false; }
+			if (!setup.documentMove) {
+				document.ontouchmove = function (e) { e.preventDefault(); }
+			}
+			document.addEventListener("MSHoldVisual", function (e) { e.preventDefault(); }, false);
+			if (typeof this.elem.style.msTouchAction != 'undefined') this.elem.style.msTouchAction = "none";
+
+			this.pointerDown = function (e) {
+				if (!this.isDown) {
+					if (this.elem.setCapture) this.elem.setCapture();
+					this.isDraging = false;
+					this.hasMoved = false;
+					this.isDown = true;
+					this.evt = e;
+					this.Xr = (e.clientX !== undefined ? e.clientX : e.touches[0].clientX);
+					this.Yr = (e.clientY !== undefined ? e.clientY : e.touches[0].clientY);
+					this.X = sX = this.Xr - this.screen.left;
+					this.Y = sY = this.Yr - this.screen.top + ((html && html.scrollTop) || body.scrollTop);
+					this.setup.down && this.setup.down(e);
+				}
+			}
+			this.pointerMove = function (e) {
+				this.Xr = (e.clientX !== undefined ? e.clientX : e.touches[0].clientX);
+				this.Yr = (e.clientY !== undefined ? e.clientY : e.touches[0].clientY);
+				this.X = this.Xr - this.screen.left;
+				this.Y = this.Yr - this.screen.top + ((html && html.scrollTop) || body.scrollTop);
+				if (this.isDown) {
+					this.Xi = this.bXi + (this.X - sX);
+					this.Yi = this.bYi - (this.Y - sY);
+				}
+				if (Math.abs(this.X - sX) > 11 || Math.abs(this.Y - sY) > 11) {
+					this.hasMoved = true;
+					if (this.isDown) {
+						if (!this.isDraging) {
+							this.startX = sX;
+							this.startY = sY;
+							this.setup.startDrag && this.setup.startDrag(e);
+							this.isDraging = true;
+						} else {
+							this.setup.drag && this.setup.drag(e);
+						}
+					} else {
+						sX = this.X;
+						sY = this.Y;
+					}
+				}
+				this.setup.move && this.setup.move(e);
+			}
+			this.pointerUp = function (e) {
+				this.bXi = this.Xi;
+				this.bYi = this.Yi;
+				if (!this.hasMoved) {
+					this.X = sX;
+					this.Y = sY;
+					this.setup.tap && this.setup.tap(this.evt);
+				} else {
+					this.setup.up && this.setup.up(this.evt);
+				}
+				this.isDraging = false;
+				this.isDown = false;
+				this.hasMoved = false;
+				this.setup.up && this.setup.up(this.evt);
+				if (this.elem.releaseCapture) this.elem.releaseCapture();
+				this.evt = false;
+			}
+			this.pointerCancel = function (e) {
+				if (this.elem.releaseCapture) this.elem.releaseCapture();
+				this.isDraging = false;
+				this.hasMoved = false;
+				this.isDown = false;
+				this.bXi = this.Xi;
+				this.bYi = this.Yi;
+				sX = 0;
+				sY = 0;
+			}
+			if ('ontouchstart' in window) {
+				this.elem.ontouchstart = function (e) { self.pointerDown(e); return false; }
+				this.elem.ontouchmove = function (e) { self.pointerMove(e); return false; }
+				this.elem.ontouchend = function (e) { self.pointerUp(e); return false; }
+				this.elem.ontouchcancel = function (e) { self.pointerCancel(e); return false; }
+			}
+			document.addEventListener("mousedown", function (e) {
+				if (
+					e.target === self.elem ||
+					(e.target.parentNode && e.target.parentNode === self.elem) ||
+					(e.target.parentNode.parentNode && e.target.parentNode === self.elem)
+				) {
+					if (typeof e.stopPropagation != "undefined") {
+						e.stopPropagation();
+					} else {
+						e.cancelBubble = true;
+					}
+					e.preventDefault();
+					self.pointerDown(e);
+				}
+			}, false);
+			document.addEventListener("mousemove", function (e) { self.pointerMove(e); }, false);
+			document.addEventListener("mouseup", function (e) {
+				self.pointerUp(e);
+			}, false);
+			document.addEventListener('gesturechange', function (e) {
+				e.preventDefault();
+				if (e.scale > 1) self.scale = 0.1; else if (e.scale < 1) self.scale = -0.1; else self.scale = 0;
+				self.setup.scale && self.setup.scale(e);
+				return false;
+			}, false);
+			if (window.navigator.msPointerEnabled) {
+				var nContact = 0;
+				var myGesture = new MSGesture();
+				myGesture.target = this.elem;
+				this.elem.addEventListener("MSPointerDown", function (e) {
+					if (e.pointerType == e.MSPOINTER_TYPE_TOUCH) {
+						myGesture.addPointer(e.pointerId);
+						nContact++;
+					}
+				}, false);
+				this.elem.addEventListener("MSPointerOut", function (e) {
+					if (e.pointerType == e.MSPOINTER_TYPE_TOUCH) {
+						nContact--;
+					}
+				}, false);
+				this.elem.addEventListener("MSGestureHold", function (e) {
+					e.preventDefault();
+				}, false);
+				this.elem.addEventListener("MSGestureChange", function (e) {
+					if (nContact > 1) {
+						if (e.preventDefault) e.preventDefault();
+						self.scale = e.velocityExpansion;
+						self.setup.scale && self.setup.scale(e);
+					}
+					return false;
+				}, false);
+			}
+			if (window.addEventListener) this.elem.addEventListener('DOMMouseScroll', function (e) {
+				if (e.preventDefault) e.preventDefault();
+				self.wheelDelta = e.detail * 10;
+				self.setup.wheel && self.setup.wheel(e);
+				return false;
+			}, false);
+			this.elem.onmousewheel = function () {
+				self.wheelDelta = -event.wheelDelta * .25;
+				self.setup.wheel && self.setup.wheel(event);
+				return false;
+			}
+		}
+
+		// ===== request animation frame =====
+
+		window.requestAnimFrame = (function () {
+			return window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				window.oRequestAnimationFrame ||
+				window.msRequestAnimationFrame ||
+				function (run) {
+					window.setTimeout(run, 16);
+				};
+		})();
+
+		// ===== 3D Transform =====
+
+		ge1doot.transform3D = {};
+
+		/* ==== draw Poly ==== */
+		ge1doot.transform3D.drawPoly = function () {
+			this.ctx.beginPath();
+			this.ctx.moveTo(this.points[0].X, this.points[0].Y);
+			this.ctx.lineTo(this.points[1].X, this.points[1].Y);
+			this.ctx.lineTo(this.points[2].X, this.points[2].Y);
+			this.ctx.lineTo(this.points[3].X, this.points[3].Y);
+			this.ctx.closePath();
+		}
+
+		/* =============== camera constructor ================= */
+		ge1doot.transform3D.Camera = function (setup, func) {
+			ge1doot.camera = this;
+			this.x = 0;
+			this.y = 0;
+			this.z = 0;
+			this.rx = 0;
+			this.ry = 0;
+			this.rz = 0;
+			this.focalLength = setup.focalLength || 500;
+			this.easeTranslation = setup.easeTranslation || 0.1;
+			this.easeRotation = setup.easeRotation || 0.025;
+			this.enableRx = setup.disableRx ? false : true;
+			this.enableRy = setup.disableRy ? false : true;
+			this.enableRz = setup.disableRz ? false : true;
+			this.cmov = false;
+			this.cosX = 1;
+			this.sinX = 0;
+			this.cosY = 1;
+			this.sinY = 0;
+			this.cosZ = 1;
+			this.sinZ = 0;
+			this.target = {
+				over: false,
+				elem: false,
+				x: 0,
+				y: 0,
+				z: 0,
+				rx: 0,
+				ry: 0,
+				rz: 0
+			};
+			// ---- def custom move ----
+			if (func && func.move) this.cmov = func.move;
+		}
+
+		/* ==== easing ==== */
+		ge1doot.transform3D.Camera.prototype.ease = function (target, value) {
+			while (Math.abs(target - value) > Math.PI) {
+				if (target < value) value -= 2 * Math.PI;
+				else value += 2 * Math.PI;
+			}
+			return (target - value) * this.easeRotation;
+		}
+
+		/* ==== move / rotate camera ==== */
+		ge1doot.transform3D.Camera.prototype.move = function () {
+			// ---- run custom function ----
+			this.cmov && this.cmov();
+			// ---- translations ----
+			this.x += (this.target.x - this.x) * this.easeTranslation;
+			this.y += (this.target.y - this.y) * this.easeTranslation;
+			this.z += (this.target.z - this.z) * this.easeTranslation;
+			// ---- rotation rx ----
+			if (this.enableRx) {
+				this.rx += this.ease(this.target.rx, this.rx);
+				this.cosX = Math.cos(this.rx);
+				this.sinX = Math.sin(this.rx);
+			}
+			// ---- rotation ry ----
+			if (this.enableRy) {
+				this.ry += this.ease(this.target.ry, this.ry);
+				this.cosY = Math.cos(this.ry);
+				this.sinY = Math.sin(this.ry);
+			}
+			// ---- rotation rz ----
+			if (this.enableRz) {
+				this.rz += this.ease(this.target.rz, this.rz);
+				this.cosZ = Math.cos(this.rz);
+				this.sinZ = Math.sin(this.rz);
+			}
+		}
+
+		/* =============== point constructor ================= */
+		ge1doot.transform3D.Point = function (x, y, z, tx, ty) {
+			this.x = x;
+			this.y = y;
+			this.z = z;
+			this.tx = tx || 0;
+			this.ty = ty || 0;
+			this.visible = false;
+			this.scale = 0;
+			this.X = 0;
+			this.Y = 0;
+			this.Z = 0;
+			this.next = true;
+		}
+
+		/* ==== perspective projection ==== */
+		ge1doot.transform3D.Point.prototype.projection = function () {
+			var sw = this.scr.width >> 1;
+			var sh = this.scr.height >> 1;
+			// ---- 3D coordinates ----
+			var nx = this.x - this.camera.x;
+			var ny = this.y - this.camera.y;
+			var nz = this.z - this.camera.z;
+			// ---- 3D rotation and projection ----
+			if (this.camera.enableRz) {
+				var u = this.camera.sinZ * ny + this.camera.cosZ * nx;
+				var t = this.camera.cosZ * ny - this.camera.sinZ * nx;
+			} else {
+				var u = nx;
+				var t = ny;
+			}
+			var s = this.camera.cosY * nz + this.camera.sinY * u;
+			this.Z = this.camera.cosX * s - this.camera.sinX * t;
+			this.scale = this.camera.focalLength / Math.max(1, this.Z);
+			this.X = sw + (this.camera.cosY * u - this.camera.sinY * nz) * this.scale;
+			this.Y = -(this.camera.y >> 1) + sh - (this.camera.sinX * s + this.camera.cosX * t) * this.scale;
+			// ---- visibility test ----
+			this.visible = (
+				this.X > -sw * 0.5 && this.X < sw * 2.5
+			) && (
+					this.Y > -sh * 0.5 && this.Y < sh * 2.5
+				);
+			// ----return next (fast loop) ----
+			return this.next;
+		}
+
+		/* ==== triangle constructor ==== */
+		ge1doot.transform3D.Triangle = function (parent, p0, p1, p2) {
+			this.ctx = parent.ctx;
+			this.texture = parent.texture;
+			this.p0 = p0;
+			this.p1 = p1;
+			this.p2 = p2;
+			this.d = p0.tx * (p2.ty - p1.ty) - p1.tx * p2.ty + p2.tx * p1.ty + (p1.tx - p2.tx) * p0.ty;
+			this.pmy = p1.ty - p2.ty;
+			this.pmx = p1.tx - p2.tx;
+			this.pxy = p2.tx * p1.ty - p1.tx * p2.ty;
+			if (parent.t) parent.t.next = true;
+		}
+
+		/* ==== draw triangle ==== */
+		ge1doot.transform3D.Triangle.prototype.draw = function () {
+			if (this.p0.visible || this.p1.visible || this.p2.visible) {
+				var dx, dy, d;
+				// ---- centroid ----
+				var xc = (this.p0.X + this.p1.X + this.p2.X) / 3;
+				var yc = (this.p0.Y + this.p1.Y + this.p2.Y) / 3;
+				// ---- clipping ----
+				this.ctx.save();
+				this.ctx.beginPath();
+				dx = xc - this.p0.X;
+				dy = yc - this.p0.Y;
+				d = Math.max(Math.abs(dx), Math.abs(dy));
+				this.ctx.moveTo(this.p0.X - 2 * (dx / d), this.p0.Y - 2 * (dy / d));
+				dx = xc - this.p1.X;
+				dy = yc - this.p1.Y;
+				d = Math.max(Math.abs(dx), Math.abs(dy));
+				this.ctx.lineTo(this.p1.X - 2 * (dx / d), this.p1.Y - 2 * (dy / d));
+				dx = xc - this.p2.X;
+				dy = yc - this.p2.Y;
+				d = Math.max(Math.abs(dx), Math.abs(dy));
+				this.ctx.lineTo(this.p2.X - 2 * (dx / d), this.p2.Y - 2 * (dy / d));
+				this.ctx.closePath();
+				this.ctx.clip();
+				// ---- transform ----
+				var t0 = this.p2.X - this.p1.X,
+					t1 = this.p1.Y - this.p2.Y,
+					t2 = this.p2.ty * this.p1.X,
+					t3 = this.p1.tx * this.p2.X,
+					t4 = this.p2.ty * this.p1.Y,
+					t5 = this.p1.ty * this.p2.X,
+					t6 = this.p1.ty * this.p2.Y,
+					t7 = this.p2.tx * this.p1.X,
+					t8 = this.p1.tx * this.p2.Y,
+					t9 = this.p2.tx * this.p1.Y;
+				this.ctx.transform(
+					-(this.p0.ty * t0 - t5 + t2 + this.pmy * this.p0.X) / this.d, // m11
+					(t6 + this.p0.ty * t1 - t4 - this.pmy * this.p0.Y) / this.d, // m12
+					(this.p0.tx * t0 - t3 + t7 + this.pmx * this.p0.X) / this.d, // m21
+					-(t8 + this.p0.tx * t1 - t9 - this.pmx * this.p0.Y) / this.d, // m22
+					(this.p0.tx * (t2 - t5) + this.p0.ty * (t3 - t7) + this.pxy * this.p0.X) / this.d, // dx
+					(this.p0.tx * (t4 - t6) + this.p0.ty * (t8 - t9) + this.pxy * this.p0.Y) / this.d  // dy
+				);
+				// ---- draw ----
+				this.ctx.drawImage(this.texture, 0, 0);
+				this.ctx.restore();
+			}
+			return this.next;
+		}
+
+		/* ===================== image constructor ========================== */
+		ge1doot.transform3D.Image = function (parent, imgSrc, lev, callback) {
+			this.parent = parent;
+			this.points = [];
+			this.triangles = [];
+			this.ctx = ge1doot.screen.ctx;
+			this.pointer = ge1doot.pointer;
+			this.texture = new Image();
+			this.texture.src = imgSrc;
+			this.isLoading = true;
+			this.callback = callback;
+			this.textureWidth = 0;
+			this.textureHeight = 0;
+			this.level = lev || 1;
+			this.visible = false;
+			this.t = false;
+			if (!ge1doot.transform3D.Point.prototype.scr) {
+				ge1doot.transform3D.Point.prototype.scr = ge1doot.screen;
+				ge1doot.transform3D.Point.prototype.camera = ge1doot.camera;
+			}
+		}
+
+		/* ==== drawPoly prototype ==== */
+		ge1doot.transform3D.Image.prototype.drawPoly = ge1doot.transform3D.drawPoly;
+
+		/* ==== change tessellation level prototype ==== */
+		ge1doot.transform3D.Image.prototype.setLevel = function (level) {
+			this.points.length = 0;
+			this.triangles.length = 0;
+			this.level = level;
+			this.loading();
+		}
+
+		/* ==== loading prototype ==== */
+		ge1doot.transform3D.Image.prototype.loading = function () {
+			if (this.texture.complete) {
+				var dir = [0, 1, 1, 0, 0, 0, 1, 1];
+				this.isLoading = false;
+				// ---- image size ----
+				this.textureWidth = this.texture.width;
+				this.textureHeight = this.texture.height;
+				// ---- isLoaded callback ---
+				this.callback && this.callback.isLoaded && this.callback.isLoaded(this);
+				// ---- texture position ----
+				for (var i = -1, p; p = this.points[++i];) {
+					p.tx = this.textureWidth * dir[i];
+					p.ty = this.textureHeight * dir[i + 4];
+				}
+				// ---- triangularization ----
+				this.triangulate(this.points[0], this.points[1], this.points[2], this.level);
+				this.triangulate(this.points[0], this.points[2], this.points[3], this.level);
+				// ---- last point ----
+				this.points[this.points.length - 1].next = false;
+			}
+		}
+
+		/* ==== vector bisection function ==== */
+		ge1doot.transform3D.Image.prototype.subdivise = function (p0, p1) {
+			return {
+				x: (p1.x + p0.x) * 0.5,
+				y: (p1.y + p0.y) * 0.5,
+				z: (p1.z + p0.z) * 0.5,
+				tx: (p1.tx + p0.tx) * 0.5,
+				ty: (p1.ty + p0.ty) * 0.5
+			};
+		}
+
+		/* ==== triangulation ==== */
+		ge1doot.transform3D.Image.prototype.triangulate = function (p0, p1, p2, level) {
+			level--;
+			if (level === 0) {
+				// final triangle
+				this.t = new ge1doot.transform3D.Triangle(this, p0, p1, p2);
+				this.triangles.push(this.t);
+			} else {
+				// ---- subdivision ----
+				var p01 = this.subdivise(p0, p1);
+				var p12 = this.subdivise(p1, p2);
+				var p20 = this.subdivise(p2, p0);
+				// ---- insert new points ----
+				this.points.push(p01 = new ge1doot.transform3D.Point(p01.x, p01.y, p01.z, p01.tx, p01.ty));
+				this.points.push(p12 = new ge1doot.transform3D.Point(p12.x, p12.y, p12.z, p12.tx, p12.ty));
+				this.points.push(p20 = new ge1doot.transform3D.Point(p20.x, p20.y, p20.z, p20.tx, p20.ty));
+				// ---- recursive triangulation ----
+				this.triangulate(p0, p01, p20, level);
+				this.triangulate(p01, p1, p12, level);
+				this.triangulate(p20, p12, p2, level);
+				this.triangulate(p01, p12, p20, level);
+			}
+		}
+
+		/* ==== transform prototype ==== */
+		ge1doot.transform3D.Image.prototype.transform3D = function (backfaceTest) {
+			if (this.isLoading) {
+				// ---- image is loading ----
+				this.loading();
+				return false;
+			} else {
+				// ---- project points ----
+				for (
+					var i = 0;
+					this.points[i++].projection();
+				);
+				if (backfaceTest) {
+					var p0 = this.points[0];
+					var p1 = this.points[1];
+					var p2 = this.points[2];
+					return (
+						((p1.Y - p0.Y) / (p1.X - p0.X) -
+							(p2.Y - p0.Y) / (p2.X - p0.X) < 0) ^
+						(p0.X <= p1.X == p0.X > p2.X)
+					);
+				} else return true;
+			}
+		}
+
+		/* ==== draw prototype ==== */
+		ge1doot.transform3D.Image.prototype.draw = function () {
+			if (!this.isLoading) {
+				// ---- draw triangles ----
+				for (
+					var i = 0;
+					this.triangles[i++].draw();
+				);
+			}
+		}
+
+		/* ==== isPointerInside prototype ==== */
+		ge1doot.transform3D.Image.prototype.isPointerInside = function (x, y) {
+			this.drawPoly(this.points);
+			return this.ctx.isPointInPath(x, y);
+		}
+
+		"use strict";
+
+		(function () {
+			/* ==== definitions ==== */
+			var diapo = [], layers = [], ctx, pointer, scr, camera, light, fps = 0, quality = [1, 2];
+			// 定义全局访问点
+			window.diapo3D = {
+				resetAlbum: null // 将在初始化后赋值
+			};
+
+			// ---- poly constructor ----
+			Poly = function (parent, face) {
+				this.parent = parent;
+				this.ctx = ctx;
+				this.color = face.fill || false;
+				this.points = [];
+				if (!face.img) {
+					// ---- create points ----
+					for (var i = 0; i < 4; i++) {
+						this.points[i] = new ge1doot.transform3D.Point(
+							parent.pc.x + (face.x[i] * parent.normalZ) + (face.z[i] * parent.normalX),
+							parent.pc.y + face.y[i],
+							parent.pc.z + (face.x[i] * parent.normalX) + (-face.z[i] * parent.normalZ)
+						);
+					}
+					this.points[3].next = false;
+				}
+			},
+				// ---- diapo constructor ----
+				Diapo = function (path, img, structure) {
+					// ---- create image ----
+					this.img = new ge1doot.transform3D.Image(
+						this, path + img.img, 1, {
+						isLoaded: function (img) {
+							img.parent.isLoaded = true;
+							img.parent.loaded(img);
+						}
+					}
+					);
+					this.visible = false;
+					this.normalX = img.nx;
+					this.normalZ = img.nz;
+					// ---- point center ----
+					this.pc = new ge1doot.transform3D.Point(img.x, img.y, img.z);
+					// ---- target positions ----
+					this.tx = img.x + (img.nx * Math.sqrt(camera.focalLength) * 25);
+					this.tz = img.z - (img.nz * Math.sqrt(camera.focalLength) * 25);
+					// ---- create polygons ----
+					this.poly = [];
+					for (var i = -1, p; p = structure[++i];) {
+						layers[i] = (p.img === true ? 1 : 2);
+						this.poly.push(
+							new Poly(this, p)
+						);
+					}
+				},
+				// ---- init section ----
+				init = function (json) {
+					if (diapo.length > 0) {
+						// 如果已经初始化过，只更新图片数据，不重新创建整个场景
+						resetScene(json);
+						return;
+					}
+
+					// 首次初始化，创建完整场景
+					// draw poly primitive
+					Poly.prototype.drawPoly = ge1doot.transform3D.drawPoly;
+					// ---- init screen ----
+					scr = new ge1doot.Screen({
+						container: "canvas"
+					});
+					ctx = scr.ctx;
+					// 设置3D场景背景为透明
+					ctx.clearRect(0, 0, scr.width, scr.height);
+					scr.resize();
+					// ---- init pointer ----
+					pointer = new ge1doot.Pointer({
+						tap: function () {
+							if (camera.over) {
+								if (camera.over === camera.target.elem) {
+									// ---- return to the center ----
+									camera.target.x = 0;
+									camera.target.z = 0;
+									camera.target.elem = false;
+								} else {
+									// ---- goto diapo ----
+									camera.target.elem = camera.over;
+									camera.target.x = camera.over.tx;
+									camera.target.z = camera.over.tz;
+									// ---- adapt tesselation level to distance ----
+									for (var i = 0, d; d = diapo[i++];) {
+										var dx = camera.target.x - d.pc.x;
+										var dz = camera.target.z - d.pc.z;
+										var dist = Math.sqrt(dx * dx + dz * dz);
+										var lev = (dist > 1800) ? quality[0] : quality[1];
+										d.img.setLevel(lev);
+									}
+								}
+							}
+						}
+					});
+					// ---- init camera ----
+					camera = new ge1doot.transform3D.Camera({
+						focalLength: Math.sqrt(scr.width) * 12,
+						easeTranslation: 0.025,
+						easeRotation: 0.06,
+						disableRz: true
+					}, {
+						move: function () {
+							this.over = false;
+							// ---- rotation ----
+							if (pointer.isDraging) {
+								this.target.elem = false;
+								this.target.ry = -pointer.Xi * 0.01;
+								this.target.rx = (pointer.Y - scr.height * 0.5) / (scr.height * 0.5);
+							} else {
+								if (this.target.elem) {
+									this.target.ry = Math.atan2(
+										this.target.elem.pc.x - this.x,
+										this.target.elem.pc.z - this.z
+									);
+								}
+							}
+							this.target.rx *= 0.9;
+						}
+					});
+					camera.z = -12000;
+					camera.py = 0;
+
+					// 创建图片
+					resetScene(json);
+
+					// 暴露重置方法到全局访问点
+					window.diapo3D.resetAlbum = function () {
+						resetScene(json);
+					};
+
+					// ---- start engine ---- >>>
+					setInterval(function () {
+						quality = (fps > 50) ? [2, 4] : [2, 3];
+						fps = 0;
+					}, 1000);
+					run();
+				},
+				// 重置场景，只更新图片数据
+				resetScene = function (json) {
+					// 清空已有图片
+					diapo = [];
+					// 获取当前相册数据
+					var imgdata = getAlbumImgData();
+					// 创建新图片
+					for (var i = 0, img; img = imgdata[i++];) {
+						diapo.push(
+							new Diapo(
+								json.options.imagesPath,
+								img,
+								json.structure
+							)
+						);
+					}
+
+					// 重置摄像机位置
+					if (camera) {
+						camera.target.x = 0;
+						camera.target.z = 0;
+						camera.target.elem = false;
+					}
+				},
+				// ---- main loop ----
+				run = function () {
+					// ---- clear screen ----
+					ctx.clearRect(0, 0, scr.width, scr.height);
+					// ---- camera ----
+					camera.move();
+					// ---- draw layers ----
+					for (var k = -1, l; l = layers[++k];) {
+						light = false;
+						for (var i = 0, d; d = diapo[i++];) {
+							(l === 1 && d.draw()) ||
+								(d.visible && d.poly[k].draw());
+						}
+					}
+					// ---- cursor ----
+					if (camera.over && !pointer.isDraging) {
+						scr.setCursor("pointer");
+					} else {
+						scr.setCursor("move");
+					}
+					// ---- loop ----
+					fps++;
+					requestAnimFrame(run);
+				};
+			/* ==== prototypes ==== */
+			Poly.prototype.draw = function () {
+				// ---- color light ----
+				var c = this.color;
+				if (c.light || !light) {
+					var s = c.light ? this.parent.light : 1;
+					// ---- rgba color ----
+					light = "rgba(" +
+						Math.round(c.r * s) + "," +
+						Math.round(c.g * s) + "," +
+						Math.round(c.b * s) + "," + (c.a || 1) + ")";
+					ctx.fillStyle = light;
+				}
+				// ---- paint poly ----
+				if (!c.light || this.parent.light < 1) {
+					// ---- projection ----
+					for (
+						var i = 0;
+						this.points[i++].projection();
+					);
+					this.drawPoly();
+					ctx.fill();
+				}
+			}
+			/* ==== image onload ==== */
+			Diapo.prototype.loaded = function (img) {
+				// ---- create points ----
+				var d = [-1, 1, 1, -1, 1, 1, -1, -1];
+				var w = img.texture.width * 0.35;
+				var h = img.texture.height * 0.35;
+				for (var i = 0; i < 4; i++) {
+					img.points[i] = new ge1doot.transform3D.Point(
+						this.pc.x + (w * this.normalZ * d[i]),
+						this.pc.y + (h * d[i + 4]),
+						this.pc.z + (w * this.normalX * d[i])
+					);
+				}
+			}
+			/* ==== img draw ==== */
+			Diapo.prototype.draw = function () {
+				// ---- visibility ----
+				this.pc.projection();
+				if (this.pc.Z > -(camera.focalLength >> 1) * 0.8 && this.img.transform3D(true)) {
+					// ---- light ----
+					this.light = 0.7 + Math.abs(this.normalZ * camera.cosY - this.normalX * camera.sinY) * 0.8;
+					// ---- draw image ----
+					this.visible = true;
+					this.img.draw();
+					// ---- test pointer inside ----
+					if (pointer.hasMoved || pointer.isDown) {
+						if (
+							this.img.isPointerInside(
+								pointer.X,
+								pointer.Y
+							)
+						) camera.over = this;
+					}
+				} else this.visible = false;
+				return true;
+			}
+			return {
+				// --- load data ----
+				load: function (data) {
+					window.addEventListener('load', function () {
+						init(data);
+
+						// 初始化相册切换控制
+						setupAlbumControls(init, data);
+					}, false);
+				}
+			}
+		})().load({
+			imgdata: [], // 不直接使用imgdata，改为从getAlbumImgData()获取
+			structure: [
+				{
+					// wall - 背景墙，改用更现代的颜色
+					fill: { r: 30, g: 30, b: 40, light: 1 },
+					x: [-1001, -490, -490, -1001],
+					z: [-500, -500, -500, -500],
+					y: [500, 500, -500, -500]
+				}, {
+					// wall
+					fill: { r: 30, g: 30, b: 40, light: 1 },
+					x: [-501, 2, 2, -500],
+					z: [-500, -500, -500, -500],
+					y: [500, 500, -500, -500]
+				}, {
+					// wall
+					fill: { r: 30, g: 30, b: 40, light: 1 },
+					x: [0, 502, 502, 0],
+					z: [-500, -500, -500, -500],
+					y: [500, 500, -500, -500]
+				}, {
+					// wall
+					fill: { r: 30, g: 30, b: 40, light: 1 },
+					x: [490, 1002, 1002, 490],
+					z: [-500, -500, -500, -500],
+					y: [500, 500, -500, -500]
+				}, {
+					// floor reflection - 增强地面反光效果
+					fill: { r: 30, g: 30, b: 50, a: 0.5 },
+					x: [-420, 420, 420, -420],
+					z: [-500, -500, -500, -500],
+					y: [50, 50, -320, -320]
+				}, {
+					// shadow
+					fill: { r: 0, g: 0, b: 0, a: 0.3 },
+					x: [-20, 20, 20, -20],
+					z: [-500, -500, -500, -500],
+					y: [250, 250, 150, 150]
+				}, {
+					// shadow
+					fill: { r: 0, g: 0, b: 0, a: 0.3 },
+					x: [-20, 20, 20, -20],
+					z: [-500, -500, -500, -500],
+					y: [-320, -320, -500, -500]
+				}, {
+					// shadow
+					fill: { r: 0, g: 0, b: 0, a: 0.3 },
+					x: [-20, 20, 10, -10],
+					z: [-500, -500, -100, -100],
+					y: [-500, -500, -500, -500]
+				}, {
+					// base - 底座改为更现代的设计
+					fill: { r: 50, g: 50, b: 70 },
+					x: [-60, 60, 60, -60],
+					z: [-160, -160, -40, -40],
+					y: [-500, -500, -485, -485]
+				}, {
+					// 底座装饰
+					fill: { r: 80, g: 80, b: 120 },
+					x: [-55, 55, 55, -55],
+					z: [-155, -155, -45, -45],
+					y: [-485, -485, -480, -480]
+				}, {
+					// 主支柱 - 优化立柱设计
+					fill: { r: 100, g: 100, b: 130 },
+					x: [-10, 10, 10, -10],
+					z: [-100, -100, -100, -100],
+					y: [300, 300, -480, -480]
+				}, {
+					// 支柱装饰环 - 顶部
+					fill: { r: 150, g: 150, b: 200 },
+					x: [-15, 15, 15, -15],
+					z: [-105, -105, -95, -95],
+					y: [290, 290, 270, 270]
+				}, {
+					// 支柱装饰环 - 底部
+					fill: { r: 150, g: 150, b: 200 },
+					x: [-15, 15, 15, -15],
+					z: [-105, -105, -95, -95],
+					y: [-440, -440, -460, -460]
+				}, {
+					// 支柱反光
+					fill: { r: 200, g: 200, b: 255, a: 0.3 },
+					x: [-3, 3, 3, -3],
+					z: [-90, -90, -90, -90],
+					y: [300, 300, -480, -480]
+				}, {
+					// 相框边框 - 左侧，改为更精致的设计
+					fill: { r: 180, g: 180, b: 210 },
+					x: [-325, -320, -320, -325],
+					z: [-5, -5, -15, -15],
+					y: [-190, -190, 190, 190]
+				}, {
+					// 相框边框 - 右侧
+					fill: { r: 180, g: 180, b: 210 },
+					x: [325, 320, 320, 325],
+					z: [-5, -5, -15, -15],
+					y: [-190, -190, 190, 190]
+				}, {
+					// 相框边框 - 上部
+					fill: { r: 180, g: 180, b: 210 },
+					x: [-320, 320, 320, -320],
+					z: [-5, -5, -15, -15],
+					y: [190, 190, 185, 185]
+				}, {
+					// 相框边框 - 下部
+					fill: { r: 180, g: 180, b: 210 },
+					x: [-320, 320, 320, -320],
+					z: [-5, -5, -15, -15],
+					y: [-190, -190, -185, -185]
+				}, {
+					// 相框内嵌光效 - 增强质感
+					fill: { r: 100, g: 100, b: 140, a: 0.5 },
+					x: [-310, 310, 310, -310],
+					z: [-10, -10, -10, -10],
+					y: [-180, -180, 180, 180]
+				},
+				{ img: true },
+				{
+					// 顶部光源 - 更柔和的光
+					fill: { r: 255, g: 180, b: 120, a: 0.8 },
+					x: [-70, 70, 70, -70],
+					z: [420, 420, 580, 580],
+					y: [500, 500, 500, 500]
+				}, {
+					// 地面光源 - 更柔和的光
+					fill: { r: 120, g: 140, b: 255, a: 0.6 },
+					x: [-70, 70, 70, -70],
+					z: [420, 420, 580, 580],
+					y: [-500, -500, -500, -500]
+				}, {
+					// 地面装饰 - 添加优雅的反光效果
+					fill: { r: 150, g: 150, b: 220, a: 0.15 },
+					x: [-400, 400, 400, -400],
+					z: [-400, -400, -300, -300],
+					y: [-499, -499, -499, -499]
+				}, {
+					// 地面装饰 - 添加优雅的反光效果2
+					fill: { r: 140, g: 180, b: 255, a: 0.1 },
+					x: [-350, 350, 350, -350],
+					z: [-250, -250, -150, -150],
+					y: [-499, -499, -499, -499]
+				}
+			],
+			options: {
+				imagesPath: ""
+			}
+		});
+	</script>
+
+</head>
+
+<body>
+	<!-- 彩虹背景画布 -->
+	<canvas id="rainbow-bg"></canvas>
+	<!-- 3D相册画布 -->
+	<canvas id="canvas">你的浏览器不支持HTML5画布技术，请使用谷歌浏览器。</canvas>
+
+	<!-- 相册切换控制 -->
+	<div id="album-controls">
+		<button id="prev-album" class="album-button"></button>
+		<div id="album-name">相册集1</div>
+		<button id="next-album" class="album-button"></button>
+	</div>
+
+	<script>
+		// 页面加载完成后初始化彩虹背景
+		window.addEventListener('load', function () {
+			initRainbowBackground();
+		});
+
+		// 设置相册切换功能
+		function setupAlbumControls(initFunc, initData) {
+			const prevBtn = document.getElementById('prev-album');
+			const nextBtn = document.getElementById('next-album');
+			const albumNameEl = document.getElementById('album-name');
+
+			// 显示当前相册名称
+			albumNameEl.textContent = albumSets[currentAlbumIndex].name;
+
+			// 更新按钮状态
+			updateButtonStatus();
+
+			// 切换到上一个相册
+			prevBtn.addEventListener('click', function () {
+				if (currentAlbumIndex > 0) {
+					currentAlbumIndex--;
+					albumNameEl.textContent = albumSets[currentAlbumIndex].name;
+					updateButtonStatus();
+
+					// 使用全局暴露的方法重置相册
+					if (window.diapo3D && window.diapo3D.resetAlbum) {
+						window.diapo3D.resetAlbum();
+					}
+				}
+			});
+
+			// 切换到下一个相册
+			nextBtn.addEventListener('click', function () {
+				if (currentAlbumIndex < albumSets.length - 1) {
+					currentAlbumIndex++;
+					albumNameEl.textContent = albumSets[currentAlbumIndex].name;
+					updateButtonStatus();
+
+					// 使用全局暴露的方法重置相册
+					if (window.diapo3D && window.diapo3D.resetAlbum) {
+						window.diapo3D.resetAlbum();
+					}
+				}
+			});
+
+			// 更新按钮状态
+			function updateButtonStatus() {
+				prevBtn.disabled = currentAlbumIndex === 0;
+				nextBtn.disabled = currentAlbumIndex === albumSets.length - 1;
+
+				prevBtn.style.opacity = prevBtn.disabled ? "0.5" : "1";
+				prevBtn.style.cursor = prevBtn.disabled ? "not-allowed" : "pointer";
+
+				nextBtn.style.opacity = nextBtn.disabled ? "0.5" : "1";
+				nextBtn.style.cursor = nextBtn.disabled ? "not-allowed" : "pointer";
+			}
+		}
+	</script>
+
+</body>
+
+</html>

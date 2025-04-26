@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>3D文字标签云</title>
+
+    <link type="text/css" href="css/文字标签style.css" rel="stylesheet" />
+    <link rel="icon" href="ico/戏曲.ico" type="image/x-icon">
+
+    <script>
+        // 彩虹渐变背景效果
+        window.addEventListener('DOMContentLoaded', function () {
+            // // 创建更丰富的彩虹背景
+            // document.body.style.background = 'linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #ff2400, #e81d1d)';
+            // document.body.style.backgroundSize = '1800% 1800%';
+            // document.body.style.animation = 'rainbow 18s ease infinite';
+
+            document.body.style.background = 'linear-gradient(124deg, #ff0000,#ffa500,#ffff00,#80ff00,#00ffff,#0066ff,#aa00ff)';
+
+            document.body.style.backgroundSize = '1000% 1000%';
+            document.body.style.animation = 'rainbow 10s ease infinite';
+
+            // 添加彩虹动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                            @keyframes rainbow { 
+                                0% { background-position: 0% 82% }
+                                25% { background-position: 50% 19% }
+                                50% { background-position: 100% 50% }
+                                75% { background-position: 50% 81% }
+                                100% { background-position: 0% 82% }
+                            }
+                            
+                            .key:after {
+                                text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 10px rgba(255,255,255,0.8);
+                                transition: all 0.5s ease;
+                                animation: textGlow 3s infinite alternate;
+                                font-weight: bold;
+                                font-size: 1.2em;
+                                opacity: 0.9;
+                            }
+                            
+                            .key:hover:after {
+                                text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 15px rgba(255,255,255,1);
+                                transform: scale(1.1);
+                                opacity: 1;
+                            }
+                            
+                            @keyframes textGlow {
+                                0% { text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 8px rgba(255,0,0,0.8); }
+                                25% { text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 8px rgba(255,255,0,0.8); }
+                                50% { text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 8px rgba(0,255,0,0.8); }
+                                75% { text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 8px rgba(0,0,255,0.8); }
+                                100% { text-shadow: 0 0 2px #000, 0 0 5px #000, 0 0 8px rgba(255,0,255,0.8); }
+                            }
+                            
+                            /* 添加选择器样式 */
+                            .novel-selector {
+                                position: fixed;
+                                left: 20px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                z-index: 1000;
+                                background: rgba(0, 0, 0, 0.3);
+                                border-radius: 10px;
+                                padding: 10px;
+                                backdrop-filter: blur(5px);
+                                box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+                                transition: all 0.3s ease;
+                            }
+                            
+                            .novel-selector:hover {
+                                background: rgba(0, 0, 0, 0.6);
+                            }
+                            
+                            .novel-selector select {
+                                background: transparent;
+                                color: white;
+                                border: 1px solid rgba(255, 255, 255, 0.3);
+                                padding: 5px;
+                                border-radius: 5px;
+                                outline: none;
+                                cursor: pointer;
+                                font-size: 14px;
+                                width: 120px;
+                            }
+                            
+                            .novel-selector select option {
+                                background: rgba(0, 0, 0, 0.8);
+                                color: white;
+                            }
+                            
+                            .novel-selector .title {
+                                color: white;
+                                font-size: 12px;
+                                margin-bottom: 5px;
+                                text-align: center;
+                                opacity: 0.8;
+                            }
+                        `;
+            document.head.appendChild(style);
+
+            // 添加动态星星背景
+            createStars();
+        });
+
+        // 创建星星背景
+        function createStars() {
+            const starsContainer = document.createElement('div');
+            starsContainer.className = 'stars-container';
+            document.body.appendChild(starsContainer);
+
+            const style = document.createElement('style');
+            style.textContent = `
+                        .stars-container {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            pointer-events: none;
+                            z-index: -1;
+                        }
+                        .star {
+                            position: absolute;
+                            background: white;
+                            border-radius: 50%;
+                            filter: blur(1px);
+                            opacity: 0;
+                            animation: starTwinkle var(--duration) ease-in-out infinite;
+                            animation-delay: var(--delay);
+                        }
+                        @keyframes starTwinkle {
+                            0%, 100% { opacity: 0; transform: scale(0.5); }
+                            50% { opacity: 1; transform: scale(1); }
+                        }
+                    `;
+            document.head.appendChild(style);
+
+            // 创建100个星星
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                // 随机位置和大小
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 5;
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.setProperty('--duration', `${duration}s`);
+                star.style.setProperty('--delay', `${delay}s`);
+
+                starsContainer.appendChild(star);
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <!-- 添加四大名著选择器 -->
+    <div class="novel-selector">
+        <!-- <div class="title">四大名著选择</div> -->
+        <select id="novelSelector">
+            <option value="sanguoyanyi">三国演义</option>
+            <option value="shuihuzhuan">水浒传</option>
+            <option value="xiyouji">西游记</option>
+            <option value="hongloumeng">红楼梦</option>
+        </select>
+    </div>
+
+    <div class="a3d"></div>
+
+    <!-- <script src="js/index.js"></script> -->
+
+</body>
+
+</html>
+
+<script>
+    'use strict';
+
+    window.onload = function () {
+        // 定义四大名著的关键词映射
+        const NOVEL_KEYMAPS = {
+            sanguoyanyi: {
+                // 核心人物（新增12人）
+                '关羽': 89, '诸葛亮': 152, '曹操': 14, '吕布': 55,
+                '赵云': 33, '周瑜': 122, '张飞': 76, '孙权': 132,
+                '刘备': 199, '司马懿': 5, '典韦': 187, '黄忠': 168,
+                '马超': 28, '黄盖': 143, '徐庶': 91, '庞统': 74,
+                '张辽': 157, '于禁': 39, '许褚': 105, '姜维': 121,
+
+                // 经典战役（新增8场）
+                '赤壁之战': 63, '官渡之战': 167, '夷陵之战': 101,
+                '长坂坡': 42, '水淹七军': 115, '火烧连营': 53,
+                '定军山': 21, '街亭': 169, '五丈原': 7,
+                '汉中之战': 148, '合肥之战': 83, '潼关战': 129,
+                '南蛮之战': 46, '襄樊战': 176,
+
+                // 武器/坐骑（新增6项）
+                '青龙刀': 11, '方天戟': 162, '丈八矛': 136,
+                '的卢': 128, '赤兔': 45, '连弩': 77,
+                '双股剑': 194, '青釭剑': 27, '雌雄鞭': 138,
+
+                // 计策/阵法（新增5类）
+                '反间计': 126, '苦肉计': 88, '连环计': 107,
+                '八阵图': 37, '八卦阵': 72, '十面伏': 155,
+                '诈降计': 113, '火攻计': 189,
+
+                // 历史典故（新增10项）
+                '蒋干盗书': 17, '徐庶归曹': 192, '庞统献计': 61,
+                '子龙救主': 98, '文鸯夜袭': 135, '邓艾偷渡': 184,
+                '张昭劝降': 73, '陆逊烧营': 156, '孟获七擒': 69,
+                '华佗刮骨': 183
+            },
+            shuihuzhuan: {
+                // 核心人物（新增16人）
+                '宋江': 89, '武松': 152, '林冲': 14, '鲁智深': 55,
+                '李逵': 33, '吴用': 122, '卢俊义': 76, '燕青': 132,
+                '杨志': 199, '公孙胜': 5, '秦明': 187, '呼延灼': 168,
+                '花荣': 28, '柴进': 143, '朱仝': 91, '雷横': 74,
+                '张顺': 157, '张清': 39, '解珍': 105, '解宝': 121,
+
+                // 经典情节（新增12场）
+                '杨志卖刀': 63, '智取生辰纲': 167, '醉打蒋门神': 101,
+                '大闹飞云浦': 42, '血溅鸳鸯楼': 53, '风雪山神庙': 115,
+                '拳打镇关西': 21, '大闹五台山': 169, '三打祝家庄': 7,
+                '江州劫法场': 148, '夜打曾头市': 83, '两赢童贯': 129,
+
+                // 兵器场景（新增7项）
+                '朴刀': 11, '狼牙棒': 162, '流星锤': 136,
+                '梁山泊': 128, '忠义堂': 45, '断金亭': 77,
+                '水泊': 194, '蓼儿洼': 27,
+
+                // 江湖绰号（新增8个）
+                '及时雨': 126, '玉麒麟': 88, '黑旋风': 107,
+                '智多星': 37, '入云龙': 72, '大刀': 155,
+                '没羽箭': 113, '神行太保': 189
+            },
+            xiyouji: {
+                // 核心角色（新增10人）
+                '孙悟空': 89, '唐僧': 152, '猪八戒': 14, '沙僧': 55,
+                '白龙马': 33, '如来佛': 122, '观音': 76, '玉帝': 132,
+                '哪吒': 199, '弥勒佛': 5, '镇元子': 187, '菩提祖师': 168,
+
+                // 妖魔洞府（新增12处）
+                '白骨洞': 28, '火云洞': 143, '盘丝洞': 91, '狮驼洞': 74,
+                '无底洞': 157, '黑风洞': 39, '黄风洞': 105, '九曲洞': 121,
+                '毒敌山': 63, '小雷音': 167, '陷空山': 101, '积雷山': 53,
+
+                // 法宝兵器（新增8件）
+                '金刚琢': 11, '九齿耙': 162, '降妖杖': 136,
+                '紫金铃': 128, '阴阳瓶': 45, '幌金绳': 77,
+                '人种袋': 194, '芭蕉扇': 27,
+
+                // 劫难节点（新增10难）
+                '三调扇': 126, '车迟斗法': 88, '真假猴王': 107,
+                '通天河': 37, '女儿国': 72, '朱紫国': 155,
+                '比丘国': 113, '灭法国': 189, '连环洞': 17,
+                '金光寺': 192
+            },
+            hongloumeng: {
+                // 金陵群芳（新增12人）
+                '贾宝玉': 89, '林黛玉': 152, '薛宝钗': 14, '王熙凤': 55,
+                '史湘云': 33, '贾母': 122, '贾政': 76, '元春': 132,
+                '探春': 199, '妙玉': 5, '迎春': 187, '惜春': 168,
+                '秦可卿': 28, '李纨': 143, '巧姐': 91, '晴雯': 74,
+
+                // 经典场景（新增10处）
+                '葬花冢': 157, '凹晶馆': 39, '暖香坞': 105, '紫菱洲': 121,
+                '藕香榭': 63, '天香楼': 167, '凸碧堂': 101, '滴翠亭': 53,
+                '芦雪庵': 21, '沁芳桥': 169,
+
+                // 重要物件（新增8件）
+                '通灵玉': 11, '金锁': 162, '冷香丸': 136,
+                '芙蓉诔': 128, '海棠诗': 45, '菊花笺': 77,
+                '虾须镯': 194, '孔雀裘': 27,
+
+                // 命运节点（新增10事）
+                '黛玉焚稿': 126, '宝玉摔玉': 88, '抄检大观': 107,
+                '元春省亲': 37, '可卿托梦': 72, '探春远嫁': 155,
+                '迎春抵债': 113, '妙玉遭劫': 189, '凤姐托孤': 17,
+                '宝玉出家': 192
+            }
+        };
+
+        // 当前选择的名著
+        let currentNovel = 'sanguoyanyi';
+        let KEYMAP = NOVEL_KEYMAPS[currentNovel];
+        let key_els = {};
+
+        // 监听选择器变化
+        document.getElementById('novelSelector').addEventListener('change', function (e) {
+            currentNovel = e.target.value;
+            KEYMAP = NOVEL_KEYMAPS[currentNovel];
+
+            // 清空当前标签云
+            const a3d = document.querySelector('.a3d');
+            a3d.innerHTML = '';
+
+            // 重新初始化标签云
+            initTagCloud();
+        });
+
+        var rand = function rand() {
+            var max = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+            var min = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+
+            var _int = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+
+            var gen = min + (max - min) * Math.random();
+            return _int ? Math.round(gen) : gen;
+        };
+
+        function initTagCloud() {
+            key_els = {}; // 重置key元素引用
+
+            var a3d = document.querySelector('.a3d'),
+                f = document.createDocumentFragment(),
+                lims = [33, 41, 47, 58, 91, 127, 146],
+                len = lims.length,
+                unit = 360 / (len + 1);
+
+            for (var p in KEYMAP) {
+                var rot = document.createElement('div'),
+                    key = document.createElement('div');
+
+                key.dataset.name = p.replace('NUM_', '');
+                key.dataset.code = KEYMAP[p];
+                key.classList.add('key');
+
+                for (var i = 0; i < len; i++) {
+                    if (KEYMAP[p] < lims[i]) {
+                        var hue = rand((i + .8) * unit, (i + .2) * unit, 1);
+                        key.style.color = 'hsl(' + hue + ',100%,65%)';
+                        break;
+                    }
+                }
+
+                rot.classList.add('rot');
+
+                key_els[p] = key;
+                rot.appendChild(key);
+                f.appendChild(rot);
+            }
+
+            a3d.appendChild(f);
+        }
+
+        // 初始化标签云
+        initTagCloud();
+
+        addEventListener('keydown', function (e) {
+            e.preventDefault();
+
+            for (var p in KEYMAP) {
+                if (e.keyCode === KEYMAP[p]) {
+                    if (!key_els[p].classList.contains('vis')) key_els[p].classList.add('vis');
+                    return;
+                }
+            }
+        }, false);
+
+        addEventListener('keyup', function (e) {
+            e.preventDefault();
+        }, false);
+
+        addEventListener('animationend', function (e) {
+            var t = e.target;
+            if (e.animationName === 'hl') t.classList.remove('vis');
+        }, false);
+    };
+</script>
