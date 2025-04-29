@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>羊马影院 - 沉浸式观影体验</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="description" content="羊马影院 - 精选高品质影像内容，打造沉浸式观影体验">
+    <meta name="keywords" content="羊马影院,在线观影,电影,电视剧,动漫">
+    <meta name="theme-color" content="#6C63FF">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+    <style>
+        :root {
+            --primary-color: #6C63FF;
+            --secondary-color: #F857A6;
+            --dark-color: #1A1A2E;
+            --light-color: #F5F5F7;
+            --accent-color: #4ECCA3;
+            --gradient-primary: linear-gradient(135deg, #6C63FF, #F857A6);
+            --gradient-dark: linear-gradient(135deg, #0F0F23, #1F1F3F);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(248, 87, 166, 0.1) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cinema-app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(15, 15, 35, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .logo i {
+            color: var(--secondary-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* 英雄区 */
+        .hero {
+            background: var(--gradient-dark);
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(108, 99, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(248, 87, 166, 0.2) 0%, transparent 50%);
+            animation: gradientMove 15s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 100% 100%;
+            }
+
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.85;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(108, 99, 255, 0.6);
+        }
+
+        .btn-outline {
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            padding: 0;
+        }
+
+        /* 影院布局 */
+        .cinema-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 50px 0;
+        }
+
+        .sidebar {
+            flex: 0 0 280px;
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* 侧边栏卡片 */
+        .sidebar-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .sidebar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-color);
+        }
+
+        .sidebar-card h3 i {
+            color: var(--accent-color);
+        }
+
+        /* 电影分类 */
+        .category-list {
+            list-style: none;
+        }
+
+        .category-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .category-item:hover {
+            transform: translateX(5px);
+        }
+
+        .category-item:hover::before {
+            opacity: 0.1;
+        }
+
+        .category-item.active {
+            background: rgba(108, 99, 255, 0.2);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .category-item i {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .category-item:hover i {
+            transform: scale(1.2);
+        }
+
+        /* 影院厅 */
+        .theater {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            margin-bottom: 40px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+        }
+
+        .theater:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .theater-header {
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .theater-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0.85;
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .theater-header:hover::before {
+            opacity: 1;
+        }
+
+        .theater-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .theater-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theater-header:hover .theater-icon {
+            transform: rotate(360deg);
+        }
+
+        .theater-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .theater-header.active .theater-toggle {
+            transform: rotate(180deg);
+        }
+
+        .theater-content {
+            display: none;
+            padding: 0;
+            position: relative;
+        }
+
+        .theater-video {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            /* 16:9 纵横比 */
+            position: relative;
+            background: #000;
+        }
+
+        .theater-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-controls {
+            background: rgba(15, 15, 35, 0.8);
+            padding: 15px 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            backdrop-filter: blur(5px);
+        }
+
+        .video-btn {
+            background: var(--glass-bg);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .video-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .video-btn:hover::before {
+            opacity: 0.2;
+        }
+
+        .video-btn.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+        }
+
+        /* 外部链接卡片 */
+        .external-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 25px;
+        }
+
+        .external-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--light-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .external-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .external-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .external-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .external-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .external-card:hover .external-icon {
+            transform: scale(1.2);
+        }
+
+        .external-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .external-desc {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* 黑暗模式效果 */
+        .dark-mode {
+            background-color: #000;
+        }
+
+        .dark-mode .theater {
+            background: rgba(25, 25, 40, 0.3);
+        }
+
+        .dark-mode .sidebar-card {
+            background: rgba(25, 25, 40, 0.3);
+        }
+
+        /* 视觉效果 */
+        .visual-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .effect-particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(100px, 100px) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(50px, 200px) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(200px, 50px) rotate(270deg);
+            }
+        }
+
+        /* 通知样式 */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+            pointer-events: none;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* 爆米花动画 */
+        .popcorn {
+            position: fixed;
+            font-size: 24px;
+            animation: popcorn 2s ease-in-out infinite;
+            z-index: 1000;
+            pointer-events: none;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes popcorn {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+
+        /* 加载动画 */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 媒体查询 */
+        @media (max-width: 992px) {
+            .cinema-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                flex: 0 0 100%;
+                position: static;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .external-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .external-links {
+                grid-template-columns: 1fr;
+            }
+
+            .theater-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cinema-app">
+        <!-- 加载动画 -->
+        <div class="loading">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="container navbar-container">
+                <a href="#" class="logo">
+                    <i class="bi bi-film"></i> 羊马影院
+                </a>
+                <div class="nav-buttons">
+                    <button id="darkModeBtn" class="btn btn-icon btn-outline" title="切换夜间模式">
+                        <i class="bi bi-moon-stars"></i>
+                    </button>
+                    <button id="effectsBtn" class="btn btn-icon btn-outline" title="视觉特效">
+                        <i class="bi bi-stars"></i>
+                    </button>
+                    <button id="randomBtn" class="btn btn-outline">
+                        <i class="bi bi-shuffle"></i> 随机播放
+                    </button>
+                    <button id="fullscreenBtn" class="btn btn-outline" title="全屏模式">
+                        <i class="bi bi-arrows-fullscreen"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 英雄区 -->
+        <section class="hero">
+            <div class="container">
+                <h1>5G全村通，享你所想！</h1>
+                <p>一把瓜子，嗑出百味人生</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="playRandomVideo()">
+                        <i class="bi bi-play-fill"></i> 立即观看
+                    </button>
+                    <button class="btn btn-outline" onclick="showPopcorn()">
+                        <i class="bi bi-cup-hot"></i> 来份爆米花
+                    </button>
+                    <button class="btn btn-outline" onclick="showNotification('🎵 正在播放背景音乐...')">
+                        <i class="bi bi-music-note-beamed"></i> 背景音乐
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 影院主体 -->
+        <div class="container">
+            <div class="cinema-layout">
+                <!-- 侧边栏 -->
+                <aside class="sidebar">
+                    <div class="sidebar-card">
+                        <h3><i class="bi bi-collection-play"></i> 影片分类</h3>
+                        <ul class="category-list">
+                            <li class="category-item active" data-target="hakone-theater">
+                                <i class="bi bi-trophy"></i> 箱根驿传
+                            </li>
+                            <li class="category-item" data-target="exotic-theater">
+                                <i class="bi bi-globe"></i> 异域风情
+                            </li>
+                            <li class="category-item" data-target="battle-theater">
+                                <i class="bi bi-lightning"></i> 超燃战斗
+                            </li>
+                            <li class="category-item" data-target="enjoy-theater">
+                                <i class="bi bi-link-45deg"></i> 更多资源
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3><i class="bi bi-info-circle"></i> 关于影院</h3>
+                        <p>羊马影院为您精选全村优质视频内容，打造沉浸式观影体验。最终解释权归本村所有。</p>
+                        <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.7;">更新日期: 2025-04-16</p>
+                    </div>
+
+                    <!-- <div class="sidebar-card">
+            <h3><i class="bi bi-chat-dots"></i> 观影小贴士</h3>
+            <ul style="list-style: none; margin-top: 15px;">
+              <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                <i class="bi bi-lightbulb" style="color: var(--accent-color);"></i>
+                <span>点击影院标题可展开/收起内容</span>
+              </li>
+              <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                <i class="bi bi-lightbulb" style="color: var(--accent-color);"></i>
+                <span>支持全屏模式，获得更佳体验</span>
+              </li>
+              <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                <i class="bi bi-lightbulb" style="color: var(--accent-color);"></i>
+                <span>点击爆米花按钮有惊喜哦</span>
+              </li>
+            </ul>
+          </div> -->
+                </aside>
+
+                <!-- 主内容区 -->
+                <main class="main-content">
+                    <!-- 1号厅：箱根驿传 -->
+                    <div id="hakone-theater" class="theater">
+                        <div class="theater-header active" onclick="toggleTheater('hakone-theater')">
+                            <div class="theater-title">
+                                <div class="theater-icon"><i class="bi bi-trophy"></i></div>
+                                1号厅：箱根驿传，风驰电掣
+                            </div>
+                            <div class="theater-toggle"><i class="bi bi-chevron-down"></i></div>
+                        </div>
+                        <div class="theater-content" style="display: block;">
+                            <div class="theater-video">
+                                <iframe id="hakone-iframe"
+                                    src="https://player.bilibili.com/player.html?bvid=BV1Wwd9YqE1i&p=1"
+                                    allowfullscreen="true"></iframe>
+                            </div>
+                            <div class="video-controls">
+                                <button class="video-btn active" onclick="changeVideo('hakone-theater', 0)">第一集</button>
+                                <button class="video-btn" onclick="changeVideo('hakone-theater', 1)">第二集</button>
+                                <button class="video-btn" onclick="changeVideo('hakone-theater', 2)">第三集</button>
+                                <button class="video-btn" onclick="changeVideo('hakone-theater', 3)">第四集</button>
+                                <button class="video-btn" onclick="changeVideo('hakone-theater', 4)">第五集</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2号厅：异域风情 -->
+                    <div id="exotic-theater" class="theater">
+                        <div class="theater-header" onclick="toggleTheater('exotic-theater')">
+                            <div class="theater-title">
+                                <div class="theater-icon"><i class="bi bi-globe"></i></div>
+                                2号厅：异域风情，彼岸之息
+                            </div>
+                            <div class="theater-toggle"><i class="bi bi-chevron-down"></i></div>
+                        </div>
+                        <div class="theater-content">
+                            <div class="theater-video">
+                                <iframe id="exotic-iframe"
+                                    src="https://player.bilibili.com/player.html?bvid=BV1pK411u7y6&p=1"
+                                    allowfullscreen="true"></iframe>
+                            </div>
+                            <div class="video-controls">
+                                <button class="video-btn active" onclick="changeVideo('exotic-theater', 0)">第一集</button>
+                                <button class="video-btn" onclick="changeVideo('exotic-theater', 1)">第二集</button>
+                                <button class="video-btn" onclick="changeVideo('exotic-theater', 2)">第三集</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3号厅：超燃战斗 -->
+                    <div id="battle-theater" class="theater">
+                        <div class="theater-header" onclick="toggleTheater('battle-theater')">
+                            <div class="theater-title">
+                                <div class="theater-icon"><i class="bi bi-lightning"></i></div>
+                                3号厅：超燃战斗，电光石火
+                            </div>
+                            <div class="theater-toggle"><i class="bi bi-chevron-down"></i></div>
+                        </div>
+                        <div class="theater-content">
+                            <div class="theater-video">
+                                <iframe id="battle-iframe"
+                                    src="https://player.bilibili.com/player.html?bvid=BV1wx411e71v&p=1"
+                                    allowfullscreen="true"></iframe>
+                            </div>
+                            <div class="video-controls">
+                                <button class="video-btn active" onclick="changeVideo('battle-theater', 0)">第一集</button>
+                                <button class="video-btn" onclick="changeVideo('battle-theater', 1)">第二集</button>
+                                <button class="video-btn" onclick="changeVideo('battle-theater', 2)">第三集</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6号厅：享你所想 -->
+                    <div id="enjoy-theater" class="theater">
+                        <div class="theater-header" onclick="toggleTheater('enjoy-theater')">
+                            <div class="theater-title">
+                                <div class="theater-icon"><i class="bi bi-link-45deg"></i></div>
+                                6号厅：更多资源
+                            </div>
+                            <div class="theater-toggle"><i class="bi bi-chevron-down"></i></div>
+                        </div>
+                        <div class="theater-content">
+                            <div class="external-links">
+                                <!-- 茶杯狐 -->
+                                <a href="https://cupfox.love/" target="_blank" class="external-card">
+                                    <div class="external-icon">🦊</div>
+                                    <h3 class="external-title">茶杯狐</h3>
+                                    <p class="external-desc">片荒剧荒速来</p>
+                                </a>
+
+                                <!-- fofo影院 -->
+                                <a href="https://www.fofo11.com/" target="_blank" class="external-card">
+                                    <div class="external-icon">🎬</div>
+                                    <h3 class="external-title">fofo影院</h3>
+                                    <p class="external-desc">免费在线看电影</p>
+                                </a>
+
+                                <!-- 星辰影院 -->
+                                <a href="https://www.xcyycn.com/" target="_blank" class="external-card">
+                                    <div class="external-icon">✨</div>
+                                    <h3 class="external-title">星辰影院</h3>
+                                    <p class="external-desc">免费在线看电影</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- 视觉效果层 -->
+        <div class="visual-effects"></div>
+
+        <!-- 通知元素 -->
+        <div id="notification" class="notification"></div>
+
+        <!-- 背景音乐 -->
+        <audio id="bgMusic" loop>
+            <source src="/music/渔舟唱晚.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        // 视频BV号列表
+        const hakoneVideos = [
+            'BV1Wwd9YqE1i', // 箱根驿传1
+            'BV1NBwVeGEyJ', // 箱根驿传2
+            'BV14D4y1F7cg', // 箱根驿传3
+            'BV1b5411z7vC', // 箱根驿传4
+            'BV1Kb421Y7vb'  // 箱根驿传5
+        ];
+
+        const exoticVideos = [
+            'BV1pK411u7y6', // 异域风情1
+            'BV1gM4y117zU', // 异域风情2
+            'BV1Yp4y1W7u3'  // 异域风情3
+        ];
+
+        const battleVideos = [
+            'BV1wx411e71v', // 超燃战斗1
+            'BV1Qs411e7SN', // 超燃战斗2
+            'BV1Em4y1H7To'  // 超燃战斗3
+        ];
+
+        // 所有视频的集合，用于随机播放
+        const allVideos = [...hakoneVideos, ...exoticVideos, ...battleVideos];
+
+        // 影院与视频列表的映射
+        const theaterVideoMap = {
+            'hakone-theater': hakoneVideos,
+            'exotic-theater': exoticVideos,
+            'battle-theater': battleVideos
+        };
+
+        // 影院与iframe ID的映射
+        const theaterIframeMap = {
+            'hakone-theater': 'hakone-iframe',
+            'exotic-theater': 'exotic-iframe',
+            'battle-theater': 'battle-iframe'
+        };
+
+        // 初始化视觉效果
+        function initVisualEffects() {
+            const effectsContainer = document.querySelector('.visual-effects');
+
+            // 清空现有效果
+            effectsContainer.innerHTML = '';
+
+            // 创建新效果
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'effect-particle';
+                particle.style.width = `${Math.random() * 10 + 2}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.opacity = `${Math.random() * 0.3}`;
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+
+                effectsContainer.appendChild(particle);
+            }
+        }
+
+        // 更改特定影院的视频
+        function changeVideo(theaterId, index) {
+            const videos = theaterVideoMap[theaterId];
+            const iframeId = theaterIframeMap[theaterId];
+
+            if (index >= 0 && index < videos.length) {
+                const iframe = document.getElementById(iframeId);
+                iframe.src = `https://player.bilibili.com/player.html?bvid=${videos[index]}&p=1`;
+
+                // 高亮选中的按钮
+                const buttons = document.querySelectorAll(`#${theaterId} .video-btn`);
+                buttons.forEach((btn, i) => {
+                    if (i === index) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                showNotification(`正在播放 ${getVideoTitle(theaterId, index)}`);
+            }
+        }
+
+        // 获取视频标题
+        function getVideoTitle(theaterId, index) {
+            const theaterTitles = {
+                'hakone-theater': [
+                    '箱根驿传 第一集',
+                    '箱根驿传 第二集',
+                    '箱根驿传 第三集',
+                    '箱根驿传 第四集',
+                    '箱根驿传 第五集'
+                ],
+                'exotic-theater': [
+                    '异域风情 第一集',
+                    '异域风情 第二集',
+                    '异域风情 第三集'
+                ],
+                'battle-theater': [
+                    '超燃战斗 第一集',
+                    '超燃战斗 第二集',
+                    '超燃战斗 第三集'
+                ]
+            };
+
+            return theaterTitles[theaterId][index];
+        }
+
+        // 切换影院的显示与隐藏
+        function toggleTheater(theaterId) {
+            const content = document.getElementById(theaterId).querySelector('.theater-content');
+            const header = document.getElementById(theaterId).querySelector('.theater-header');
+
+            if (content.style.display === 'none' || content.style.display === '') {
+                // 关闭所有其他影院
+                document.querySelectorAll('.theater-content').forEach(element => {
+                    element.style.display = 'none';
+                });
+
+                document.querySelectorAll('.theater-header').forEach(element => {
+                    element.classList.remove('active');
+                });
+
+                // 打开当前影院
+                content.style.display = 'block';
+                header.classList.add('active');
+
+                // 更新侧边栏选中状态
+                document.querySelectorAll('.category-item').forEach(item => {
+                    if (item.getAttribute('data-target') === theaterId) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+
+                // 滚动到影院位置
+                document.getElementById(theaterId).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            } else {
+                content.style.display = 'none';
+                header.classList.remove('active');
+            }
+        }
+
+        // 随机播放视频
+        function playRandomVideo() {
+            // 随机选择一个BV号
+            const randomIndex = Math.floor(Math.random() * allVideos.length);
+            const randomBvid = allVideos[randomIndex];
+
+            // 确定该视频属于哪个影院
+            let targetTheater = '';
+            let videoIndex = -1;
+
+            if (hakoneVideos.includes(randomBvid)) {
+                targetTheater = 'hakone-theater';
+                videoIndex = hakoneVideos.indexOf(randomBvid);
+            } else if (exoticVideos.includes(randomBvid)) {
+                targetTheater = 'exotic-theater';
+                videoIndex = exoticVideos.indexOf(randomBvid);
+            } else if (battleVideos.includes(randomBvid)) {
+                targetTheater = 'battle-theater';
+                videoIndex = battleVideos.indexOf(randomBvid);
+            }
+
+            // 确保目标影院被打开
+            toggleTheater(targetTheater);
+
+            // 播放选中的视频
+            changeVideo(targetTheater, videoIndex);
+
+            showNotification('🎲 随机播放中...');
+        }
+
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.opacity = '1';
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+            }, 3000);
+        }
+
+        // 显示爆米花
+        function showPopcorn() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const popcorn = document.createElement('div');
+                    popcorn.className = 'popcorn';
+                    popcorn.textContent = '🍿';
+                    popcorn.style.left = Math.random() * window.innerWidth + 'px';
+                    popcorn.style.top = Math.random() * window.innerHeight + 'px';
+                    document.body.appendChild(popcorn);
+
+                    setTimeout(() => {
+                        popcorn.remove();
+                    }, 2000);
+                }, i * 200);
+            }
+
+            showNotification('🍿 爆米花来喽！');
+        }
+
+        // 切换暗模式
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+
+            const button = document.getElementById('darkModeBtn');
+            const icon = button.querySelector('i');
+
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'bi bi-brightness-high';
+                showNotification('🌙 已切换到黑暗模式');
+            } else {
+                icon.className = 'bi bi-moon-stars';
+                showNotification('☀️ 已切换到普通模式');
+            }
+        }
+
+        // 切换视觉效果
+        function toggleEffects() {
+            const effectsContainer = document.querySelector('.visual-effects');
+            const button = document.getElementById('effectsBtn');
+            const icon = button.querySelector('i');
+
+            if (effectsContainer.style.opacity === '0' || effectsContainer.style.opacity === '') {
+                effectsContainer.style.opacity = '1';
+                icon.className = 'bi bi-stars-fill';
+                initVisualEffects();
+                showNotification('✨ 视觉特效已开启');
+            } else {
+                effectsContainer.style.opacity = '0';
+                icon.className = 'bi bi-stars';
+                showNotification('✨ 视觉特效已关闭');
+            }
+        }
+
+        // 切换全屏模式
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                showNotification('🖥️ 已进入全屏模式');
+            } else {
+                document.exitFullscreen();
+                showNotification('🖥️ 已退出全屏模式');
+            }
+        }
+
+        // 切换背景音乐
+        function toggleBackgroundMusic() {
+            const bgMusic = document.getElementById('bgMusic');
+            const button = document.querySelector('.hero-buttons button:last-child');
+            const icon = button.querySelector('i');
+
+            if (bgMusic.paused) {
+                bgMusic.play();
+                icon.className = 'bi bi-music-note-beamed';
+                showNotification('🎵 背景音乐已开启');
+            } else {
+                bgMusic.pause();
+                icon.className = 'bi bi-music-note';
+                showNotification('🎵 背景音乐已关闭');
+            }
+        }
+
+        // 事件监听器设置
+        document.addEventListener('DOMContentLoaded', function () {
+            // 初始化视觉效果
+            initVisualEffects();
+
+            // 设置事件监听器
+            document.getElementById('darkModeBtn').addEventListener('click', toggleDarkMode);
+            document.getElementById('effectsBtn').addEventListener('click', toggleEffects);
+            document.getElementById('randomBtn').addEventListener('click', playRandomVideo);
+            document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
+            document.querySelector('.hero-buttons button:last-child').addEventListener('click', toggleBackgroundMusic);
+
+            // 设置侧边栏分类点击事件
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    toggleTheater(this.getAttribute('data-target'));
+                });
+            });
+
+            // 默认显示第一个影院
+            toggleTheater('hakone-theater');
+
+            // 显示加载动画
+            const loading = document.querySelector('.loading');
+            loading.style.opacity = '1';
+
+            // 页面加载完成后隐藏加载动画
+            window.addEventListener('load', function () {
+                setTimeout(() => {
+                    loading.style.opacity = '0';
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                    }, 500);
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+
+</html>

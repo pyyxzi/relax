@@ -19,15 +19,15 @@
   <meta name="author" content="彭于晏">
   <meta name="keywords" content="">
   
-    <meta name="description" content="🎬 沙子坑影院">
+    <meta name="description" content="现代影院           :root {       --primary-color: #6C63FF;       --secondary-color: #F857A6;       --dark-color: #1A1A2E;       --light-color: #F5F5F7;       --accent-color: #4ECCA3;       --g">
 <meta property="og:type" content="website">
 <meta property="og:title" content="放映厅">
 <meta property="og:url" content="http://example.com/%E6%94%BE%E6%98%A0%E5%8E%85/index.html">
 <meta property="og:site_name" content="赛博窥天阁">
-<meta property="og:description" content="🎬 沙子坑影院">
+<meta property="og:description" content="现代影院           :root {       --primary-color: #6C63FF;       --secondary-color: #F857A6;       --dark-color: #1A1A2E;       --light-color: #F5F5F7;       --accent-color: #4ECCA3;       --g">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-16T13:36:02.000Z">
-<meta property="article:modified_time" content="2025-04-23T14:19:16.948Z">
+<meta property="article:modified_time" content="2025-04-29T05:47:25.251Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -209,9 +209,25 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/play/3d%E7%9B%B8%E5%86%8C.html" target="_blank">
+                  <a class="dropdown-item" href="/play/verification.html" target="_blank">
                     <i class="iconfont icon-image"></i>
-                    <span>3d相册</span>
+                    <span>相册</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/play/cool/Desktop.html" target="_self">
+                    <i class="iconfont icon-th-large"></i>
+                    <span>工作台</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/play/cool/love-master/index.html" target="_self">
+                    <i class="iconfont icon-telegram-fill"></i>
+                    <span>彬的表白定制</span>
                   </a>
                 
               </div>
@@ -249,7 +265,7 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/%E6%94%BE%E6%98%A0%E5%8E%85" target="_self">
+                  <a class="dropdown-item" href="/play/cool/video.html" target="_self">
                     <i class="iconfont icon-youtube-fill"></i>
                     <span>放映厅</span>
                   </a>
@@ -336,1278 +352,964 @@
 
 <article class="page-content">
   
-<div class="cinema-container" style="background: linear-gradient(to bottom, #0a0a20, #1a1a40); padding: 30px; min-height: 100vh; font-family: 'Microsoft YaHei', sans-serif;">
-  
-  <!-- 3D背景效果 -->
-  <div class="cinema-3d-bg">
-    <div class="cube"></div>
-    <div class="cube"></div>
-    <div class="cube"></div>
-    <div class="cube"></div>
-    <div class="cube"></div>
-  </div>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>现代影院</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --primary-color: #6C63FF;
+      --secondary-color: #F857A6;
+      --dark-color: #1A1A2E;
+      --light-color: #F5F5F7;
+      --accent-color: #4ECCA3;
+      --gradient-primary: linear-gradient(135deg, #6C63FF, #F857A6);
+      --gradient-dark: linear-gradient(135deg, #0F0F23, #1F1F3F);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      --border-radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
 
-  <!-- 粒子效果 -->
-  <div class="particles-container">
-    <canvas id="particles"></canvas>
-  </div>
-  
-  <!-- 动态背景 -->
-  <div class="dynamic-bg">
-    <div class="star star1"></div>
-    <div class="star star2"></div>
-    <div class="star star3"></div>
-    <div class="star star4"></div>
-    <div class="star star5"></div>
-    <div class="star star6"></div>
-    <div class="star star7"></div>
-    <div class="star star8"></div>
-  </div>
-  
-  <!-- 影院幕布 -->
-  <div class="cinema-curtain">
-    <div class="curtain-left"></div>
-    <div class="curtain-right"></div>
-  </div>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <!-- 光影效果 -->
-  <div class="light-effects">
-    <div class="spotlight spotlight1"></div>
-    <div class="spotlight spotlight2"></div>
-    <div class="spotlight spotlight3"></div>
-  </div>
-  
-  <!-- 页面标题 -->
-  <div class="cinema-header" style="text-align: center; margin-bottom: 50px; position: relative;">
-    <h1 class="cinema-title" style="color: #e4e4e4; font-size: 3.5em; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); letter-spacing: 3px; font-weight: bold;">
-      🎬 沙子坑影院
-    </h1>
-    <div class="header-decoration" style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 300px; height: 4px; background: linear-gradient(90deg, transparent, #ff4d8d, transparent);"></div>
-    
-    <!-- 功能按钮区 -->
-    <div class="function-buttons" style="margin-top: 30px; display: flex; justify-content: center; gap: 20px;">
-      <!-- 随机播放按钮 -->
-      <button onclick="playRandomVideo()" class="cinema-button" style="background: linear-gradient(90deg, #ff4d8d, #ff9b66);">
-        <span style="margin-right: 10px;">🎲</span> 随机震撼体验
-      </button>
+    body {
+      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background-color: var(--dark-color);
+      color: var(--light-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .cinema-app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 导航栏 */
+    .navbar {
+      background: rgba(15, 15, 35, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo i {
+      color: var(--secondary-color);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    /* 英雄区 */
+    .hero {
+      background: var(--gradient-dark);
+      padding: 60px 0;
+      text-align: center;
+      border-radius: 0 0 var(--border-radius) var(--border-radius);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0.85;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    /* 按钮样式 */
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+      color: white;
+    }
+
+    .btn-primary {
+      background: var(--gradient-primary);
+      box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(108, 99, 255, 0.6);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      padding: 0;
+    }
+
+    /* 影院布局 */
+    .cinema-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 50px 0;
+    }
+
+    .sidebar {
+      flex: 0 0 280px;
+    }
+
+    .main-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* 侧边栏卡片 */
+    .sidebar-card {
+      background: rgba(30, 30, 60, 0.6);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-card h3 i {
+      color: var(--accent-color);
+    }
+
+    /* 电影分类 */
+    .category-list {
+      list-style: none;
+    }
+
+    .category-item {
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .category-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .category-item.active {
+      background: rgba(108, 99, 255, 0.2);
+      border-left: 3px solid var(--primary-color);
+    }
+
+    .category-item i {
+      margin-right: 12px;
+      font-size: 1.1rem;
+    }
+
+    /* 影院厅 */
+    .theater {
+      background: rgba(30, 30, 60, 0.5);
+      border-radius: var(--border-radius);
+      margin-bottom: 40px;
+      overflow: hidden;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .theater:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .theater-header {
+      padding: 20px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theater-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-primary);
+      opacity: 0.85;
+      z-index: -1;
+    }
+
+    .theater-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .theater-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .theater-toggle {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .theater-header.active .theater-toggle {
+      transform: rotate(180deg);
+    }
+
+    .theater-content {
+      display: none;
+      padding: 0;
+      position: relative;
+    }
+
+    .theater-video {
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%; /* 16:9 纵横比 */
+      position: relative;
+    }
+
+    .theater-video iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-controls {
+      background: rgba(15, 15, 35, 0.8);
+      padding: 15px 25px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .video-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+
+    .video-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .video-btn.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    /* 外部链接卡片 */
+    .external-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 25px;
+    }
+
+    .external-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      text-align: center;
+      transition: var(--transition);
+      text-decoration: none;
+      color: var(--light-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .external-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .external-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--secondary-color);
+    }
+
+    .external-title {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .external-desc {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    /* 黑暗模式效果 */
+    .dark-mode {
+      background-color: #000;
+    }
+
+    .dark-mode .theater {
+      background: rgba(25, 25, 40, 0.3);
+    }
+
+    .dark-mode .sidebar-card {
+      background: rgba(25, 25, 40, 0.3);
+    }
+
+    /* 视觉效果 */
+    .visual-effects {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .effect-particle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 15s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      25% {
+        transform: translate(100px, 100px);
+      }
+      50% {
+        transform: translate(50px, 200px);
+      }
+      75% {
+        transform: translate(200px, 50px);
+      }
+    }
+
+    /* 通知样式 */
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      z-index: 1000;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-size: 16px;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    /* 媒体查询 */
+    @media (max-width: 992px) {
+      .cinema-layout {
+        flex-direction: column;
+      }
       
-      <!-- 关灯按钮 -->
-      <button id="lightToggle" onclick="toggleLights()" class="cinema-button" style="background: linear-gradient(90deg, #6a11cb, #2575fc);">
-        <span style="margin-right: 10px;">💡</span> 关灯模式
-      </button>
+      .sidebar {
+        flex: 0 0 100%;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .external-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-      <!-- 爆米花按钮 -->
-      <button onclick="showPopcorn()" class="cinema-button" style="background: linear-gradient(90deg, #ff9966, #ff5e62);">
-        <span style="margin-right: 10px;">🍿</span> 来份爆米花
-      </button>
+    @media (max-width: 768px) {
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .external-links {
+        grid-template-columns: 1fr;
+      }
+      
+      .theater-title {
+        font-size: 1.2rem;
+      }
+    }
 
-      <!-- 特效按钮 -->
-      <button onclick="toggleEffects()" class="cinema-button" style="background: linear-gradient(90deg, #00b4d8, #0096c7);">
-        <span style="margin-right: 10px;">✨</span> 特效模式
-      </button>
-    </div>
-  </div>
+    /* 爆米花动画 */
+    .popcorn {
+      position: fixed;
+      font-size: 24px;
+      animation: popcorn 2s ease-in-out infinite;
+      z-index: 1000;
+      pointer-events: none;
+    }
 
-  <!-- 影院座位区 -->
-  <div class="cinema-seats">
-    <div class="screen"></div>
-    <div class="seats-grid"></div>
-  </div>
-
-  <!-- 影院列表 -->
-  <div class="theaters-container" style="max-width: 1200px; margin: 0 auto;">
-    
-    <!-- 1号厅：箱根驿传 -->
-    <div class="theater-section" style="margin-bottom: 60px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;">
-      <div class="theater-header" onclick="toggleTheater('hakone-theater')" style="padding: 25px; background: linear-gradient(90deg, #d32f2f, #f44336); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-        <h2 style="color: #fff; margin: 0; font-size: 1.8em; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
-          <span style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; margin-right: 15px; box-shadow: 0 0 10px rgba(255,255,255,0.3);">🏃</span>
-          1号厅：箱根驿传，风驰电掣
-        </h2>
-        <span class="toggle-icon" style="color: #fff; font-size: 1.8em; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">▼</span>
-      </div>
-      <div id="hakone-theater" class="theater-content" style="display: none; padding: 25px; position: relative;">
-        <div class="theater-control" style="position: absolute; top: 25px; right: 25px; z-index: 10; display: flex; gap: 10px;">
-          <button onclick="changeVideo('hakone-theater', 0)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">1</button>
-          <button onclick="changeVideo('hakone-theater', 1)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">2</button>
-          <button onclick="changeVideo('hakone-theater', 2)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">3</button>
-          <button onclick="changeVideo('hakone-theater', 3)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">4</button>
-          <button onclick="changeVideo('hakone-theater', 4)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">5</button>
+    @keyframes popcorn {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="cinema-app">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+      <div class="container navbar-container">
+        <a href="#" class="logo">
+          <i class="bi bi-film"></i> 寰宇影院
+        </a>
+        <div class="nav-buttons">
+          <button id="darkModeBtn" class="btn btn-icon btn-outline" title="切换夜间模式">
+            <i class="bi bi-moon-stars"></i>
+          </button>
+          <button id="effectsBtn" class="btn btn-icon btn-outline" title="视觉特效">
+            <i class="bi bi-stars"></i>
+          </button>
+          <button id="randomBtn" class="btn btn-outline">
+            <i class="bi bi-shuffle"></i> 随机播放
+          </button>
         </div>
-        <iframe id="hakone-iframe" src="//player.bilibili.com/player.html?bvid=BV1Wwd9YqE1i&p=1"
-                style="width: 100%; height: 650px; border: none; border-radius: 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);"
-                allowfullscreen="true">
-        </iframe>
       </div>
-    </div>
+    </nav>
 
-    <!-- 2号厅：异域风情 -->
-    <div class="theater-section" style="margin-bottom: 60px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;">
-      <div class="theater-header" onclick="toggleTheater('exotic-theater')" style="padding: 25px; background: linear-gradient(90deg, #00695c, #009688); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-        <h2 style="color: #fff; margin: 0; font-size: 1.8em; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
-          <span style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; margin-right: 15px; box-shadow: 0 0 10px rgba(255,255,255,0.3);">🌏</span>
-          2号厅：异域风情，彼岸之息
-        </h2>
-        <span class="toggle-icon" style="color: #fff; font-size: 1.8em; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">▼</span>
-      </div>
-      <div id="exotic-theater" class="theater-content" style="display: none; padding: 25px; position: relative;">
-        <div class="theater-control" style="position: absolute; top: 25px; right: 25px; z-index: 10; display: flex; gap: 10px;">
-          <button onclick="changeVideo('exotic-theater', 0)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">1</button>
-          <button onclick="changeVideo('exotic-theater', 1)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">2</button>
-          <button onclick="changeVideo('exotic-theater', 2)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">3</button>
+    <!-- 英雄区 -->
+    <section class="hero">
+      <div class="container">
+        <h1>沉浸式观影体验</h1>
+        <p>探索无边界的视听盛宴，精选高品质影像内容，尽在寰宇影院</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="playRandomVideo()">
+            <i class="bi bi-play-fill"></i> 立即观看
+          </button>
+          <button class="btn btn-outline" onclick="showPopcorn()">
+            <i class="bi bi-cup-hot"></i> 来份爆米花
+          </button>
         </div>
-        <iframe id="exotic-iframe" src="//player.bilibili.com/player.html?bvid=BV1pK411u7y6&p=1"
-                style="width: 100%; height: 650px; border: none; border-radius: 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);"
-                allowfullscreen="true">
-        </iframe>
       </div>
-    </div>
+    </section>
 
-    <!-- 3号厅：超燃战斗 -->
-    <div class="theater-section" style="margin-bottom: 60px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;">
-      <div class="theater-header" onclick="toggleTheater('battle-theater')" style="padding: 25px; background: linear-gradient(90deg, #303f9f, #5c6bc0); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-        <h2 style="color: #fff; margin: 0; font-size: 1.8em; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
-          <span style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; margin-right: 15px; box-shadow: 0 0 10px rgba(255,255,255,0.3);">⚔️</span>
-          3号厅：超燃战斗，电光石火
-        </h2>
-        <span class="toggle-icon" style="color: #fff; font-size: 1.8em; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">▼</span>
-      </div>
-      <div id="battle-theater" class="theater-content" style="display: none; padding: 25px; position: relative;">
-        <div class="theater-control" style="position: absolute; top: 25px; right: 25px; z-index: 10; display: flex; gap: 10px;">
-          <button onclick="changeVideo('battle-theater', 0)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">1</button>
-          <button onclick="changeVideo('battle-theater', 1)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">2</button>
-          <button onclick="changeVideo('battle-theater', 2)" class="control-button" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: all 0.3s ease;">3</button>
-        </div>
-        <iframe id="battle-iframe" src="//player.bilibili.com/player.html?bvid=BV1wx411e71v&p=1"
-                style="width: 100%; height: 650px; border: none; border-radius: 10px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);"
-                allowfullscreen="true">
-        </iframe>
-      </div>
-    </div>
-
-    <!-- 6号厅：享你所想 -->
-    <div class="theater-section" style="margin-bottom: 60px; background: rgba(0, 0, 0, 0.4); border-radius: 15px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;">
-      <div class="theater-header" onclick="toggleTheater('enjoy-theater')" style="padding: 25px; background: linear-gradient(90deg, #6a11cb, #2575fc); cursor: pointer; display: flex; justify-content: space-between; align-items: center;">
-        <h2 style="color: #fff; margin: 0; font-size: 1.8em; display: flex; align-items: center; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">
-          <span style="background: rgba(255, 255, 255, 0.2); border-radius: 50%; width: 45px; height: 45px; display: inline-flex; justify-content: center; align-items: center; margin-right: 15px; box-shadow: 0 0 10px rgba(255,255,255,0.3);">🌈</span>
-          6号厅：享你所想
-        </h2>
-        <span class="toggle-icon" style="color: #fff; font-size: 1.8em; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">▼</span>
-      </div>
-      <div id="enjoy-theater" class="theater-content" style="display: none; padding: 25px;">
-        <div class="external-sites" style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
-          <!-- 茶杯狐 -->
-          <a href="https://cupfox.love/" target="_blank" class="site-card" style="text-decoration: none; color: white; background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); border-radius: 15px; width: 300px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: all 0.3s ease; position: relative; overflow: hidden;">
-            <div class="site-icon" style="font-size: 48px; margin-bottom: 15px;">🦊</div>
-            <h3 style="margin: 0; font-size: 1.5em; text-shadow: 0 2px 5px rgba(0,0,0,0.3);">茶杯狐</h3>
-            <p style="margin: 5px 0 0 0; text-align: center; font-size: 1em;">片荒剧荒速来</p>
-            <div class="site-hover-effect" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,154,158,0.5) 0%, rgba(250,208,196,0.5) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center;">
-              <span style="background: rgba(255,255,255,0.2); border-radius: 50px; padding: 10px 20px; font-weight: bold;">点击访问</span>
-            </div>
-          </a>
+    <!-- 影院主体 -->
+    <div class="container">
+      <div class="cinema-layout">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+          <div class="sidebar-card">
+            <h3><i class="bi bi-collection-play"></i> 影片分类</h3>
+            <ul class="category-list">
+              <li class="category-item active" data-target="hakone-theater">
+                <i class="bi bi-trophy"></i> 箱根驿传
+              </li>
+              <li class="category-item" data-target="exotic-theater">
+                <i class="bi bi-globe"></i> 异域风情
+              </li>
+              <li class="category-item" data-target="battle-theater">
+                <i class="bi bi-lightning"></i> 超燃战斗
+              </li>
+              <li class="category-item" data-target="enjoy-theater">
+                <i class="bi bi-link-45deg"></i> 更多资源
+              </li>
+            </ul>
+          </div>
           
-          <!-- fofo影院 -->
-          <a href="https://www.fofo11.com/" target="_blank" class="site-card" style="text-decoration: none; color: white; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); border-radius: 15px; width: 300px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: all 0.3s ease; position: relative; overflow: hidden;">
-            <div class="site-icon" style="font-size: 48px; margin-bottom: 15px;">🎬</div>
-            <h3 style="margin: 0; font-size: 1.5em; text-shadow: 0 2px 5px rgba(0,0,0,0.3);">fofo影院</h3>
-            <p style="margin: 5px 0 0 0; text-align: center; font-size: 1em;">免费在线看电影</p>
-            <div class="site-hover-effect" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(161,140,209,0.5) 0%, rgba(251,194,235,0.5) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center;">
-              <span style="background: rgba(255,255,255,0.2); border-radius: 50px; padding: 10px 20px; font-weight: bold;">点击访问</span>
+          <div class="sidebar-card">
+            <h3><i class="bi bi-info-circle"></i> 关于影院</h3>
+            <p>寰宇影院为您精选全球优质视频内容，打造沉浸式观影体验。本站所有资源均来自互联网，仅供学习交流使用。</p>
+            <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.7;">更新日期: 2025-04-16</p>
+          </div>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+          <!-- 1号厅：箱根驿传 -->
+          <div id="hakone-theater" class="theater">
+            <div class="theater-header active" onclick="toggleTheater('hakone-theater')">
+              <div class="theater-title">
+                <div class="theater-icon"><i class="bi bi-trophy"></i></div>
+                1号厅：箱根驿传，风驰电掣
+              </div>
+              <div class="theater-toggle"><i class="bi bi-chevron-down"></i></div>
             </div>
-          </a>
-          
-          <!-- 星辰影院 -->
-          <a href="https://www.xcyycn.com/" target="_blank" class="site-card" style="text-decoration: none; color: white; background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); border-radius: 15px; width: 300px; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); transition: all 0.3s ease; position: relative; overflow: hidden;">
-            <div class="site-icon" style="font-size: 48px; margin-bottom: 15px;">✨</div>
-            <h3 style="margin: 0; font-size: 1.5em; text-shadow: 0 2px 5px rgba(0,0,0,0.3);">星辰影院</h3>
-            <p style="margin: 5px 0 0 0; text-align: center; font-size: 1em;">免费在线看电影</p>
-            <div class="site-hover-effect" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(132,250,176,0.5) 0%, rgba(143,211,244,0.5) 100%); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center;">
-              <span style="background: rgba(255,255,255,0.2); border-radius: 50px; padding: 10px 20px; font-weight: bold;">点击访问</span>
+            <div class="theater-content" style="display: block;">
+              <div class="theater-video">
+                <iframe id="hakone-iframe" src="//player.bilibili.com/player.html?bvid=BV1Wwd9YqE1i&p=1" allowfullscreen="true"></iframe>
+              </div>
+              <div class="video-controls">
+                <button class="video-btn active" onclick="changeVideo('hakone-theater', 0)">第一集</button>
+                <button class="video-btn" onclick="changeVideo('hakone-theater', 1)">第二集</button>
+                <button class="video-btn" onclick="changeVideo('hakone-theater', 2)">第三集</button>
+                <button class="video-btn" onclick="changeVideo('hakone-theater', 3)">第四集</button>
+                <button class="video-btn" onclick="changeVideo('hakone-theater', 4)">第五集</button>
+              </div>
             </div>
-          </a>
-        </div>
+          </div>
+
+          <!-- 2号厅：异域风情 -->
+          <div id="exotic-theater" class="theater">
+            <div class="theater-header" onclick="toggleTheater('exotic-theater')">
+              <div class="theater-title">
+                <div class="theater-icon"><i class="bi bi-globe"></i></div>
+                2号厅：异域风情，彼岸之息
+              </div>
+              <div class="theater-toggle"><i class="bi bi-chevron-down"></i></div>
+            </div>
+            <div class="theater-content">
+              <div class="theater-video">
+                <iframe id="exotic-iframe" src="//player.bilibili.com/player.html?bvid=BV1pK411u7y6&p=1" allowfullscreen="true"></iframe>
+              </div>
+              <div class="video-controls">
+                <button class="video-btn active" onclick="changeVideo('exotic-theater', 0)">第一集</button>
+                <button class="video-btn" onclick="changeVideo('exotic-theater', 1)">第二集</button>
+                <button class="video-btn" onclick="changeVideo('exotic-theater', 2)">第三集</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3号厅：超燃战斗 -->
+          <div id="battle-theater" class="theater">
+            <div class="theater-header" onclick="toggleTheater('battle-theater')">
+              <div class="theater-title">
+                <div class="theater-icon"><i class="bi bi-lightning"></i></div>
+                3号厅：超燃战斗，电光石火
+              </div>
+              <div class="theater-toggle"><i class="bi bi-chevron-down"></i></div>
+            </div>
+            <div class="theater-content">
+              <div class="theater-video">
+                <iframe id="battle-iframe" src="//player.bilibili.com/player.html?bvid=BV1wx411e71v&p=1" allowfullscreen="true"></iframe>
+              </div>
+              <div class="video-controls">
+                <button class="video-btn active" onclick="changeVideo('battle-theater', 0)">第一集</button>
+                <button class="video-btn" onclick="changeVideo('battle-theater', 1)">第二集</button>
+                <button class="video-btn" onclick="changeVideo('battle-theater', 2)">第三集</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6号厅：享你所想 -->
+          <div id="enjoy-theater" class="theater">
+            <div class="theater-header" onclick="toggleTheater('enjoy-theater')">
+              <div class="theater-title">
+                <div class="theater-icon"><i class="bi bi-link-45deg"></i></div>
+                6号厅：更多资源
+              </div>
+              <div class="theater-toggle"><i class="bi bi-chevron-down"></i></div>
+            </div>
+            <div class="theater-content">
+              <div class="external-links">
+                <!-- 茶杯狐 -->
+                <a href="https://cupfox.love/" target="_blank" class="external-card">
+                  <div class="external-icon">🦊</div>
+                  <h3 class="external-title">茶杯狐</h3>
+                  <p class="external-desc">片荒剧荒速来</p>
+                </a>
+                
+                <!-- fofo影院 -->
+                <a href="https://www.fofo11.com/" target="_blank" class="external-card">
+                  <div class="external-icon">🎬</div>
+                  <h3 class="external-title">fofo影院</h3>
+                  <p class="external-desc">免费在线看电影</p>
+                </a>
+                
+                <!-- 星辰影院 -->
+                <a href="https://www.xcyycn.com/" target="_blank" class="external-card">
+                  <div class="external-icon">✨</div>
+                  <h3 class="external-title">星辰影院</h3>
+                  <p class="external-desc">免费在线看电影</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
     
-  </div>
-</div>
-
-<style>
-/* 新增3D背景效果 */
-.cinema-3d-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  pointer-events: none;
-}
-
-.cube {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  transform-style: preserve-3d;
-  animation: float 20s infinite linear;
-}
-
-.cube:nth-child(1) {
-  top: 10%;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.cube:nth-child(2) {
-  top: 30%;
-  right: 20%;
-  animation-delay: -5s;
-}
-
-.cube:nth-child(3) {
-  bottom: 20%;
-  left: 30%;
-  animation-delay: -10s;
-}
-
-.cube:nth-child(4) {
-  top: 50%;
-  right: 40%;
-  animation-delay: -15s;
-}
-
-.cube:nth-child(5) {
-  bottom: 40%;
-  left: 60%;
-  animation-delay: -20s;
-}
-
-@keyframes float {
-  0% {
-    transform: translateZ(0) rotateX(0) rotateY(0);
-  }
-  100% {
-    transform: translateZ(500px) rotateX(360deg) rotateY(360deg);
-  }
-}
-
-/* 新增粒子效果 */
-.particles-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-#particles {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-/* 新增光影效果 */
-.light-effects {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.spotlight {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-  filter: blur(20px);
-  animation: spotlightMove 15s infinite ease-in-out;
-}
-
-.spotlight1 {
-  top: 20%;
-  left: 20%;
-  animation-delay: 0s;
-}
-
-.spotlight2 {
-  top: 60%;
-  right: 20%;
-  animation-delay: -5s;
-}
-
-.spotlight3 {
-  bottom: 20%;
-  left: 50%;
-  animation-delay: -10s;
-}
-
-@keyframes spotlightMove {
-  0%, 100% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(100px, 50px);
-  }
-  50% {
-    transform: translate(-50px, 100px);
-  }
-  75% {
-    transform: translate(50px, -50px);
-  }
-}
-
-/* 新增标题动画 */
-.cinema-title {
-  position: relative;
-  animation: titleGlow 3s infinite ease-in-out;
-}
-
-@keyframes titleGlow {
-  0%, 100% {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-  }
-  50% {
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
-                 0 0 50px rgba(255, 255, 255, 0.4);
-  }
-}
-
-/* 新增特效模式样式 */
-.effects-on .cinema-3d-bg .cube {
-  animation-play-state: running;
-}
-
-.effects-on .spotlight {
-  animation-play-state: running;
-}
-
-.effects-on .cinema-title {
-  animation-play-state: running;
-}
-
-.effects-off .cinema-3d-bg .cube {
-  animation-play-state: paused;
-}
-
-.effects-off .spotlight {
-  animation-play-state: paused;
-}
-
-.effects-off .cinema-title {
-  animation-play-state: paused;
-}
-
-/* 动态背景 */
-.dynamic-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.star {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  filter: blur(1px);
-  animation: twinkle 7s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
-}
-
-.star1 {
-  width: 2px;
-  height: 2px;
-  top: 10%;
-  left: 20%;
-  animation-delay: 0s;
-}
-
-.star2 {
-  width: 3px;
-  height: 3px;
-  top: 30%;
-  left: 85%;
-  animation-delay: 1s;
-}
-
-.star3 {
-  width: 2px;
-  height: 2px;
-  top: 70%;
-  left: 40%;
-  animation-delay: 1.5s;
-}
-
-.star4 {
-  width: 4px;
-  height: 4px;
-  top: 40%;
-  left: 10%;
-  animation-delay: 2s;
-}
-
-.star5 {
-  width: 3px;
-  height: 3px;
-  top: 80%;
-  left: 80%;
-  animation-delay: 2.5s;
-}
-
-.star6 {
-  width: 2px;
-  height: 2px;
-  top: 20%;
-  left: 60%;
-  animation-delay: 3s;
-}
-
-.star7 {
-  width: 3px;
-  height: 3px;
-  top: 60%;
-  left: 15%;
-  animation-delay: 3.5s;
-}
-
-.star8 {
-  width: 2px;
-  height: 2px;
-  top: 50%;
-  left: 75%;
-  animation-delay: 4s;
-}
-
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 0.2;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.5);
-  }
-}
-
-.cinema-container {
-  position: relative;
-  z-index: 1;
-  transition: background 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* 关灯模式 */
-.lights-off .dynamic-bg .star {
-  opacity: 1;
-  filter: blur(1px);
-}
-
-.lights-off {
-  background: rgba(5, 5, 15, 0.95) !important;
-}
-
-.lights-off .theater-section,
-.lights-off .theater-header {
-  background: rgba(0, 0, 0, 0.7) !important;
-}
-
-.lights-off .cinema-header h1 {
-  opacity: 0.7;
-}
-
-.lights-off .header-decoration,
-.lights-off .random-button,
-.lights-off .toggle-icon,
-.lights-off .theater-control {
-  opacity: 0.5;
-}
-
-.lights-off .theater-content:not(.active-theater) {
-  opacity: 0.3;
-}
-
-.lights-off .active-theater {
-  box-shadow: 0 0 50px rgba(255, 255, 255, 0.1) !important;
-}
-
-/* 站点卡片悬停效果 */
-.site-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-}
-
-.site-card:hover .site-hover-effect {
-  opacity: 1;
-}
-
-/* 动画效果 */
-@keyframes glow {
-  0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); }
-  100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0px); }
-}
-
-.theater-section {
-  transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.theater-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-  pointer-events: none;
-}
-
-.theater-section:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-}
-
-.random-button button {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.random-button button::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
-}
-
-.random-button button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(255, 77, 141, 0.7);
-  animation: pulse 2.2s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
-}
-
-.random-button button:hover::after {
-  opacity: 1;
-  animation: float 4s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
-}
-
-.theater-header {
-  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.theater-header::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-  transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
-
-.theater-header:hover {
-  filter: brightness(1.3);
-}
-
-.theater-header:hover::after {
-  left: 100%;
-}
-
-.toggle-icon {
-  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.theater-header.active .toggle-icon {
-  transform: rotate(180deg);
-}
-
-.theater-content {
-  animation: slideDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.control-button {
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-}
-
-.control-button:hover {
-  background: rgba(255,255,255,0.4) !important;
-  transform: scale(1.1);
-}
-
-.site-card {
-  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-}
-
-/* 响应式设计 */
-@media (max-width: 992px) {
-  .cinema-container {
-    padding: 20px;
-  }
-  
-  .cinema-header h1 {
-    font-size: 2.5em;
-  }
-  
-  .theater-content iframe {
-    height: 500px;
-  }
-  
-  .theater-header h2 {
-    font-size: 1.5em;
-  }
-}
-
-@media (max-width: 768px) {
-  .cinema-container {
-    padding: 15px;
-  }
-  
-  .cinema-header h1 {
-    font-size: 2em;
-  }
-  
-  .theater-content iframe {
-    height: 350px;
-  }
-  
-  .theater-control {
-    position: relative !important;
-    top: 0 !important;
-    right: 0 !important;
-    margin-bottom: 15px;
-    justify-content: center;
-  }
-  
-  .theater-header h2 {
-    font-size: 1.2em;
-  }
-  
-  .theater-header h2 span {
-    width: 36px !important;
-    height: 36px !important;
-  }
-}
-
-/* 新增影院幕布样式 */
-.cinema-curtain {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.curtain-left, .curtain-right {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(255,0,0,0.1), rgba(255,0,0,0.05));
-  transition: transform 1s ease;
-}
-
-.curtain-left {
-  left: 0;
-  transform-origin: left;
-  transform: translateX(-100%);
-}
-
-.curtain-right {
-  right: 0;
-  transform-origin: right;
-  transform: translateX(100%);
-}
-
-.lights-off .curtain-left {
-  transform: translateX(0);
-}
-
-.lights-off .curtain-right {
-  transform: translateX(0);
-}
-
-/* 新增影院座位区样式 */
-.cinema-seats {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.1;
-  transition: opacity 0.5s ease;
-}
-
-.screen {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 20px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(255,255,255,0.2);
-}
-
-.seats-grid {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  height: 60%;
-  display: grid;
-  grid-template-columns: repeat(20, 1fr);
-  grid-template-rows: repeat(10, 1fr);
-  gap: 5px;
-}
-
-.seats-grid::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 20px,
-    rgba(255,255,255,0.05) 20px,
-    rgba(255,255,255,0.05) 40px
-  );
-}
-
-.lights-off .cinema-seats {
-  opacity: 0.3;
-}
-
-/* 新增按钮样式 */
-.cinema-button {
-  border: none;
-  color: white;
-  padding: 12px 30px;
-  border-radius: 50px;
-  font-size: 18px;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.cinema-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: 0.5s;
-}
-
-.cinema-button:hover::before {
-  left: 100%;
-}
-
-.cinema-button:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-}
-
-/* 新增爆米花动画 */
-@keyframes popcorn {
-  0% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(180deg); }
-  100% { transform: translateY(0) rotate(360deg); }
-}
-
-.popcorn {
-  position: fixed;
-  font-size: 24px;
-  animation: popcorn 2s ease-in-out infinite;
-  z-index: 1000;
-}
-</style>
-
-<script>
-// 视频BV号列表
-const hakoneVideos = [
-  'BV1Wwd9YqE1i', // 箱根驿传1
-  'BV1NBwVeGEyJ', // 箱根驿传2
-  'BV14D4y1F7cg', // 箱根驿传3
-  'BV1b5411z7vC', // 箱根驿传4
-  'BV1Kb421Y7vb'  // 箱根驿传5
-];
-
-const exoticVideos = [
-  'BV1pK411u7y6', // 异域风情1
-  'BV1gM4y117zU', // 异域风情2
-  'BV1Yp4y1W7u3'  // 异域风情3
-];
-
-const battleVideos = [
-  'BV1wx411e71v', // 超燃战斗1
-  'BV1Qs411e7SN', // 超燃战斗2
-  'BV1Em4y1H7To'  // 超燃战斗3
-];
-
-// 所有视频的集合，用于随机播放
-const allVideos = [...hakoneVideos, ...exoticVideos, ...battleVideos];
-
-// 影院与视频列表的映射
-const theaterVideoMap = {
-  'hakone-theater': hakoneVideos,
-  'exotic-theater': exoticVideos,
-  'battle-theater': battleVideos
-};
-
-// 影院与iframe ID的映射
-const theaterIframeMap = {
-  'hakone-theater': 'hakone-iframe',
-  'exotic-theater': 'exotic-iframe',
-  'battle-theater': 'battle-iframe'
-};
-
-// 更改特定影院的视频
-function changeVideo(theaterId, index) {
-  const videos = theaterVideoMap[theaterId];
-  const iframeId = theaterIframeMap[theaterId];
-  
-  if (index >= 0 && index < videos.length) {
-    const iframe = document.getElementById(iframeId);
-    iframe.src = `//player.bilibili.com/player.html?bvid=${videos[index]}&p=1`;
+    <!-- 视觉效果层 -->
+    <div class="visual-effects"></div>
     
-    // 高亮选中的按钮
-    const buttons = document.querySelectorAll(`#${theaterId} .control-button`);
-    buttons.forEach((btn, i) => {
-      if (i === index) {
-        btn.style.background = 'rgba(255,255,255,0.4)';
-        btn.style.transform = 'scale(1.1)';
+    <!-- 通知元素 -->
+    <div id="notification" class="notification"></div>
+  </div>
+
+  <script>
+    // 视频BV号列表
+    const hakoneVideos = [
+      'BV1Wwd9YqE1i', // 箱根驿传1
+      'BV1NBwVeGEyJ', // 箱根驿传2
+      'BV14D4y1F7cg', // 箱根驿传3
+      'BV1b5411z7vC', // 箱根驿传4
+      'BV1Kb421Y7vb'  // 箱根驿传5
+    ];
+
+    const exoticVideos = [
+      'BV1pK411u7y6', // 异域风情1
+      'BV1gM4y117zU', // 异域风情2
+      'BV1Yp4y1W7u3'  // 异域风情3
+    ];
+
+    const battleVideos = [
+      'BV1wx411e71v', // 超燃战斗1
+      'BV1Qs411e7SN', // 超燃战斗2
+      'BV1Em4y1H7To'  // 超燃战斗3
+    ];
+
+    // 所有视频的集合，用于随机播放
+    const allVideos = [...hakoneVideos, ...exoticVideos, ...battleVideos];
+
+    // 影院与视频列表的映射
+    const theaterVideoMap = {
+      'hakone-theater': hakoneVideos,
+      'exotic-theater': exoticVideos,
+      'battle-theater': battleVideos
+    };
+
+    // 影院与iframe ID的映射
+    const theaterIframeMap = {
+      'hakone-theater': 'hakone-iframe',
+      'exotic-theater': 'exotic-iframe',
+      'battle-theater': 'battle-iframe'
+    };
+
+    // 初始化视觉效果
+    function initVisualEffects() {
+      const effectsContainer = document.querySelector('.visual-effects');
+      
+      // 清空现有效果
+      effectsContainer.innerHTML = '';
+      
+      // 创建新效果
+      for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'effect-particle';
+        particle.style.width = `${Math.random() * 10 + 2}px`;
+        particle.style.height = particle.style.width;
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.opacity = `${Math.random() * 0.3}`;
+        particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        effectsContainer.appendChild(particle);
+      }
+    }
+
+    // 更改特定影院的视频
+    function changeVideo(theaterId, index) {
+      const videos = theaterVideoMap[theaterId];
+      const iframeId = theaterIframeMap[theaterId];
+      
+      if (index >= 0 && index < videos.length) {
+        const iframe = document.getElementById(iframeId);
+        iframe.src = `//player.bilibili.com/player.html?bvid=${videos[index]}&p=1`;
+        
+        // 高亮选中的按钮
+        const buttons = document.querySelectorAll(`#${theaterId} .video-btn`);
+        buttons.forEach((btn, i) => {
+          if (i === index) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+        
+        showNotification(`正在播放 ${getVideoTitle(theaterId, index)}`);
+      }
+    }
+
+    // 获取视频标题
+    function getVideoTitle(theaterId, index) {
+      const theaterTitles = {
+        'hakone-theater': [
+          '箱根驿传 第一集',
+          '箱根驿传 第二集',
+          '箱根驿传 第三集',
+          '箱根驿传 第四集',
+          '箱根驿传 第五集'
+        ],
+        'exotic-theater': [
+          '异域风情 第一集',
+          '异域风情 第二集',
+          '异域风情 第三集'
+        ],
+        'battle-theater': [
+          '超燃战斗 第一集',
+          '超燃战斗 第二集',
+          '超燃战斗 第三集'
+        ]
+      };
+      
+      return theaterTitles[theaterId][index];
+    }
+
+    // 切换影院的显示与隐藏
+    function toggleTheater(theaterId) {
+      const content = document.getElementById(theaterId).querySelector('.theater-content');
+      const header = document.getElementById(theaterId).querySelector('.theater-header');
+      
+      if (content.style.display === 'none' || content.style.display === '') {
+        // 关闭所有其他影院
+        document.querySelectorAll('.theater-content').forEach(element => {
+          element.style.display = 'none';
+        });
+        
+        document.querySelectorAll('.theater-header').forEach(element => {
+          element.classList.remove('active');
+        });
+        
+        // 打开当前影院
+        content.style.display = 'block';
+        header.classList.add('active');
+        
+        // 更新侧边栏选中状态
+        document.querySelectorAll('.category-item').forEach(item => {
+          if (item.getAttribute('data-target') === theaterId) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
       } else {
-        btn.style.background = 'rgba(255,255,255,0.2)';
-        btn.style.transform = 'scale(1)';
+        content.style.display = 'none';
+        header.classList.remove('active');
       }
-    });
-    
-    showNotification(`正在播放 ${getVideoTitle(theaterId, index)}`);
-  }
-}
+    }
 
-// 获取视频标题
-function getVideoTitle(theaterId, index) {
-  const theaterTitles = {
-    'hakone-theater': [
-      '箱根驿传 第一集',
-      '箱根驿传 第二集',
-      '箱根驿传 第三集',
-      '箱根驿传 第四集',
-      '箱根驿传 第五集'
-    ],
-    'exotic-theater': [
-      '异域风情 第一集',
-      '异域风情 第二集',
-      '异域风情 第三集'
-    ],
-    'battle-theater': [
-      '超燃战斗 第一集',
-      '超燃战斗 第二集',
-      '超燃战斗 第三集'
-    ]
-  };
-  
-  return theaterTitles[theaterId][index];
-}
-
-// 随机播放视频函数
-function playRandomVideo() {
-  // 随机选择一个BV号
-  const randomIndex = Math.floor(Math.random() * allVideos.length);
-  const randomBvid = allVideos[randomIndex];
-  
-  // 确定该视频属于哪个影院
-  let targetTheater = '';
-  let videoIndex = -1;
-  
-  if (hakoneVideos.includes(randomBvid)) {
-    targetTheater = 'hakone-theater';
-    videoIndex = hakoneVideos.indexOf(randomBvid);
-  } else if (exoticVideos.includes(randomBvid)) {
-    targetTheater = 'exotic-theater';
-    videoIndex = exoticVideos.indexOf(randomBvid);
-  } else if (battleVideos.includes(randomBvid)) {
-    targetTheater = 'battle-theater';
-    videoIndex = battleVideos.indexOf(randomBvid);
-  }
-  
-  // 关闭所有影院
-  const theaters = document.querySelectorAll('.theater-content');
-  theaters.forEach(theater => {
-    theater.style.display = 'none';
-  });
-  
-  // 移除所有header的active类
-  const headers = document.querySelectorAll('.theater-header');
-  headers.forEach(header => {
-    header.classList.remove('active');
-  });
-  
-  // 打开目标影院
-  const targetTheaterElement = document.getElementById(targetTheater);
-  targetTheaterElement.style.display = 'block';
-  
-  // 添加active类
-  const header = targetTheaterElement.previousElementSibling;
-  header.classList.add('active');
-  
-  // 播放选中的视频
-  changeVideo(targetTheater, videoIndex);
-  
-  // 滚动到影院位置
-  targetTheaterElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  
-  // 显示随机播放提示
-  showNotification('随机播放中，震撼体验即将开始...');
-}
-
-// 显示提示消息
-function showNotification(message) {
-  // 检查是否已存在通知元素
-  let notification = document.getElementById('notification');
-  
-  if (!notification) {
-    // 创建通知元素
-    notification = document.createElement('div');
-    notification.id = 'notification';
-    notification.style.position = 'fixed';
-    notification.style.bottom = '30px';
-    notification.style.left = '50%';
-    notification.style.transform = 'translateX(-50%)';
-    notification.style.backgroundColor = 'rgba(0, 0, 0, 0.85)';
-    notification.style.color = 'white';
-    notification.style.padding = '15px 30px';
-    notification.style.borderRadius = '50px';
-    notification.style.zIndex = '1000';
-    notification.style.boxShadow = '0 5px 25px rgba(0, 0, 0, 0.5)';
-    notification.style.opacity = '0';
-    notification.style.transition = 'opacity 0.3s ease';
-    notification.style.fontSize = '16px';
-    notification.style.fontWeight = 'bold';
-    
-    document.body.appendChild(notification);
-  }
-  
-  // 更新消息并显示
-  notification.textContent = message;
-  notification.style.opacity = '1';
-  
-  // 3秒后隐藏
-  setTimeout(() => {
-    notification.style.opacity = '0';
-  }, 3000);
-}
-
-function toggleTheater(theaterId) {
-  const content = document.getElementById(theaterId);
-  const header = content.previousElementSibling;
-  
-  // 切换显示状态
-  if (content.style.display === 'none') {
-    // 关闭所有其他影院
-    const theaters = document.querySelectorAll('.theater-content');
-    theaters.forEach(theater => {
-      if (theater.id !== theaterId) {
-        theater.style.display = 'none';
-        theater.previousElementSibling.classList.remove('active');
+    // 随机播放视频
+    function playRandomVideo() {
+      // 随机选择一个BV号
+      const randomIndex = Math.floor(Math.random() * allVideos.length);
+      const randomBvid = allVideos[randomIndex];
+      
+      // 确定该视频属于哪个影院
+      let targetTheater = '';
+      let videoIndex = -1;
+      
+      if (hakoneVideos.includes(randomBvid)) {
+        targetTheater = 'hakone-theater';
+        videoIndex = hakoneVideos.indexOf(randomBvid);
+      } else if (exoticVideos.includes(randomBvid)) {
+        targetTheater = 'exotic-theater';
+        videoIndex = exoticVideos.indexOf(randomBvid);
+      } else if (battleVideos.includes(randomBvid)) {
+        targetTheater = 'battle-theater';
+        videoIndex = battleVideos.indexOf(randomBvid);
       }
-    });
-    
-    content.style.display = 'block';
-    header.classList.add('active');
-    
-    // 添加展开动画
-    content.style.animation = 'slideDown 0.5s ease forwards';
-    
-    // 在关灯模式下标记当前活跃的影院
-    if (document.querySelector('.cinema-container').classList.contains('lights-off')) {
-      // 移除所有活跃影院标记
-      document.querySelectorAll('.theater-content').forEach(theater => {
-        theater.classList.remove('active-theater');
+      
+      // 确保目标影院被打开
+      toggleTheater(targetTheater);
+      
+      // 播放选中的视频
+      changeVideo(targetTheater, videoIndex);
+      
+      // 滚动到影院位置
+      document.getElementById(targetTheater).scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
       });
-      // 添加当前影院活跃标记
-      content.classList.add('active-theater');
-    }
-    
-    // 如果有控制按钮，默认高亮第一个
-    const firstButton = content.querySelector('.control-button');
-    if (firstButton) {
-      firstButton.style.background = 'rgba(255,255,255,0.4)';
-      firstButton.style.transform = 'scale(1.1)';
-    }
-  } else {
-    content.style.display = 'none';
-    header.classList.remove('active');
-    content.classList.remove('active-theater');
-  }
-}
-
-// 新增爆米花效果
-function showPopcorn() {
-  const container = document.querySelector('.cinema-container');
-  const popcorn = document.createElement('div');
-  popcorn.className = 'popcorn';
-  popcorn.textContent = '🍿';
-  popcorn.style.left = Math.random() * window.innerWidth + 'px';
-  popcorn.style.top = Math.random() * window.innerHeight + 'px';
-  container.appendChild(popcorn);
-  
-  setTimeout(() => {
-    popcorn.remove();
-  }, 2000);
-  
-  showNotification('爆米花已送达，请享用！');
-}
-
-// 修改关灯功能
-function toggleLights() {
-  const container = document.querySelector('.cinema-container');
-  const button = document.getElementById('lightToggle');
-  
-  if (container.classList.contains('lights-off')) {
-    // 开灯
-    container.classList.remove('lights-off');
-    button.innerHTML = '<span style="margin-right: 10px;">💡</span> 关灯模式';
-    button.style.background = 'linear-gradient(90deg, #6a11cb, #2575fc)';
-    
-    // 关闭幕布
-    document.querySelector('.curtain-left').style.transform = 'translateX(-100%)';
-    document.querySelector('.curtain-right').style.transform = 'translateX(100%)';
-  } else {
-    // 关灯
-    container.classList.add('lights-off');
-    button.innerHTML = '<span style="margin-right: 10px;">🔆</span> 开灯模式';
-    button.style.background = 'linear-gradient(90deg, #ff9966, #ff5e62)';
-    
-    // 打开幕布
-    document.querySelector('.curtain-left').style.transform = 'translateX(0)';
-    document.querySelector('.curtain-right').style.transform = 'translateX(0)';
-    
-    // 标记当前打开的影院为活跃
-    document.querySelectorAll('.theater-content').forEach(theater => {
-      if (theater.style.display === 'block') {
-        theater.classList.add('active-theater');
-      }
-    });
-  }
-}
-
-// 新增特效模式切换
-function toggleEffects() {
-  const container = document.querySelector('.cinema-container');
-  const button = document.querySelector('.cinema-button[onclick="toggleEffects()"]');
-  
-  if (container.classList.contains('effects-on')) {
-    container.classList.remove('effects-on');
-    container.classList.add('effects-off');
-    button.innerHTML = '<span style="margin-right: 10px;">✨</span> 开启特效';
-    showNotification('特效已关闭');
-  } else {
-    container.classList.remove('effects-off');
-    container.classList.add('effects-on');
-    button.innerHTML = '<span style="margin-right: 10px;">🌟</span> 关闭特效';
-    showNotification('特效已开启');
-  }
-}
-
-// 新增粒子效果
-function initParticles() {
-  const canvas = document.getElementById('particles');
-  const ctx = canvas.getContext('2d');
-  let width = canvas.width = window.innerWidth;
-  let height = canvas.height = window.innerHeight;
-  
-  const particles = [];
-  const particleCount = 100;
-  
-  class Particle {
-    constructor() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.size = Math.random() * 3 + 1;
-      this.speedX = Math.random() * 2 - 1;
-      this.speedY = Math.random() * 2 - 1;
-      this.opacity = Math.random() * 0.5 + 0.1;
-    }
-    
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
       
-      if (this.x < 0 || this.x > width) this.speedX *= -1;
-      if (this.y < 0 || this.y > height) this.speedY *= -1;
+      showNotification('🎲 随机播放中...');
     }
-    
-    draw() {
-      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-  
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
-  }
-  
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    
-    particles.forEach(particle => {
-      particle.update();
-      particle.draw();
-    });
-    
-    requestAnimationFrame(animate);
-  }
-  
-  animate();
-  
-  window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  });
-}
 
-// 修改页面加载初始化
-document.addEventListener('DOMContentLoaded', function() {
-  // 默认展开第一个影院
-  setTimeout(() => {
-    toggleTheater('hakone-theater');
-  }, 800);
-  
-  // 添加展开/收起动画
-  const headers = document.querySelectorAll('.theater-header');
-  headers.forEach(header => {
-    header.addEventListener('click', function() {
-      this.classList.toggle('active');
-    });
-  });
-  
-  // 给所有控制按钮添加悬停效果
-  const controlButtons = document.querySelectorAll('.control-button');
-  controlButtons.forEach(button => {
-    button.addEventListener('mouseover', function() {
-      if (this.style.transform !== 'scale(1.1)') {
-        this.style.background = 'rgba(255,255,255,0.3)';
-      }
-    });
-    
-    button.addEventListener('mouseout', function() {
-      if (this.style.transform !== 'scale(1.1)') {
-        this.style.background = 'rgba(255,255,255,0.2)';
-      }
-    });
-  });
-  
-  // 站点卡片添加脉冲动画
-  const siteCards = document.querySelectorAll('.site-card');
-  let currentCardIndex = 0;
-  
-  function animateSiteCard() {
-    // 移除之前的动画
-    siteCards.forEach(card => {
-      card.style.animation = '';
-    });
-    
-    // 添加新动画
-    if(siteCards.length > 0) {
-      siteCards[currentCardIndex].style.animation = 'pulse 3s cubic-bezier(0.45, 0.05, 0.55, 0.95)';
+    // 显示通知
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.style.opacity = '1';
       
-      // 更新索引
-      currentCardIndex = (currentCardIndex + 1) % siteCards.length;
-      
-      // 设置下一个动画
-      setTimeout(animateSiteCard, 4000);
-    }
-  }
-  
-  // 初始动画
-  setTimeout(animateSiteCard, 3000);
-  
-  // 添加星星闪烁动画增强
-  function enhanceStars() {
-    const stars = document.querySelectorAll('.star');
-    stars.forEach((star, index) => {
-      // 随机调整位置
-      const randomTop = Math.random() * 100;
-      const randomLeft = Math.random() * 100;
       setTimeout(() => {
-        star.style.transition = 'top 15s cubic-bezier(0.34, 0.82, 0.6, 1), left 15s cubic-bezier(0.34, 0.82, 0.6, 1)';
-        star.style.top = `${randomTop}%`;
-        star.style.left = `${randomLeft}%`;
-      }, index * 300);
+        notification.style.opacity = '0';
+      }, 3000);
+    }
+
+    // 显示爆米花
+    function showPopcorn() {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const popcorn = document.createElement('div');
+          popcorn.className = 'popcorn';
+          popcorn.textContent = '🍿';
+          popcorn.style.left = Math.random() * window.innerWidth + 'px';
+          popcorn.style.top = Math.random() * window.innerHeight + 'px';
+          document.body.appendChild(popcorn);
+          
+          setTimeout(() => {
+            popcorn.remove();
+          }, 2000);
+        }, i * 200);
+      }
+      
+      showNotification('🍿 爆米花来喽！');
+    }
+
+    // 切换暗模式
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      
+      const button = document.getElementById('darkModeBtn');
+      const icon = button.querySelector('i');
+      
+      if (document.body.classList.contains('dark-mode')) {
+        icon.className = 'bi bi-brightness-high';
+        showNotification('🌙 已切换到黑暗模式');
+      } else {
+        icon.className = 'bi bi-moon-stars';
+        showNotification('☀️ 已切换到普通模式');
+      }
+    }
+
+    // 切换视觉效果
+    function toggleEffects() {
+      const effectsContainer = document.querySelector('.visual-effects');
+      const button = document.getElementById('effectsBtn');
+      const icon = button.querySelector('i');
+      
+      if (effectsContainer.style.opacity === '0' || effectsContainer.style.opacity === '') {
+        effectsContainer.style.opacity = '1';
+        icon.className = 'bi bi-stars-fill';
+        initVisualEffects();
+        showNotification('✨ 视觉特效已开启');
+      } else {
+        effectsContainer.style.opacity = '0';
+        icon.className = 'bi bi-stars';
+        showNotification('✨ 视觉特效已关闭');
+      }
+    }
+
+    // 事件监听器设置
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化视觉效果
+      initVisualEffects();
+      
+      // 设置事件监听器
+      document.getElementById('darkModeBtn').addEventListener('click', toggleDarkMode);
+      document.getElementById('effectsBtn').addEventListener('click', toggleEffects);
+      document.getElementById('randomBtn').addEventListener('click', playRandomVideo);
+      
+      // 设置侧边栏分类点击事件
+      document.querySelectorAll('.category-item').forEach(item => {
+        item.addEventListener('click', function() {
+          toggleTheater(this.getAttribute('data-target'));
+        });
+      });
+      
+      // 默认显示第一个影院
+      toggleTheater('hakone-theater');
     });
-    
-    // 定期调整星星位置
-    setTimeout(enhanceStars, 15000);
-  }
-  
-  // 初始化星星动画
-  setTimeout(enhanceStars, 2000);
-  
-  // 初始化粒子效果
-  initParticles();
-  
-  // 默认开启特效
-  document.querySelector('.cinema-container').classList.add('effects-on');
-});
-</script>
+  </script>
+</body>
+</html>
 
 
 

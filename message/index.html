@@ -19,15 +19,15 @@
   <meta name="author" content="吴彦祖">
   <meta name="keywords" content="">
   
-    <meta name="description" content="body {   background: #121212;   background: linear-gradient(to right, #121212, #1e1e2f, #121212);   color: #fff;   overflow-x: hidden; }  .guestbook-header {   text-align: center;   padding: 50px 20p">
+    <meta name="description" content="body {   background: #121212;   background: linear-gradient(to right, #121212, #1e1e2f, #121212);   color: #fff;   overflow-x: hidden; }  #particles-js {   position: fixed;   top: 0;   left: 0;   wid">
 <meta property="og:type" content="website">
 <meta property="og:title" content="留言板">
 <meta property="og:url" content="http://example.com/message/index.html">
 <meta property="og:site_name" content="赛博窥天阁">
-<meta property="og:description" content="body {   background: #121212;   background: linear-gradient(to right, #121212, #1e1e2f, #121212);   color: #fff;   overflow-x: hidden; }  .guestbook-header {   text-align: center;   padding: 50px 20p">
+<meta property="og:description" content="body {   background: #121212;   background: linear-gradient(to right, #121212, #1e1e2f, #121212);   color: #fff;   overflow-x: hidden; }  #particles-js {   position: fixed;   top: 0;   left: 0;   wid">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-05-22T07:30:00.000Z">
-<meta property="article:modified_time" content="2025-04-23T13:19:03.253Z">
+<meta property="article:modified_time" content="2025-04-29T05:39:38.127Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -209,9 +209,25 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/play/3d%E7%9B%B8%E5%86%8C.html" target="_blank">
+                  <a class="dropdown-item" href="/play/verification.html" target="_blank">
                     <i class="iconfont icon-image"></i>
-                    <span>3d相册</span>
+                    <span>相册</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/play/cool/Desktop.html" target="_self">
+                    <i class="iconfont icon-th-large"></i>
+                    <span>工作台</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/play/cool/love-master/index.html" target="_self">
+                    <i class="iconfont icon-telegram-fill"></i>
+                    <span>彬的表白定制</span>
                   </a>
                 
               </div>
@@ -249,7 +265,7 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/%E6%94%BE%E6%98%A0%E5%8E%85" target="_self">
+                  <a class="dropdown-item" href="/play/cool/video.html" target="_self">
                     <i class="iconfont icon-youtube-fill"></i>
                     <span>放映厅</span>
                   </a>
@@ -343,254 +359,532 @@ body {
   overflow-x: hidden;
 }
 
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(135deg, #1e1e2f 0%, #2d2b42 100%);
+}
+
 .guestbook-header {
   text-align: center;
   padding: 50px 20px;
-  position: relative;
-  overflow: hidden;
-  background-color: rgba(30, 30, 47, 0.7);
-  border-radius: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .guestbook-header h1 {
   font-size: 3.5rem;
-  margin-bottom: 20px;
   color: #fff;
-  text-shadow: 0 0 15px rgba(255, 126, 95, 0.7);
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+  text-shadow: 0 0 10px rgba(255, 126, 95, 0.7),
+               0 0 20px rgba(255, 126, 95, 0.5),
+               0 0 30px rgba(255, 126, 95, 0.3);
+}
+
+.guestbook-header h1::after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
 }
 
 .guestbook-header p {
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1.2rem;
-  max-width: 800px;
+  line-height: 1.6;
+  max-width: 600px;
   margin: 0 auto;
-  color: #fff;
-  font-weight: 500;
 }
 
 .guestbook-container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  max-width: 1200px;
-  margin: 30px auto;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 30px auto 60px;
   padding: 0 20px;
 }
 
 .guestbook-form {
-  background: rgba(30, 30, 47, 0.8);
+  background: rgba(30, 30, 47, 0.6);
   border-radius: 20px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 30px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2),
+              0 0 10px rgba(255, 126, 95, 0.1),
+              inset 0 0 30px rgba(255, 255, 255, 0.03);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.guestbook-form::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: rotate(45deg);
+  z-index: 0;
+  transition: all 1s ease;
+}
+
+.guestbook-form:hover::before {
+  top: -150%;
+  left: -150%;
 }
 
 .guestbook-form h2 {
   color: #fff;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(255, 126, 95, 0.3);
+}
+
+.guestbook-form h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(255, 126, 95, 0.5);
 }
 
 .guestbook-form:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 126, 95, 0.3);
   transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+              0 0 20px rgba(255, 126, 95, 0.2),
+              inset 0 0 30px rgba(255, 255, 255, 0.05);
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 1;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
+  margin-bottom: 10px;
+  font-weight: 500;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px rgba(255, 126, 95, 0.3);
 }
 
 .form-control {
   width: 100%;
-  padding: 12px 15px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  color: white;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #ffffff;
   font-size: 16px;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  caret-color: #ff7e5f;
+  letter-spacing: 0.5px;
 }
 
 .form-control:focus {
   outline: none;
-  border-color: rgba(255, 126, 95, 0.8);
-  box-shadow: 0 0 15px rgba(255, 126, 95, 0.3);
-  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 126, 95, 0.5);
+  box-shadow: 0 0 0 3px rgba(255, 126, 95, 0.2),
+              inset 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  color: #ffffff;
 }
 
 .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.3s ease;
+}
+
+.form-control:hover::placeholder {
+  color: #ffffff;
+}
+
+.form-group:hover label {
+  color: #ff7e5f;
 }
 
 textarea.form-control {
-  min-height: 120px;
+  min-height: 150px;
   resize: vertical;
+  line-height: 1.6;
 }
 
 .submit-btn {
-  padding: 12px 25px;
-  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  padding: 14px 30px;
+  background: linear-gradient(45deg, #ff7e5f, #feb47b);
   border: none;
   border-radius: 30px;
   color: white;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1),
+              0 0 15px rgba(255, 126, 95, 0.2);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: all 0.6s ease;
 }
 
 .submit-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 95, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2),
+              0 0 20px rgba(255, 126, 95, 0.4);
+}
+
+.submit-btn:hover::before {
+  left: 100%;
 }
 
 .submit-btn:active {
   transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15),
+              0 0 10px rgba(255, 126, 95, 0.2);
 }
 
+/* 消息容器样式 */
 .messages-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
 }
 
 .message-card {
-  background: rgba(30, 30, 47, 0.8);
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  transform-style: preserve-3d;
+  background: rgba(30, 30, 47, 0.4);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+              0 0 15px rgba(108, 92, 231, 0.1);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
+  overflow: hidden;
+}
+
+.message-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: 0;
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
 }
 
 .message-card:hover {
-  transform: translateY(-5px) rotateX(5deg);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 126, 95, 0.2);
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2),
+              0 0 20px rgba(108, 92, 231, 0.2);
+}
+
+.message-card:hover::before {
+  opacity: 0.7;
 }
 
 .message-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .message-author {
-  font-weight: bold;
+  font-weight: 500;
   font-size: 18px;
   color: #fff;
   display: flex;
   align-items: center;
+  gap: 12px;
 }
 
 .author-avatar {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #ff7e5f, #feb47b);
-  margin-right: 10px;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   color: #fff;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15),
+              0 0 10px rgba(108, 92, 231, 0.3);
+  position: relative;
+}
+
+.author-avatar::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.8), rgba(162, 155, 254, 0.8));
+  z-index: -1;
 }
 
 .message-date {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .message-content {
-  line-height: 1.6;
-  color: #fff;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 16px;
+  position: relative;
+  z-index: 1;
+  padding: 5px 0 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 15px;
 }
 
 .message-actions {
-  margin-top: 15px;
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 15px;
+  position: relative;
+  z-index: 1;
 }
 
 .action-btn {
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  border-radius: 20px;
-  padding: 5px 15px;
-  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 8px 18px;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .action-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+/* 点赞按钮特效 */
+.like-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(162, 155, 254, 0.05));
+}
+
+.like-btn:hover {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(162, 155, 254, 0.1));
+}
+
+.like-btn.liked {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.8), rgba(162, 155, 254, 0.6));
+  color: white;
+  box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+  border-color: rgba(108, 92, 231, 0.4);
 }
 
 .like-count {
   display: inline-flex;
   align-items: center;
-  margin-left: 5px;
-  color: #fff;
+  color: inherit;
+  transition: all 0.3s ease;
 }
 
+.reply-btn {
+  background: rgba(255, 126, 95, 0.1);
+  border-color: rgba(255, 126, 95, 0.2);
+}
+
+.reply-btn:hover {
+  background: rgba(255, 126, 95, 0.2);
+  border-color: rgba(255, 126, 95, 0.3);
+}
+
+/* 分页控件 */
 .pagination {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .page-btn {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: rgba(30, 30, 47, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
+  border-radius: 20px;
+  background: rgba(30, 30, 47, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: bold;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.page-btn:hover, .page-btn.active {
-  background: linear-gradient(to right, #ff7e5f, #feb47b);
-  box-shadow: 0 0 15px rgba(255, 126, 95, 0.5);
+.page-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.page-btn.active {
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
 }
 
 .no-messages {
   text-align: center;
-  padding: 50px;
-  background: rgba(30, 30, 47, 0.8);
-  border-radius: 15px;
-  backdrop-filter: blur(5px);
-  color: #fff;
+  padding: 60px 20px;
+  background: rgba(30, 30, 47, 0.4);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 18px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.no-messages::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: 0;
+}
+
+.no-messages::after {
+  content: '💬';
+  font-size: 40px;
+  margin-bottom: 20px;
+  display: block;
+  opacity: 0.5;
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+  100% { transform: translateY(0) rotate(0); }
+}
+
+/* 点赞飞出动画 */
+@keyframes like-fly {
+  0% {
+    opacity: 1;
+    transform: scale(0.5) translateY(0);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.5) translateY(-30px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2) translateY(-60px) rotate(10deg);
+  }
+}
+
+.flying-like {
+  position: absolute;
+  color: #6c5ce7;
+  font-size: 18px;
+  pointer-events: none;
+  animation: like-fly 1s ease-out forwards;
+  z-index: 1000;
+  text-shadow: 0 0 10px rgba(108, 92, 231, 0.5);
 }
 
 @media (max-width: 768px) {
@@ -599,7 +893,7 @@ textarea.form-control {
   }
   
   .guestbook-form {
-    padding: 20px;
+    padding: 25px;
   }
   
   .message-header {
@@ -609,18 +903,8 @@ textarea.form-control {
   }
   
   .message-date {
-    margin-left: 46px;
+    margin-left: 52px;
   }
-}
-
-/* 粒子背景容器 */
-#particles-js {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
 }
 </style>
 
@@ -662,6 +946,10 @@ textarea.form-control {
 
 <!-- 引入Particles.js -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<!-- 引入Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -752,42 +1040,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // 示例留言数据
-  const messages = [
-    {
-      id: 1,
-      author: "星辰大海",
-      email: "example1@example.com",
-      content: "这个网站太棒了！设计非常现代，资源也很丰富。希望能持续更新更多有用的内容。",
-      date: "2023-05-18 14:30",
-      likes: 666
-    },
-    {
-      id: 2,
-      author: "流光溢彩",
-      email: "example2@example.com",
-      content: "我经常使用这里推荐的资源，对我的工作帮助很大。特别是那个AI对对联工具，太有趣了！",
-      date: "2023-05-17 09:45",
-      likes: 8
-    },
-    {
-      id: 3,
-      author: "清风徐来",
-      email: "example3@example.com",
-      content: "第一次访问这个网站，被这个炫酷的界面吸引了。希望楼主能够添加更多关于学习资源的内容。",
-      date: "2023-05-16 21:20",
-      likes: 5
-    },
-    {
-      id: 4,
-      author: "数字游民",
-      email: "example4@example.com",
-      content: "感谢分享这些实用的网站工具，已经收藏了。建议可以增加一些设计资源和素材网站，会更加完善。",
-      date: "2023-05-15 16:10",
-      likes: 9
-    },
-  ];
-
+  // 初始化Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyBs5eWEiabOSZrP5LqQSvDeJ8L3pDjTyu8",
+    authDomain: "comment-526a0.firebaseapp.com",
+    databaseURL: "https://comment-526a0-default-rtdb.firebaseio.com",
+    projectId: "comment-526a0",
+    storageBucket: "comment-526a0.firebasestorage.app",
+    messagingSenderId: "450500622985",
+    appId: "1:450500622985:web:19ea2335e274de8be82458",
+    measurementId: "G-N1H2NCGLGR"
+  };
+  
+  // 初始化Firebase
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  
+  // 每页显示的留言数量
+  const messagesPerPage = 5;
+  let currentPage = 1;
+  let allMessages = [];
+  
   // 表单提交处理
   const messageForm = document.getElementById('messageForm');
   messageForm.addEventListener('submit', function(e) {
@@ -797,12 +1070,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailInput = document.getElementById('email');
     const messageInput = document.getElementById('message');
     
-    // 在实际应用中，这里应该发送数据到服务器
+    // 验证输入
+    if(!nameInput.value.trim() || !messageInput.value.trim()) {
+      alert('昵称和留言内容不能为空!');
+      return;
+    }
+    
+    // 禁用提交按钮，防止重复提交
+    const submitBtn = messageForm.querySelector('.submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = '提交中...';
+    
+    // 创建新留言对象
     const newMessage = {
-      id: messages.length + 1,
-      author: nameInput.value,
-      email: emailInput.value,
-      content: messageInput.value,
+      author: nameInput.value.trim(),
+      email: emailInput.value.trim(),
+      content: messageInput.value.trim(),
       date: new Date().toLocaleString('zh-CN', {
         year: 'numeric',
         month: '2-digit',
@@ -810,35 +1093,76 @@ document.addEventListener('DOMContentLoaded', function() {
         hour: '2-digit',
         minute: '2-digit'
       }).replace(/\//g, '-'),
-      likes: 0
+      likes: 0,
+      timestamp: firebase.database.ServerValue.TIMESTAMP // 服务器时间戳
     };
     
-    // 添加新留言到数组开头（在实际应用中这会由服务器处理）
-    messages.unshift(newMessage);
-    
-    // 重新渲染留言列表
-    renderMessages(1);
-    
-    // 重置表单
-    messageForm.reset();
-    
-    // 显示成功提示（简单示例）
-    alert('留言提交成功！');
+    // 保存到Firebase
+    database.ref('messages').push(newMessage)
+      .then(() => {
+        // 重置表单
+        messageForm.reset();
+        
+        // 显示成功提示
+        alert('留言提交成功！');
+        
+        // 恢复提交按钮
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交留言';
+        
+        // 刷新留言列表到第一页
+        fetchMessages();
+      })
+      .catch(error => {
+        console.error("提交留言失败:", error);
+        alert('提交失败，请稍后再试！');
+        
+        // 恢复提交按钮
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交留言';
+      });
   });
-
-  // 每页显示的留言数量
-  const messagesPerPage = 5;
+  
+  // 从Firebase获取留言
+  function fetchMessages() {
+    // 显示加载状态
+    const messagesContainer = document.getElementById('messagesContainer');
+    messagesContainer.innerHTML = '<div class="no-messages">正在加载留言...</div>';
+    
+    // 查询留言，按时间戳倒序排列
+    database.ref('messages').orderByChild('timestamp').once('value')
+      .then(snapshot => {
+        allMessages = [];
+        
+        // 将数据转换为数组
+        snapshot.forEach(childSnapshot => {
+          const message = childSnapshot.val();
+          message.id = childSnapshot.key; // 使用Firebase生成的键作为ID
+          allMessages.push(message);
+        });
+        
+        // 倒序排列，最新的在前面
+        allMessages.reverse();
+        
+        // 渲染留言
+        renderMessages(1);
+      })
+      .catch(error => {
+        console.error("获取留言失败:", error);
+        messagesContainer.innerHTML = '<div class="no-messages">获取留言失败，请刷新页面重试。</div>';
+      });
+  }
   
   // 计算总页数
   function getTotalPages() {
-    return Math.ceil(messages.length / messagesPerPage);
+    return Math.ceil(allMessages.length / messagesPerPage);
   }
   
   // 获取指定页的留言
   function getMessagesForPage(page) {
     const startIndex = (page - 1) * messagesPerPage;
     const endIndex = startIndex + messagesPerPage;
-    return messages.slice(startIndex, endIndex);
+    return allMessages.slice(startIndex, endIndex);
   }
   
   // 渲染分页按钮
@@ -880,6 +1204,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 渲染留言列表
   function renderMessages(page = 1) {
+    currentPage = page;
     const messagesContainer = document.getElementById('messagesContainer');
     messagesContainer.innerHTML = '';
     
@@ -911,7 +1236,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="message-content">${message.content}</div>
         <div class="message-actions">
           <button class="action-btn like-btn" data-id="${message.id}">
-            👍 点赞 <span class="like-count">${message.likes}</span>
+            👍 点赞 <span class="like-count">${message.likes || 0}</span>
           </button>
           <button class="action-btn reply-btn" data-id="${message.id}">
             💬 回复
@@ -925,25 +1250,64 @@ document.addEventListener('DOMContentLoaded', function() {
     // 添加点赞功能
     document.querySelectorAll('.like-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        const messageId = parseInt(this.dataset.id);
-        const message = messages.find(m => m.id === messageId);
-        if (message) {
-          message.likes++;
-          this.querySelector('.like-count').textContent = message.likes;
+        const messageId = this.dataset.id;
+        const messageRef = database.ref(`messages/${messageId}`);
+        
+        // 随机选择一个表情
+        const emojis = ['👍', '❤️', '🔥', '✨', '😍'];
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        // 创建多个飞出点赞图标，增加动感
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            const flyingLike = document.createElement('span');
+            flyingLike.className = 'flying-like';
+            flyingLike.textContent = randomEmoji;
+            
+            // 稍微随机化位置，使效果更自然
+            const offsetX = (Math.random() * 20) - 10;
+            const offsetY = (Math.random() * 10);
+            
+            flyingLike.style.left = (this.offsetLeft + this.offsetWidth / 2 + offsetX) + 'px';
+            flyingLike.style.top = (this.offsetTop - offsetY) + 'px';
+            this.parentNode.appendChild(flyingLike);
+            
+            // 移除动画元素
+            setTimeout(() => {
+              if (flyingLike.parentNode) {
+                flyingLike.parentNode.removeChild(flyingLike);
+              }
+            }, 1000);
+          }, i * 150); // 错开时间，创造连续效果
         }
+        
+        // 添加按钮反馈
+        this.classList.add('liked');
+        
+        messageRef.transaction(message => {
+          if (message) {
+            message.likes = (message.likes || 0) + 1;
+          }
+          return message;
+        }, (error, committed, snapshot) => {
+          if (error) {
+            console.error('点赞失败:', error);
+          } else if (committed) {
+            // 更新UI
+            this.querySelector('.like-count').textContent = snapshot.val().likes;
+          }
+        });
       });
     });
     
-    // 添加回复功能（简单示例）
+    // 添加回复功能
     document.querySelectorAll('.reply-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        const messageId = parseInt(this.dataset.id);
-        const message = messages.find(m => m.id === messageId);
+        const messageId = this.dataset.id;
+        const message = allMessages.find(m => m.id === messageId);
         if (message) {
-          // 在实际应用中，这里可以显示回复表单或对话框
           document.getElementById('message').value = `@${message.author} `;
           document.getElementById('message').focus();
-          // 滚动到留言表单
           document.querySelector('.guestbook-form').scrollIntoView({ behavior: 'smooth' });
         }
       });
@@ -953,8 +1317,8 @@ document.addEventListener('DOMContentLoaded', function() {
     renderPagination(page);
   }
   
-  // 初始渲染留言列表
-  renderMessages(1);
+  // 初始加载留言
+  fetchMessages();
 });
 </script> 
 

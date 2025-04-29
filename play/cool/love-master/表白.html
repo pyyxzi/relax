@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>彬的表白</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.7.1/dist/gsap.min.js"></script>
+    <link rel="icon" href="fonts/求婚.ico" type="image/x-icon">
+    <style>
+        @font-face {
+            font-family: 'RuiHeiXiTi';
+            /* 定义字体名称 */
+            src: url('fonts/RuiHeiXiTi.otf') format('opentype');
+            /* 指定字体文件路径和格式 */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-y: auto;
+            /* 允许垂直滚动 */
+            font-family: 'RuiHeiXiTi', 'Arial', sans-serif;
+            /* 应用新字体，并保留备用字体 */
+            background-color: #000;
+            color: #fff;
+            height: 100vh;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            /* 改为相对定位，允许滚动 */
+            margin: 50px auto;
+            /* 上下边距 */
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 1s forwards;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .love-letter {
+            font-style: italic;
+            padding: 20px;
+            border: 1px solid rgba(255, 105, 180, 0.5);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            background-color: rgba(255, 105, 180, 0.1);
+            text-align: left;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+            transition: all 0.5s ease;
+        }
+
+        .love-letter:hover {
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
+            transform: translateY(-5px);
+            border-color: rgba(255, 105, 180, 0.8);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.2rem;
+            color: #fff;
+            background: linear-gradient(45deg, #ff3366, #ff6699);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            animation: floatHeart linear infinite;
+            color: #ff69b4;
+            z-index: -1;
+        }
+
+        .flower {
+            position: fixed;
+            font-size: 20px;
+            animation: floatFlower linear infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        @keyframes floatFlower {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-1000px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        #startScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #1a001a, #330033, #4d004d, #330033);
+            /* 更深的渐变 */
+            background-size: 400% 400%;
+            /* 为了动画 */
+            display: flex;
+            /* 使用 Flexbox 布局 */
+            justify-content: center;
+            /* 水平居中 */
+            align-items: center;
+            /* 垂直居中 */
+            z-index: 200;
+            /* 确保在最上层 */
+            flex-direction: column;
+            /* 如果有多个元素，垂直排列 */
+            text-align: center;
+            /* 文本也居中 */
+            opacity: 1;
+            /* 确保初始可见 */
+            transition: opacity 0.5s ease-out;
+            /* 添加淡出过渡 */
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ff69b4;
+            box-shadow: 0 0 20px #ff69b4;
+            animation: glow 3s infinite alternate;
+            transition: all 0.5s ease;
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 0 30px #ff69b4, 0 0 50px #ff3366;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px #ff69b4;
+            }
+
+            to {
+                box-shadow: 0 0 40px #ff69b4, 0 0 60px #ff3366;
+            }
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-frame:hover .photo {
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .modal-content {
+            background: linear-gradient(45deg, #ff3366, #ff99cc);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 80%;
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.8);
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            font-size: 2.5rem;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 50%;
+        }
+
+        .timeline {
+            margin: 30px auto;
+            padding: 20px;
+            border-left: 4px solid #ff69b4;
+            text-align: left;
+            position: relative;
+        }
+
+        .timeline:before {
+            content: '我们的故事';
+            position: absolute;
+            top: -15px;
+            left: -10px;
+            background: linear-gradient(45deg, #ff3366, #ff6699);
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9rem;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            padding-left: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(5px);
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #ff69b4;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover:before {
+            transform: scale(1.3);
+            box-shadow: 0 0 10px #ff69b4;
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #ff69b4;
+            margin-bottom: 5px;
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10;
+            background-color: rgba(255, 105, 180, 0.3);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 105, 180, 0.5);
+        }
+
+        .video-container {
+            max-width: 95%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+            margin: 20px auto;
+            position: relative;
+        }
+
+        #surpriseVideo {
+            display: block;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .surprise-text {
+            color: #ff69b4;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .video-ending {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            margin-top: 30px;
+            text-shadow: 0 0 10px #ff69b4;
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes floatConfetti {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            .photo-frame {
+                width: 120px;
+                height: 120px;
+            }
+
+            .love-letter {
+                max-height: 250px;
+            }
+
+            .timeline {
+                max-height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+                /* 减小下边距 */
+            }
+
+            p {
+                font-size: 1rem;
+                margin-bottom: 15px;
+                /* 减小下边距 */
+            }
+
+            .photo-frame {
+                width: 100px;
+                height: 100px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+                margin: 5px;
+                /* 减小按钮间距 */
+            }
+
+            .love-letter {
+                padding: 10px;
+                max-height: 200px;
+            }
+
+            .timeline {
+                padding: 10px;
+                max-height: 120px;
+            }
+
+            .timeline-item {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="startScreen">
+        <button id="startButton" class="btn">开启我们的故事</button>
+    </div>
+
+    <div class="content" id="mainContent" style="display: none;"> <!-- 初始隐藏 -->
+        <div class="photo-frame">
+            <img src="love.jpg" alt="小美" class="photo">
+        </div>
+        <h1>小美，你是我永恒的惊蛰</h1>
+
+        <div class="love-letter">
+            <p>致我永不凋零的春天：</p>
+
+            <p>自惊蛰那日与你目光初遇，你睫毛上栖着的新雪便融作我眼底的春汛。那些欲言又止的黄昏，你发梢扬起的弧度，都是镌刻在我视网膜上的十四行诗。</p>
+
+            <p>当你带着栀子气息的眸光掠过我的荒原，我听见胸腔里青铜编钟般的震颤。这悸动让我想起《诗经》里"既见君子，云胡不喜"的古老韵律，如同未启封的月光在檀木匣中轻颤。</p>
+
+            <p>你灵魂里生长的翠竹，既柔且韧，在岁月风雨中自成节律。那些悄然拔节的声响，是漫过我心堤的潮汐，漫过魏晋的松涛与盛唐的蝉鸣。</p>
+
+            <p>我愿化作你窗前的芭蕉，承接你所有的晨露与星辉。纵使年轮将青丝染作飞雪，仍会在每一道年轮里长出新鲜的春天。</p>
+
+            <p>若你允许，我愿用余生临摹你掌心的纹路，将我们的故事写成比《长干行》更绵长的诗篇。让每个标点都浸透江南的烟雨，每个韵脚都缀满北斗的银辉。</p>
+
+            <p>小美，可愿与我共写这卷永不封笔的婚书？</p>
+            <p style="text-align: right;">—— 将月色熬成相思的 彬</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">惊蛰·初遇</div>
+                <div class="timeline-content">檐角风铃摇碎三寸春光，你眸中星辰惊醒我沉睡的银河</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">谷雨·初语</div>
+                <div class="timeline-content">结结巴巴的词语在喉间抽芽，被你温柔浇灌成满树杏花</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">今夕·启信</div>
+                <div class="timeline-content">以心跳为火漆封印此笺，寄往你我共有的岁岁年年</div>
+            </div>
+        </div>
+
+        <button class="btn accept">我愿意</button>
+        <button class="btn reject">容我三思</button>
+    </div>
+
+    <div class="modal" id="acceptModal">
+        <div class="modal-content">
+            <h2>心之所向，素履以往</h2>
+            <p>承蒙你的允诺，我愿以余生为墨，岁月为纸，书写我们共同的诗篇。</p>
+            <p>自刻起，我承诺：</p>
+            <ul style="text-align: left; margin: 20px 0; list-style-type: '✨'; padding-left: 20px;">
+                <li>以晨昏为序，为你编织日常的温柔与惊喜。</li>
+                <li>在你眉间微蹙时，化作拂去愁绪的清风。</li>
+                <li>珍藏你所有的欢喜与偏爱，铭记每一个值得纪念的瞬间。</li>
+                <li>尊重你的步履与方向，如同尊重星辰的轨迹。</li>
+                <li>让爱意不止于唇齿，更流淌在光阴的细微之处。</li>
+            </ul>
+            <p>我们的故事，正翻开最美的序章... 期待与你一同书写未来的每一页，直至时光尽头。</p>
+            <p style="text-align: right; margin-top: 30px;">—— 永远属于你的 彬</p>
+            <div id="heartCanvas"></div>
+
+            <div class="surprise-text" style="display: none; margin-top: 30px; animation: fadeIn 1.5s forwards;">
+                <p>还有一个小惊喜送给你...</p>
+            </div>
+
+            <div class="video-container" style="display: none; margin-top: 20px; animation: fadeIn 1.5s forwards;">
+                <video id="surpriseVideo" width="100%" controls>
+                    <source src="表白.mp4" type="video/mp4">
+                    你的浏览器不支持视频播放。
+                </video>
+            </div>
+
+            <div class="video-ending" id="videoEnding">
+                <p>爱你的心意，远不止于此</p>
+                <p>未来的每一天，都将是我们爱的见证</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="rejectModal">
+        <div class="modal-content">
+            <h2>别急着拒绝嘛~</h2>
+            <p>我知道爱情需要时间，也许我们可以先从朋友做起？</p>
+            <p>给我一次机会，让我能够证明我的真心！</p>
+            <p>如果你改变主意了...</p>
+            <button class="btn reconsider">好吧，我接受</button>
+        </div>
+    </div>
+
+    <div class="music-control" id="musicControl">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path>
+        </svg>
+    </div>
+
+    <audio id="bgMusic" loop autoplay>
+        <source src="lovebgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 创建Three.js场景
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 创建心形粒子系统
+        const heartShape = new THREE.Shape();
+        const x = 0, y = 0;
+
+        heartShape.moveTo(x + 25, y + 25);
+        heartShape.bezierCurveTo(x + 25, y + 25, x + 20, y, x, y);
+        heartShape.bezierCurveTo(x - 30, y, x - 30, y + 35, x - 30, y + 35);
+        heartShape.bezierCurveTo(x - 30, y + 55, x - 10, y + 77, x + 25, y + 95);
+        heartShape.bezierCurveTo(x + 60, y + 77, x + 80, y + 55, x + 80, y + 35);
+        heartShape.bezierCurveTo(x + 80, y + 35, x + 80, y, x + 50, y);
+        heartShape.bezierCurveTo(x + 35, y, x + 25, y + 25, x + 25, y + 25);
+
+        const particles = new THREE.Group();
+        const particlesMaterial = new THREE.PointsMaterial({
+            color: 0xff69b4,
+            size: 0.5,
+            transparent: true
+        });
+
+        // 创建粒子
+        const heartGeometry = new THREE.ShapeGeometry(heartShape);
+        const particlesCount = 2000;
+        const particlesGeometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount; i++) {
+            const i3 = i * 3;
+            const vertex = new THREE.Vector3(
+                (Math.random() - 0.5) * 100,
+                (Math.random() - 0.5) * 100,
+                (Math.random() - 0.5) * 100
+            );
+            positions[i3] = vertex.x;
+            positions[i3 + 1] = vertex.y;
+            positions[i3 + 2] = vertex.z;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+        particles.add(particleSystem);
+        scene.add(particles);
+
+        // 添加环境光
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        // 添加点光源
+        const pointLight = new THREE.PointLight(0xff69b4, 1, 100);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+
+        // 设置相机位置
+        camera.position.z = 50;
+
+        // 创建3D文字
+        const loader = new THREE.FontLoader();
+
+        // 由于无法加载外部字体，我们将使用粒子系统模拟文字效果
+        function createTextParticles() {
+            const group = new THREE.Group();
+            const textGeometry = new THREE.PlaneGeometry(30, 5, 30, 5);
+            const textMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.3,
+                transparent: true
+            });
+
+            const textMesh = new THREE.Points(textGeometry, textMaterial);
+            textMesh.position.set(0, 0, -20);
+            group.add(textMesh);
+
+            return group;
+        }
+
+        const textParticles = createTextParticles();
+        scene.add(textParticles);
+
+        // 动画循环
+        function animate() {
+            requestAnimationFrame(animate);
+
+            particles.rotation.x += 0.002;
+            particles.rotation.y += 0.003;
+
+            textParticles.rotation.y += 0.01;
+
+            // 让粒子系统呼吸效果
+            const time = Date.now() * 0.001;
+            particleSystem.material.size = 0.5 + 0.2 * Math.sin(time);
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // 窗口大小调整
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // 创建浮动爱心和花瓣
+        function createFloatingElements() {
+            // 创建浮动爱心
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.bottom = '-10px';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 10000);
+            }, 200);
+
+            // 创建浮动花瓣
+            const flowers = ['🌸', '🌹', '🌺', '🌷', '🌻', '💮', '🏵️'];
+            setInterval(() => {
+                const flower = document.createElement('div');
+                flower.classList.add('flower');
+                flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.bottom = '-10px';
+                flower.style.fontSize = Math.random() * 20 + 15 + 'px';
+                flower.style.animationDuration = Math.random() * 8 + 7 + 's';
+                document.body.appendChild(flower);
+
+                setTimeout(() => {
+                    flower.remove();
+                }, 15000);
+            }, 500);
+        }
+
+        // 创建彩色纸屑效果
+        function createConfetti() {
+            const colors = ['#ff3366', '#ff6699', '#ff99cc', '#ffccff', '#ffffff', '#ffff00', '#ff9900', '#33ccff'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = -20 + 'px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.opacity = Math.random() * 0.5 + 0.5;
+
+                    // 设置动画
+                    const xMove = Math.random() * 200 - 100; // -100px到100px之间的随机值
+                    confetti.style.animation = `floatConfetti ${Math.random() * 5 + 3}s linear forwards`;
+                    confetti.style.transform = `translateY(0) translateX(0) rotate(0deg)`;
+
+                    document.body.appendChild(confetti);
+
+                    // 手动设置动画效果
+                    setTimeout(() => {
+                        confetti.style.transform = `translateY(100vh) translateX(${xMove}px) rotate(360deg)`;
+                        confetti.style.opacity = '0';
+
+                        // 动画结束后移除元素
+                        setTimeout(() => {
+                            confetti.remove();
+                        }, 5000);
+                    }, 50);
+                }, i * 100);
+            }
+        }
+
+        // 交互逻辑
+        const startScreen = document.getElementById('startScreen');
+        const startButton = document.getElementById('startButton');
+        const mainContent = document.getElementById('mainContent');
+        const musicControl = document.getElementById('musicControl');
+        const bgMusic = document.getElementById('bgMusic');
+        const acceptBtn = document.querySelector('.accept'); // 获取接受按钮
+        const rejectBtn = document.querySelector('.reject'); // 获取拒绝按钮
+        const reconsiderBtn = document.querySelector('.reconsider'); // 获取重新考虑按钮
+        const acceptModal = document.getElementById('acceptModal');
+        const rejectModal = document.getElementById('rejectModal');
+
+        startButton.addEventListener('click', () => {
+            // 隐藏开始界面
+            startScreen.style.display = 'none';
+
+            // 显示主要内容和音乐控制按钮
+            mainContent.style.display = 'block'; // 或者 'flex' 如果你需要 flex 布局
+            // 触发淡入动画 (如果需要，可以重新应用动画类)
+            mainContent.style.opacity = '0'; // 重置透明度以便动画生效
+            mainContent.style.animation = 'fadeIn 2s ease-in-out forwards';
+
+            musicControl.style.display = 'block'; // 或者 'inline-block' / 'flex'
+
+            // 尝试播放音乐
+            const playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // 播放成功，更新图标为播放状态
+                    musicControl.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path></svg>';
+                    console.log('音乐开始播放');
+                }).catch(error => {
+                    // 播放失败
+                    console.error('音乐播放失败:', error);
+                    // 图标保持暂停状态
+                    musicControl.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3z"></path></svg>';
+                });
+            }
+        });
+
+        // --- 修改后的交互逻辑 ---
+        acceptBtn.addEventListener('click', () => {
+            // 在新窗口打开视频播放页面
+            window.open('video.html', '_blank');
+        });
+
+        rejectBtn.addEventListener('click', () => {
+            rejectModal.style.display = 'flex';
+            setTimeout(() => {
+                rejectModal.classList.add('show');
+                // 移除了按钮移动的代码
+            }, 100);
+        });
+
+        reconsiderBtn.addEventListener('click', () => {
+            rejectModal.style.display = 'none'; // 关闭拒绝弹窗
+            rejectModal.classList.remove('show'); // 移除 show 类以重置动画状态
+
+            // 在新窗口打开视频播放页面
+            window.open('video.html', '_blank');
+        });
+
+        // ... createHeartAnimation function (if exists) ...
+
+        // ... createConfetti function (if exists) ...
+
+        // ... create3DBackground function ...
+
+        // 音乐控制按钮的点击逻辑 (保持不变)
+        musicControl.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicControl.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path></svg>';
+            } else {
+                bgMusic.pause();
+                musicControl.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3z"></path></svg>';
+            }
+        });
+
+        // 初始化浮动元素
+        createFloatingElements();
+    </script>
+</body>
+
+</html>

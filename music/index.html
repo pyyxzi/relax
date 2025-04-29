@@ -27,7 +27,7 @@
 <meta property="og:description" content="歌曲名称         歌手                                                 00:00           00:00">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-16T13:36:02.000Z">
-<meta property="article:modified_time" content="2025-04-17T08:25:24.154Z">
+<meta property="article:modified_time" content="2025-04-29T04:54:18.799Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -209,9 +209,25 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/play/3d%E7%9B%B8%E5%86%8C.html" target="_blank">
+                  <a class="dropdown-item" href="/play/verification.html" target="_blank">
                     <i class="iconfont icon-image"></i>
-                    <span>3d相册</span>
+                    <span>相册</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/play/cool/Desktop.html" target="_self">
+                    <i class="iconfont icon-th-large"></i>
+                    <span>工作台</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/play/cool/love-master/index.html" target="_self">
+                    <i class="iconfont icon-telegram-fill"></i>
+                    <span>彬的表白定制</span>
                   </a>
                 
               </div>
@@ -249,7 +265,7 @@
                   
                   
                   
-                  <a class="dropdown-item" href="/%E6%94%BE%E6%98%A0%E5%8E%85" target="_self">
+                  <a class="dropdown-item" href="/play/cool/video.html" target="_self">
                     <i class="iconfont icon-youtube-fill"></i>
                     <span>放映厅</span>
                   </a>
@@ -1488,82 +1504,186 @@ document.addEventListener('DOMContentLoaded', function() {
   // 音乐列表
   const musicList = [
     {
-      title: '7 Years',
-      artist: 'Lukas Graham',
-      path: '/music/7 years.mp3',
+      title: '不渝之诺',
+      artist: 'Various Artists',
+      path: '/music/不渝之诺.mp3',
+      cover: 'https://picsum.photos/id/16/200'
+    },
+    {
+      title: '将军进行曲',
+      artist: 'Various Artists',
+      path: '/music/将军进行曲.mp3',
+      cover: 'https://picsum.photos/id/34/200'
+    },
+    {
+      title: '进行曲',
+      artist: 'Various Artists',
+      path: '/music/进行曲.mp3',
+      cover: 'https://picsum.photos/id/35/200'
+    },
+    {
+      title: '运动员进行曲',
+      artist: 'Various Artists',
+      path: '/music/运动员进行曲.mp3',
+      cover: 'https://picsum.photos/id/28/200'
+    },
+    {
+      title: '渔舟唱晚',
+      artist: 'Various Artists',
+      path: '/music/渔舟唱晚.mp3',
+      cover: 'https://picsum.photos/id/23/200'
+    },
+    {
+      title: '逆战',
+      artist: 'Various Artists',
+      path: '/music/逆战.mp3',
       cover: 'https://picsum.photos/id/10/200'
     },
     {
-      title: 'Pop',
+      title: '平凡非凡',
       artist: 'Various Artists',
-      path: '/music/pop.mp3',
+      path: '/music/平凡非凡.mp3',
+      cover: 'https://picsum.photos/id/11/200'
+    },
+    {
+      title: '七载浮生',
+      artist: 'Various Artists',
+      path: '/music/七载浮生.mp3',
+      cover: 'https://picsum.photos/id/12/200'
+    },
+    {
+      title: '入戏太深',
+      artist: 'Various Artists',
+      path: '/music/入戏太深.mp3',
+      cover: 'https://picsum.photos/id/13/200'
+    },
+    {
+      title: '盛夏光年',
+      artist: 'Various Artists',
+      path: '/music/盛夏光年.mp3',
+      cover: 'https://picsum.photos/id/14/200'
+    },
+    {
+      title: '释怀',
+      artist: 'Various Artists',
+      path: '/music/释怀.mp3',
+      cover: 'https://picsum.photos/id/15/200'
+    },
+    {
+      title: '数尽繁星',
+      artist: 'Various Artists',
+      path: '/music/数尽繁星.mp3',
+      cover: 'https://picsum.photos/id/16/200'
+    },
+    {
+      title: '送别',
+      artist: 'Various Artists',
+      path: '/music/送别.mp3',
+      cover: 'https://picsum.photos/id/17/200'
+    },
+    {
+      title: '蔚蓝独白',
+      artist: 'Various Artists',
+      path: '/music/蔚蓝独白.mp3',
+      cover: 'https://picsum.photos/id/18/200'
+    },
+    {
+      title: '我心永恒',
+      artist: 'Various Artists',
+      path: '/music/我心永恒.mp3',
+      cover: 'https://picsum.photos/id/19/200'
+    },
+    {
+      title: '香夫人赋',
+      artist: 'Various Artists',
+      path: '/music/香夫人赋.mp3',
       cover: 'https://picsum.photos/id/20/200'
     },
     {
-      title: 'Time',
-      artist: 'Hans Zimmer',
-      path: '/music/time.mp3',
+      title: '星穹之下',
+      artist: 'Various Artists',
+      path: '/music/星穹之下.mp3',
+      cover: 'https://picsum.photos/id/21/200'
+    },
+    {
+      title: '隐形的翅膀',
+      artist: 'Various Artists',
+      path: '/music/隐形的翅膀.mp3',
+      cover: 'https://picsum.photos/id/22/200'
+    },
+
+    {
+      title: '与你同在',
+      artist: 'Various Artists',
+      path: '/music/与你同在.mp3',
+      cover: 'https://picsum.photos/id/24/200'
+    },
+    {
+      title: '羽客听蝉',
+      artist: 'Various Artists',
+      path: '/music/羽客听蝉.mp3',
+      cover: 'https://picsum.photos/id/25/200'
+    },
+    {
+      title: '远乡遥望',
+      artist: 'Various Artists',
+      path: '/music/远乡遥望.mp3',
+      cover: 'https://picsum.photos/id/26/200'
+    },
+    {
+      title: '月砂絮语',
+      artist: 'Various Artists',
+      path: '/music/月砂絮语.mp3',
+      cover: 'https://picsum.photos/id/27/200'
+    },
+
+    {
+      title: '避雷',
+      artist: 'Various Artists',
+      path: '/music/避雷.mp3',
+      cover: 'https://picsum.photos/id/29/200'
+    },
+    {
+      title: '别后生香',
+      artist: 'Various Artists',
+      path: '/music/别后生香.mp3',
       cover: 'https://picsum.photos/id/30/200'
-    },
-    {
-      title: 'Shed a Light',
-      artist: 'Robin Schulz & David Guetta',
-      path: '/music/shed a light.mp3',
-      cover: 'https://picsum.photos/id/40/200'
-    },
-    {
-      title: '白月光和朱砂痣',
-      artist: '大籽',
-      path: '/music/白月光和朱砂痣.mp3',
-      cover: 'https://picsum.photos/id/50/200'
-    },
-    {
-      title: 'Counting Stars',
-      artist: 'OneRepublic',
-      path: '/music/counting stars.mp3',
-      cover: 'https://picsum.photos/id/60/200'
-    },
-    {
-      title: 'Star Sky',
-      artist: 'Two Steps From Hell',
-      path: '/music/star sky.mp3',
-      cover: 'https://picsum.photos/id/70/200'
-    },
-    {
-      title: 'Something Just Like This',
-      artist: 'The Chainsmokers & Coldplay',
-      path: '/music/Something just like this.mp3',
-      cover: 'https://picsum.photos/id/80/200'
-    },
-    {
-      title: '飞鸟和蝉',
-      artist: '任然',
-      path: '/music/飞鸟和蝉.mp3',
-      cover: 'https://picsum.photos/id/90/200'
-    },
-    {
-      title: 'Waiting For Love',
-      artist: 'Avicii',
-      path: '/music/waiting  for love.mp3',
-      cover: 'https://picsum.photos/id/100/200'
     },
     {
       title: '穿越火线',
       artist: 'Various Artists',
       path: '/music/穿越火线.mp3',
-      cover: 'https://picsum.photos/id/110/200'
+      cover: 'https://picsum.photos/id/32/200'
     },
     {
-      title: '离别开出花',
-      artist: '就是南方凯（项学凯）',
-      path: '/music/离别开出花.mp3',
-      cover: 'https://picsum.photos/id/120/200'
+      title: '归途',
+      artist: 'Various Artists',
+      path: '/music/归途.mp3',
+      cover: 'https://picsum.photos/id/33/200'
     },
     {
-      title: '奢香夫人',
-      artist: '凤凰传奇',
-      path: '/music/奢香夫人.mp3',
-      cover: 'https://picsum.photos/id/130/200'
+      title: '喀秋莎',
+      artist: 'Various Artists',
+      path: '/music/喀秋莎.mp3',
+      cover: 'https://picsum.photos/id/36/200'
+    },
+    {
+      title: '良辰',
+      artist: 'Various Artists',
+      path: '/music/良辰.mp3',
+      cover: 'https://picsum.photos/id/37/200'
+    },
+    {
+      title: '没茅台',
+      artist: 'Various Artists',
+      path: '/music/没茅台.mp3',
+      cover: 'https://picsum.photos/id/38/200'
+    },
+    {
+      title: '默',
+      artist: 'Various Artists',
+      path: '/music/默.mp3',
+      cover: 'https://picsum.photos/id/39/200'
     }
   ];
   
