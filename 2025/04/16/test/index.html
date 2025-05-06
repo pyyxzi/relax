@@ -16,16 +16,18 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="John Doe">
+  <meta name="author" content="彭于晏">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
-<meta property="og:title" content="test">
+    <meta name="description" content="其实这里啥也没有，主要看导航栏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Readme">
 <meta property="og:url" content="http://example.com/2025/04/16/test/index.html">
 <meta property="og:site_name" content="赛博窥天阁">
+<meta property="og:description" content="其实这里啥也没有，主要看导航栏">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-04-16T13:33:45.000Z">
-<meta property="article:modified_time" content="2025-04-23T13:01:35.291Z">
+<meta property="article:modified_time" content="2025-05-06T10:04:26.939Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -33,7 +35,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>test - 赛博窥天阁</title>
+  <title>Readme - 赛博窥天阁</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -125,7 +127,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>龙渊密阁</strong>
+      <strong>赛博窥天阁</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -323,7 +325,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="test"></span>
+            <span id="subtitle" data-typed-text="Readme"></span>
           
         </div>
 
@@ -333,7 +335,7 @@
     
       <span class="post-meta mr-2">
         <i class="iconfont icon-author" aria-hidden="true"></i>
-        John Doe
+        彭于晏
       </span>
     
     
@@ -351,7 +353,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          14 words
         
       </span>
     
@@ -408,12 +410,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">test</h1>
+            <h1 id="seo-header">Readme</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <p class="note note-primary">其实这里啥也没有，主要看导航栏</p>
                 
               </div>
             
@@ -430,14 +432,14 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>test</div>
+      <div>Readme</div>
       <div>http://example.com/2025/04/16/test/</div>
     </div>
     <div class="license-meta">
       
         <div class="license-meta-item">
           <div>Author</div>
-          <div>John Doe</div>
+          <div>彭于晏</div>
         </div>
       
       
@@ -511,19 +513,6 @@
 
     <div class="side-col d-none d-lg-block col-lg-2">
       
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>Table of Contents</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
 
     </div>
   </div>
@@ -602,7 +591,7 @@
     <div class="footer-inner">
   
     <div class="footer-content">
-       <div class="footer-content"> <div class="footer-item"> <span class="motto rainbow-text"><i class="fas fa-quote-left quote-icon"></i> Powered by k卷 <i class="fas fa-quote-right quote-icon"></i> | <i class="far fa-copyright"></i> All rights reserved</span> </div> <div class="footer-item"> <div class="website-runtime"> <span class="rainbow-text"><i class="far fa-clock"></i> 本站已运行</span> <span class="run-time" id="website-runtime"></span> </div> </div> </div> 
+       <div class="footer-content"> <div class="footer-item"> <span class="motto rainbow-text"><i class="fas fa-quote-left quote-icon"></i> Powered by List <i class="fas fa-quote-right quote-icon"></i> | <i class="far fa-copyright"></i> All rights reserved</span> </div> <div class="footer-item"> <div class="website-runtime"> <span class="rainbow-text"><i class="far fa-clock"></i> 本站已运行</span> <span class="run-time" id="website-runtime"></span> </div> </div> </div> 
     </div>
   
   
@@ -708,46 +697,6 @@
   
 
 
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
 
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
