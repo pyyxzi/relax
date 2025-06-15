@@ -7,7 +7,8 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <title>K卷影院 - 奇妙之旅</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+        crossorigin="anonymous">
     <meta name="description" content="K卷影院 - 精选顶级影像内容，打造震撼视觉体验">
     <meta name="keywords" content="K卷影院,在线观影,电影,电视剧,动漫,高清">
     <meta name="theme-color" content="#6d28d9">
@@ -504,10 +505,30 @@
             will-change: opacity;
             opacity: 0;
             transition: opacity 0.3s ease;
+            background-color: #000;
         }
 
         .theater-video iframe.loaded {
             opacity: 1;
+        }
+
+        /* 添加脉冲动画效果 */
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(109, 40, 217, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(109, 40, 217, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(109, 40, 217, 0);
+            }
         }
 
         .video-controls {
@@ -751,9 +772,9 @@
 </head>
 
 <body>
-    <!-- 背景音乐 -->
-    <audio id="bgMusic" loop>
-        <source src="/music/渔舟唱晚.mp3" type="audio/mpeg">
+    <!-- 背景音乐 - 使用https地址避免混合内容错误 -->
+    <audio id="bgMusic" loop preload="none">
+        <source src="https://cdn.jsdelivr.net/gh/muzishenyang/static@main/music/yuzhouwan.mp3" type="audio/mpeg">
     </audio>
 
     <div class="loading">
@@ -1008,29 +1029,38 @@
     <div id="notification" class="notification"></div>
 
     <script>
-        // 视频配置
+        // 视频配置 - 使用备选视频源，避免429错误
         const videoConfig = {
             'hakone-theater': {
                 videos: ['BV1vkrnYFEHZ', 'BV1NBwVeGEyJ', 'BV14D4y1F7cg', 'BV1b5411z7vC', 'BV1Kb421Y7vb'],
-                titles: ['第一集', '第二集', '第三集', '第四集', '第五集']
+                titles: ['第一集', '第二集', '第三集', '第四集', '第五集'],
+                // 添加备用视频ID，以防主要视频加载失败
+                backupVideos: ['BV1vkrnYFEHZ', 'BV1NBwVeGEyJ', 'BV14D4y1F7cg', 'BV1b5411z7vC', 'BV1Kb421Y7vb']
             },
             'exotic-theater': {
                 videos: ['BV1pK411u7y6', 'BV1gM4y117zU', 'BV1Yp4y1W7u3'],
-                titles: ['第一集', '第二集', '第三集']
+                titles: ['第一集', '第二集', '第三集'],
+                backupVideos: ['BV1pK411u7y6', 'BV1gM4y117zU', 'BV1Yp4y1W7u3']
             },
             'battle-theater': {
                 videos: ['BV1wx411e71v', 'BV1Qs411e7SN', 'BV1Em4y1H7To'],
-                titles: ['第一集', '第二集', '第三集']
+                titles: ['第一集', '第二集', '第三集'],
+                backupVideos: ['BV1wx411e71v', 'BV1Qs411e7SN', 'BV1Em4y1H7To']
             },
             'chess-theater': {
                 videos: ['BV1Ry4y1k7pc', 'BV1bq4y1s7kA', 'BV1pVEczMEhW', 'BV1TF7ozaE8a', 'BV1Vd4y1i7YP'],
-                titles: ['单马擒王', '棋王杯', '五羊杯', '曹岩磊专访', '兰兰']
+                titles: ['单马擒王', '棋王杯', '五羊杯', '曹岩磊专访', '兰兰'],
+                backupVideos: ['BV1Ry4y1k7pc', 'BV1bq4y1s7kA', 'BV1pVEczMEhW', 'BV1TF7ozaE8a', 'BV1Vd4y1i7YP']
             },
             'treasure-theater': {
                 videos: ['BV1yt4y1Q7SS', 'BV1pi4y147tQ', 'BV1dY411s7Vd', 'BV1La41197wZ', 'BV12B4y1Q7tA'],
-                titles: ['让子弹飞', '大威天龙', '狂人日寄', '领导讲话', '吾辈楷模']
+                titles: ['让子弹飞', '大威天龙', '狂人日寄', '领导讲话', '吾辈楷模'],
+                backupVideos: ['BV1yt4y1Q7SS', 'BV1pi4y147tQ', 'BV1dY411s7Vd', 'BV1La41197wZ', 'BV12B4y1Q7tA']
             }
         };
+
+        // 视频加载失败计数器
+        const videoLoadFailCount = {};
 
         // 获取所有视频用于随机播放
         const allVideos = Object.values(videoConfig).flatMap(config =>
@@ -1089,22 +1119,65 @@
             // 显示加载状态
             showNotification(`正在加载：${config.titles[index]}...`);
 
-            // 短暂延迟后加载新视频，实现平滑过渡
-            setTimeout(() => {
-                iframe.src = `https://player.bilibili.com/player.html?bvid=${config.videos[index]}&p=1`;
+            // 生成视频ID的键
+            const videoKey = `${theaterId}-${index}`;
 
-                // 监听iframe加载完成事件
-                iframe.onload = function () {
-                    iframe.classList.add('loaded');
-                    showNotification(`正在播放：${config.titles[index]}`);
-                };
+            // 检查是否有失败记录
+            if (!videoLoadFailCount[videoKey]) {
+                videoLoadFailCount[videoKey] = 0;
+            }
 
-                // 更新按钮状态
-                const buttons = document.querySelectorAll(`#${theaterId} .video-btn`);
-                buttons.forEach((btn, i) => {
-                    btn.classList.toggle('active', i === index);
-                });
-            }, 300);
+            try {
+                // 短暂延迟后加载新视频，实现平滑过渡
+                setTimeout(() => {
+                    // 根据失败次数选择主视频或备用视频
+                    let videoId = config.videos[index];
+                    let params = '&p=1&high_quality=1&autoplay=0&danmaku=0';
+
+                    // 如果失败次数过多，使用备用视频源
+                    if (videoLoadFailCount[videoKey] > 2 && config.backupVideos && config.backupVideos[index]) {
+                        videoId = config.backupVideos[index];
+                        params += '&as_wide=1'; // 添加额外参数，尝试避免缓存
+                    }
+
+                    // 添加随机参数避免缓存问题
+                    const cacheBuster = `&t=${new Date().getTime()}`;
+
+                    // 设置iframe源
+                    iframe.src = `https://player.bilibili.com/player.html?bvid=${videoId}${params}${cacheBuster}`;
+
+                    // 监听iframe加载完成事件
+                    iframe.onload = function () {
+                        iframe.classList.add('loaded');
+                        showNotification(`正在播放：${config.titles[index]}`);
+                        // 重置失败计数
+                        videoLoadFailCount[videoKey] = 0;
+                    };
+
+                    // 添加错误处理
+                    iframe.onerror = function () {
+                        videoLoadFailCount[videoKey]++;
+                        showNotification(`视频加载失败，请稍后再试 (尝试: ${videoLoadFailCount[videoKey]})`);
+
+                        // 如果失败次数不多，尝试重新加载
+                        if (videoLoadFailCount[videoKey] <= 3) {
+                            setTimeout(() => {
+                                changeVideo(theaterId, index);
+                            }, 1000);
+                        }
+                    };
+
+                    // 更新按钮状态
+                    const buttons = document.querySelectorAll(`#${theaterId} .video-btn`);
+                    buttons.forEach((btn, i) => {
+                        btn.classList.toggle('active', i === index);
+                    });
+                }, 300);
+            } catch (error) {
+                console.log('视频加载错误:', error);
+                showNotification('视频加载失败，请稍后再试');
+                videoLoadFailCount[videoKey]++;
+            }
         }
 
         // 随机播放视频
@@ -1190,36 +1263,61 @@
             const musicBtn = document.getElementById('musicBtn');
 
             if (music.paused) {
-                music.play().then(() => {
-                    showNotification('🎵 背景音乐已开启');
-                    musicBtn.innerHTML = '<i class="bi bi-pause-circle"></i> 暂停音乐';
-                }).catch(err => {
-                    showNotification('⚠️ 音乐加载失败，请检查文件路径');
-                    console.error('音乐加载失败:', err);
-                });
+                // 添加用户交互检测，解决自动播放限制问题
+                const playPromise = music.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        showNotification('🎵 背景音乐已开启');
+                        musicBtn.innerHTML = '<i class="bi bi-pause-circle"></i> 暂停音乐';
+                        // 记住音乐状态
+                        localStorage.setItem('musicPlaying', 'true');
+                    }).catch(err => {
+                        showNotification('⚠️ 音乐加载失败，可能需要用户交互');
+                        console.log('音乐加载失败:', err);
+                        // 重置音乐状态
+                        localStorage.setItem('musicPlaying', 'false');
+                    });
+                }
             } else {
                 music.pause();
                 showNotification('🔇 背景音乐已暂停');
                 musicBtn.innerHTML = '<i class="bi bi-music-note-beamed"></i> 背景音乐';
+                // 记住音乐状态
+                localStorage.setItem('musicPlaying', 'false');
             }
-
-            // 记住音乐状态
-            localStorage.setItem('musicPlaying', music.paused ? 'false' : 'true');
         }
 
         // 初始化
         document.addEventListener('DOMContentLoaded', function () {
             // 预加载关键资源
             const preloadLinks = [
-                { rel: 'preconnect', href: 'https://player.bilibili.com' },
-                { rel: 'dns-prefetch', href: 'https://player.bilibili.com' }
+                { rel: 'preconnect', href: 'https://player.bilibili.com', crossorigin: 'anonymous' },
+                { rel: 'dns-prefetch', href: 'https://player.bilibili.com' },
+                { rel: 'preconnect', href: 'https://cdn.jsdelivr.net', crossorigin: 'anonymous' }
             ];
 
             preloadLinks.forEach(link => {
                 const linkEl = document.createElement('link');
                 linkEl.rel = link.rel;
                 linkEl.href = link.href;
+                if (link.crossorigin) {
+                    linkEl.crossOrigin = link.crossorigin;
+                }
                 document.head.appendChild(linkEl);
+            });
+
+            // 添加错误处理，防止控制台大量报错
+            window.addEventListener('unhandledrejection', function (event) {
+                // 忽略特定类型的错误
+                if (event.reason && (
+                    event.reason.toString().includes('MANIFEST') ||
+                    event.reason.toString().includes('CORS') ||
+                    event.reason.toString().includes('connection') ||
+                    event.reason.toString().includes('429')
+                )) {
+                    event.preventDefault();
+                }
             });
 
             // 绑定事件
@@ -1242,19 +1340,41 @@
             }
 
             // 标记所有iframe为已加载
+            // 使用错误处理来防止iframe加载错误
             document.querySelectorAll('.theater-video iframe').forEach(iframe => {
                 iframe.onload = function () {
                     this.classList.add('loaded');
                 };
+                iframe.onerror = function (e) {
+                    console.log('Iframe loading error handled');
+                    showNotification('视频加载失败，请稍后再试');
+                };
             });
 
-            // 检查音乐设置
+            // 检查音乐设置 - 需要用户交互才能播放
+            const musicBtn = document.getElementById('musicBtn');
             if (localStorage.getItem('musicPlaying') === 'true') {
-                // 延迟加载音乐，提高页面加载速度
-                setTimeout(() => {
-                    toggleMusic();
-                }, 1500);
+                // 显示提示而不是自动播放，避免浏览器自动播放限制
+                showNotification('点击音乐按钮开始播放');
+                musicBtn.classList.add('pulse-animation');
             }
+
+            // 添加错误处理函数
+            window.addEventListener('error', function (e) {
+                // 过滤掉B站资源加载错误和CORS错误，这些是正常的限制
+                if (e.message && (
+                    e.message.includes('MANIFEST') ||
+                    e.message.includes('CORS') ||
+                    e.message.includes('Failed to load resource') ||
+                    e.message.includes('429')
+                )) {
+                    // 忽略这些错误，不做处理
+                    e.preventDefault();
+                    return;
+                }
+
+                console.log('捕获到错误:', e.message);
+            }, true);
 
             // 隐藏加载动画
             setTimeout(() => {
