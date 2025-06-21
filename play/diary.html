@@ -111,6 +111,7 @@
             background-size: 400% 400%;
             animation: gradientAnimation 30s ease infinite;
             opacity: 0.85;
+            will-change: background-position;
         }
 
         .dark-theme .animated-background {
@@ -315,13 +316,14 @@
             border-radius: var(--border-radius);
             padding: 2.5rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid rgba(0, 0, 0, 0.05);
             animation: slideInUp 0.6s ease-out var(--delay, 0) both;
             position: relative;
             overflow: hidden;
             font-family: var(--font-family);
             margin-bottom: 2rem;
+            will-change: transform, box-shadow;
         }
 
         .diary-card::before {
@@ -362,7 +364,7 @@
             align-items: center;
             margin-bottom: 0;
             cursor: pointer;
-            transition: all 0.4s ease-out;
+            transition: all 0.3s ease;
             position: relative;
             z-index: 2;
             padding-bottom: 1rem;
@@ -372,7 +374,7 @@
         .diary-toggle-icon {
             font-size: 1.2rem;
             color: var(--text-secondary);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: transform 0.3s ease;
             opacity: 0.7;
             width: 30px;
             height: 30px;
@@ -436,18 +438,18 @@
             height: 0;
             opacity: 0;
             transform-origin: top;
-            transform: translateY(-10px) scale(0.98);
+            transform: translateY(-10px);
             transition:
-                height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-                opacity 0.4s ease-out,
-                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+                height 0.4s ease,
+                opacity 0.3s ease,
+                transform 0.3s ease;
             will-change: height, opacity, transform;
         }
 
         .diary-card.expanded .diary-collapsible-content {
             height: auto;
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
         .diary-meta {
@@ -524,11 +526,12 @@
             border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            transition: var(--transition);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             background: var(--bg-secondary);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             border: 3px solid white;
             position: relative;
+            will-change: transform;
         }
 
         .diary-image:hover {
@@ -1073,19 +1076,20 @@
             box-shadow: 0 0 10px rgba(var(--accent-color-rgb), 0.7);
         }
 
-        /* 点击水波纹效果 */
+        /* 优化粒子和水波纹效果 */
         .click-ripple {
             position: absolute;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(var(--cursor-color-rgb), 0.6) 0%, rgba(var(--cursor-color-rgb), 0) 70%);
             transform: scale(0);
             pointer-events: none;
-            animation: rippleEffect 0.8s ease-out forwards;
+            animation: rippleEffect 0.7s ease-out forwards;
             z-index: 9997;
-            width: 100px;
-            height: 100px;
-            margin-left: -50px;
-            margin-top: -50px;
+            width: 80px;
+            height: 80px;
+            margin-left: -40px;
+            margin-top: -40px;
+            will-change: transform, opacity;
         }
 
         .click-ripple::before {
@@ -1097,12 +1101,13 @@
             left: 15%;
             border: 2px solid rgba(var(--cursor-color-rgb), 0.4);
             border-radius: 50%;
-            animation: ringExpand 0.8s ease-out forwards;
+            animation: ringExpand 0.7s ease-out forwards;
+            will-change: width, height, top, left, opacity;
         }
 
         @keyframes rippleEffect {
             to {
-                transform: scale(2);
+                transform: scale(1.5);
                 opacity: 0;
             }
         }
@@ -1117,7 +1122,7 @@
             }
         }
 
-        /* 粒子轨迹效果 */
+        /* 优化粒子轨迹效果 */
         .particle {
             position: fixed;
             background: rgba(var(--cursor-color-rgb), 0.6);
@@ -1126,15 +1131,16 @@
             pointer-events: none;
             z-index: 9996;
             opacity: 0.7;
-            animation: fadeOut 0.8s ease-out forwards;
+            animation: fadeOut 0.6s ease-out forwards;
             border-radius: 50%;
             box-shadow: 0 0 6px rgba(var(--cursor-color-rgb), 0.4);
+            will-change: opacity, transform;
         }
 
         @keyframes fadeOut {
             to {
                 opacity: 0;
-                transform: scale(0.5) translateY(-10px);
+                transform: scale(0.5) translateY(-8px);
             }
         }
     </style>
@@ -1206,7 +1212,7 @@
         </div>
 
         <div class="ai-analysis">
-            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.25rem;">🤖 AI智能分析</h3>
+            <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.25rem;">AI日记分析</h3>
             <div class="ai-controls">
                 <select class="select" id="analysisType">
                     <option value="quick">快速分析</option>
@@ -1269,8 +1275,8 @@
                 date: "2025-06-21",
                 mood: "joyful",
                 weather: 'sunny',
-                images: ['diary_img/7.jpg']
-
+                images: ['diary_img/7.jpg'],
+                tags: ['测试', '日常']
             },
 
         ];
@@ -1294,7 +1300,11 @@
             setInitialDates();
             loadThemePreference();
             addRippleEffect();
-            initCustomCursor();
+
+            // 延迟初始化鼠标效果，优先渲染页面内容
+            setTimeout(() => {
+                initCustomCursor();
+            }, 100);
         }
 
         // 设置事件监听器
@@ -1337,7 +1347,11 @@
             const stats = calculateStats(filteredData);
             const statsContainer = document.getElementById('stats');
 
-            statsContainer.innerHTML = `
+            // 使用文档片段减少重排
+            const fragment = document.createDocumentFragment();
+            const tempContainer = document.createElement('div');
+
+            tempContainer.innerHTML = `
                 <div class="stat-card" style="--delay: 0.4s">
                     <div class="stat-number">${stats.total}</div>
                     <div class="stat-label">总日记数</div>
@@ -1359,6 +1373,15 @@
                     <div class="stat-label">常见天气</div>
                 </div>
             `;
+
+            // 将所有子节点移到文档片段中
+            while (tempContainer.firstChild) {
+                fragment.appendChild(tempContainer.firstChild);
+            }
+
+            // 清空并一次性添加所有元素
+            statsContainer.innerHTML = '';
+            statsContainer.appendChild(fragment);
         }
 
         // 计算统计数据
@@ -1421,8 +1444,12 @@
             diaryGrid.style.display = 'grid';
             emptyState.style.display = 'none';
 
-            diaryGrid.innerHTML = filteredData.map((entry, index) => `
-                <div class="diary-card fade-in" style="--delay: ${index * 0.1}s">
+            // 使用文档片段减少重排
+            const fragment = document.createDocumentFragment();
+            const tempContainer = document.createElement('div');
+
+            tempContainer.innerHTML = filteredData.map((entry, index) => `
+                <div class="diary-card fade-in" style="--delay: ${Math.min(index * 0.05, 0.5)}s">
                     <div class="diary-header" onclick="toggleDiaryContent(this)">
                         <div>
                             <h3 class="diary-title">${entry.title}</h3>
@@ -1449,12 +1476,21 @@
                 </div>
             `).join('');
 
+            // 将所有子节点移到文档片段中
+            while (tempContainer.firstChild) {
+                fragment.appendChild(tempContainer.firstChild);
+            }
+
+            // 清空并一次性添加所有元素
+            diaryGrid.innerHTML = '';
+            diaryGrid.appendChild(fragment);
+
             // 触发动画
             setTimeout(() => {
                 document.querySelectorAll('.fade-in').forEach(el => {
                     el.classList.add('fade-in');
                 });
-            }, 100);
+            }, 50);
         }
 
         // 应用筛选和排序
@@ -1556,7 +1592,7 @@
 
             // 准备分析内容
             const diariesText = recentDiaries.map(entry =>
-                `日期: ${entry.date}\n标题: ${entry.title}\n心情: ${getMoodText(entry.mood)}\n天气: ${getWeatherText(entry.weather)}\n内容: ${entry.content}\n标签: ${entry.tags.join(', ')}`
+                `日期: ${entry.date}\n标题: ${entry.title}\n心情: ${getMoodText(entry.mood)}\n天气: ${getWeatherText(entry.weather)}\n内容: ${entry.content}\n标签: ${entry.tags ? entry.tags.join(', ') : '无标签'}`
             ).join('\n\n');
 
             const dateRangeText = analysisType === 'quick'
@@ -1648,18 +1684,21 @@ ${diariesText}
                 // 强制浏览器重绘
                 void content.offsetHeight;
 
-                // 设置具体高度值以触发动画
-                content.style.height = height + 'px';
+                // 使用requestAnimationFrame优化动画
+                requestAnimationFrame(() => {
+                    // 设置具体高度值以触发动画
+                    content.style.height = height + 'px';
 
-                // 添加expanded类
-                card.classList.add('expanded');
+                    // 添加expanded类
+                    card.classList.add('expanded');
 
-                // 动画完成后设置为auto以适应内容变化
-                setTimeout(() => {
-                    if (card.classList.contains('expanded')) {
-                        content.style.height = 'auto';
-                    }
-                }, 500);
+                    // 动画完成后设置为auto以适应内容变化
+                    setTimeout(() => {
+                        if (card.classList.contains('expanded')) {
+                            content.style.height = 'auto';
+                        }
+                    }, 400); // 与CSS中的过渡时间匹配
+                });
             } else {
                 // 如果要折叠，先设置具体高度，再动画到0
                 content.style.height = content.scrollHeight + 'px';
@@ -1667,9 +1706,11 @@ ${diariesText}
                 // 强制浏览器重绘
                 void content.offsetHeight;
 
-                // 移除expanded类并设置高度为0
-                card.classList.remove('expanded');
-                content.style.height = '0px';
+                requestAnimationFrame(() => {
+                    // 移除expanded类并设置高度为0
+                    card.classList.remove('expanded');
+                    content.style.height = '0px';
+                });
             }
         }
 
@@ -1774,22 +1815,42 @@ ${diariesText}
                 el.classList.add('clickable');
             });
 
+            // 使用节流函数优化鼠标移动事件
+            let lastMouseMoveTime = 0;
+            const throttleDelay = 10; // 10ms节流
+            let mouseX = 0, mouseY = 0;
+            let rafId = null;
+
+            // 使用requestAnimationFrame优化光标更新
+            function updateCursorPosition() {
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+
+                cursorOutline.style.left = mouseX + 'px';
+                cursorOutline.style.top = mouseY + 'px';
+
+                cursorDot.style.left = (mouseX + 3) + 'px';
+                cursorDot.style.top = (mouseY + 3) + 'px';
+
+                rafId = null;
+            }
+
             // 鼠标移动事件
             document.addEventListener('mousemove', (e) => {
-                // 精确定位标准光标位置
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
+                const now = Date.now();
+                if (now - lastMouseMoveTime < throttleDelay) return;
+                lastMouseMoveTime = now;
 
-                // 光标轮廓位置
-                cursorOutline.style.left = e.clientX + 'px';
-                cursorOutline.style.top = e.clientY + 'px';
+                mouseX = e.clientX;
+                mouseY = e.clientY;
 
-                // 更新点位置
-                cursorDot.style.left = (e.clientX + 3) + 'px';
-                cursorDot.style.top = (e.clientY + 3) + 'px';
+                // 只在需要时请求动画帧
+                if (!rafId) {
+                    rafId = requestAnimationFrame(updateCursorPosition);
+                }
 
-                // 创建粒子轨迹
-                if (Math.random() > 0.95) {
+                // 减少粒子生成频率
+                if (Math.random() > 0.98) {
                     createParticle(e.clientX, e.clientY);
                 }
             });
@@ -1801,16 +1862,20 @@ ${diariesText}
 
             // 鼠标按下效果
             document.addEventListener('mousedown', () => {
-                cursor.style.transform = 'scale(0.9)';
-                cursorOutline.style.transform = 'translate(-2px, -2px) scale(0.9)';
-                cursorDot.style.transform = 'scale(0.9)';
+                requestAnimationFrame(() => {
+                    cursor.style.transform = 'scale(0.9)';
+                    cursorOutline.style.transform = 'translate(-2px, -2px) scale(0.9)';
+                    cursorDot.style.transform = 'scale(0.9)';
+                });
             });
 
             // 鼠标释放效果
             document.addEventListener('mouseup', () => {
-                cursor.style.transform = 'scale(1)';
-                cursorOutline.style.transform = 'translate(-2px, -2px) scale(1)';
-                cursorDot.style.transform = 'scale(1)';
+                requestAnimationFrame(() => {
+                    cursor.style.transform = 'scale(1)';
+                    cursorOutline.style.transform = 'translate(-2px, -2px) scale(1)';
+                    cursorDot.style.transform = 'scale(1)';
+                });
             });
 
             // 鼠标离开页面
@@ -1828,8 +1893,16 @@ ${diariesText}
             });
         }
 
+        // 限制水波纹数量
+        let rippleCount = 0;
+        const MAX_RIPPLES = 3;
+
         // 创建点击水波纹效果
         function createRippleEffect(x, y) {
+            // 限制同时存在的水波纹数量
+            if (rippleCount >= MAX_RIPPLES) return;
+            rippleCount++;
+
             const ripple = document.createElement('div');
             ripple.className = 'click-ripple';
             ripple.style.left = x + 'px';
@@ -1838,19 +1911,30 @@ ${diariesText}
 
             // 动画结束后移除元素
             setTimeout(() => {
-                ripple.remove();
-            }, 800);
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+                rippleCount--;
+            }, 700);
         }
+
+        // 优化粒子生成
+        let particleCount = 0;
+        const MAX_PARTICLES = 20; // 限制同时存在的粒子数量
 
         // 创建粒子轨迹
         function createParticle(x, y) {
+            // 限制粒子数量
+            if (particleCount >= MAX_PARTICLES) return;
+            particleCount++;
+
             const particle = document.createElement('div');
             particle.className = 'particle';
 
             // 随机大小和位置偏移
-            const size = Math.random() * 4 + 2;
-            const xOffset = (Math.random() - 0.5) * 10;
-            const yOffset = (Math.random() - 0.5) * 10;
+            const size = Math.random() * 3 + 2;
+            const xOffset = (Math.random() - 0.5) * 8;
+            const yOffset = (Math.random() - 0.5) * 8;
 
             particle.style.width = size + 'px';
             particle.style.height = size + 'px';
@@ -1861,20 +1945,32 @@ ${diariesText}
 
             // 动画结束后移除元素
             setTimeout(() => {
-                particle.remove();
-            }, 1000);
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+                particleCount--;
+            }, 800);
         }
 
         // 添加涟漪效果
         function addRippleEffect() {
             const buttons = document.querySelectorAll('.btn');
-            buttons.forEach(button => {
-                button.addEventListener('click', createRipple);
+
+            // 使用事件委托减少事件监听器数量
+            document.addEventListener('click', function (e) {
+                const button = e.target.closest('.btn');
+                if (button) {
+                    createRipple(e, button);
+                }
             });
         }
 
-        function createRipple(event) {
-            const button = event.currentTarget;
+        function createRipple(event, button) {
+            // 限制每个按钮的涟漪数量
+            if (button.querySelector('.ripple')) {
+                return;
+            }
+
             const circle = document.createElement('span');
             const diameter = Math.max(button.clientWidth, button.clientHeight);
 
@@ -1882,13 +1978,16 @@ ${diariesText}
             circle.style.left = `${event.clientX - button.getBoundingClientRect().left - diameter / 2}px`;
             circle.style.top = `${event.clientY - button.getBoundingClientRect().top - diameter / 2}px`;
             circle.classList.add('ripple');
-
-            const ripple = button.querySelector('.ripple');
-            if (ripple) {
-                ripple.remove();
-            }
+            circle.style.willChange = 'opacity, transform';
 
             button.appendChild(circle);
+
+            // 动画结束后移除元素
+            setTimeout(() => {
+                if (circle.parentNode) {
+                    circle.parentNode.removeChild(circle);
+                }
+            }, 600);
         }
     </script>
 </body>
