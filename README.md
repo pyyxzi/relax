@@ -1,1 +1,1 @@
-Custom domain: 520.ln.cn for project preview
+Custom domain: https://520.ln.cn for project preview
